@@ -1,0 +1,36 @@
+---
+- name: Create service account for application
+  user: name=nih-wayfinding
+        system=yes
+        home=/var/lib/nih-wayfinding
+        shell=/bin/false
+        state=present
+
+- name: Add Vagrant user to the nih-wayfinding group
+  user: name=vagrant
+        append=yes
+        group=nih-wayfinding
+        state=present
+  when: developing_or_testing
+
+- name: Create configuration file directory
+  file: path={{ app_config_home }}
+        owner=root
+        group=nih-wayfinding
+        mode=0750
+        state=directory
+
+- name: Configure application
+  copy: content={{ item.content }}
+        dest={{ app_config_home }}/{{ item.file }}
+        owner=root
+        group=nih-wayfinding
+        mode=0750
+  with_items: app_config
+  notify:
+    - Restart nih-wayfinding-app
+
+- name: Configure service definition
+  template: src=upstart-nih-wayfinding-app.conf.j2 dest=/etc/init/nih-wayfinding-app.conf
+  notify:
+    - Restart nih-wayfinding-app

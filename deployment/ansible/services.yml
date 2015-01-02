@@ -1,0 +1,11 @@
+---
+- hosts: services
+  sudo: True
+
+  pre_tasks:
+    - name: Update APT cache
+      apt: update_cache=yes
+
+  roles:
+    - { role: "nih-wayfinding.postgresql", when: developing_or_testing }
+    - { role: "nih-wayfinding.pgweb", when: developing_or_testing }

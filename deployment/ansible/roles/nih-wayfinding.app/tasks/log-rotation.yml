@@ -1,0 +1,10 @@
+---
+- name: Touch log file if it does not exist
+  command: touch {{ app_log }}
+           creates={{ app_log }}
+
+- name: Set log file permissions
+  file: path={{ app_log }} owner=nih-wayfinding group=nih-wayfinding mode=0644
+
+- name: Configure log rotation
+  template: src=logrotate-nih-wayfinding-app.j2 dest=/etc/logrotate.d/nih-wayfinding-app
