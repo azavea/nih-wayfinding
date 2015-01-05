@@ -15,7 +15,7 @@
     * Main module of the application.
     */
     angular.module('nih', [
-        'ui.bootstrap',
+        'nih.views.navbar',
         'nih.views.profile',
         'nih.views.locations'
     ]).config(DefaultRoutingConfig);

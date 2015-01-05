@@ -20,11 +20,11 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default" ng-controller="NavbarController as navbar">
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-          <a class="navbar-brand" ui-sref="profiles">Wayfinding</a>
+          <a class="navbar-brand" ui-sref="profiles">{{ ::navbar.profile.name }}</a>
         </div>
 
         <div class="btn-group nav navbar-nav navbar-right" dropdown>
@@ -32,7 +32,7 @@
             Menu <span class="caret"></span>
           </button>
           <ul class="dropdown-menu pull-right" role="menu">
-            <li><a ui-sref="profiles">Profiles</a></li>
+            <li><a ui-sref="profiles">Switch User</a></li>
             <li><a ui-sref="locations">Locations</a></li>
           </ul>
         </div>
@@ -73,6 +73,8 @@
     <!-- endbuild -->
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/views/navbar/module.js"></script>
+    <script src="scripts/views/navbar/navbar-controller.js"></script>
     <script src="scripts/views/profile/module.js"></script>
     <script src="scripts/views/profile/profiles-controller.js"></script>
     <script src="scripts/views/locations/module.js"></script>
