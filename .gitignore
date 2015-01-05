@@ -11,8 +11,13 @@ lib_managed/
 src_managed/
 project/boot/
 project/plugins/project/
+resources/application.conf
+*.class
+*.log
+*.jar
 
 # Scala-IDE specific
+/scala/.lib
 .scala_dependencies
 .worksheet
 
@@ -34,3 +39,7 @@ src/nih_wayfinding/.idea
 
 # MacOS
 .DS_Store
+
+# ctags
+tags
+.tags
