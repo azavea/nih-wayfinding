@@ -3,7 +3,8 @@
 
     /* ngInject */
     function LocationsController() {
-        this.name = 'Locations List';
+        var ctl = this;
+        ctl.name = 'Locations List';
     }
 
     angular.module('nih.views.locations')
