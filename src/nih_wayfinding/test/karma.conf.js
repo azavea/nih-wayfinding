@@ -26,7 +26,17 @@ module.exports = function(config) {
       'bower_components/angular-touch/angular-touch.js',
       'bower_components/angular-ui-router/release/angular-ui-router.js',
       'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
-      'app/scripts/**/*.js',
+
+      // include app.js file first
+      'app/scripts/app.js',
+
+      // explicitly list files here in same order as in index.html
+      // (globbing fails)
+      'app/scripts/views/profile/module.js',
+      'app/scripts/views/profile/profiles-controller.js',
+      'app/scripts/views/locations/module.js',
+      'app/scripts/views/locations/locations-controller.js',
+
       'test/mock/**/*.js',
       'test/spec/**/*.js'
     ],

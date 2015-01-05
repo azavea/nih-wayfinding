@@ -1,22 +1,22 @@
 'use strict';
 
-describe('Controller: MainCtrl', function () {
+describe('Controller: ProfilesController', function () {
 
   // load the controller's module
-  beforeEach(module('nihWayfindingApp'));
+  beforeEach(module('nih'));
 
-  var MainCtrl,
-    scope;
+  var ProfilesCtrl;
+  var scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    MainCtrl = $controller('MainCtrl', {
+    ProfilesCtrl = $controller('ProfilesController', {
       $scope: scope
     });
   }));
 
-  it('should attach a list of awesomeThings to the scope', function () {
-    expect(scope.awesomeThings.length).toBe(3);
+  it('should have a name', function () {
+    expect(ProfilesCtrl.name).toBeDefined();
   });
 });
