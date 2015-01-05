@@ -13,7 +13,8 @@
 
     angular.module('nih.views.locations', [
         'ngAria',
-        'ui.router'
+        'ui.router',
+        'nih.geocoder'
     ])
     .config(StateConfig);
 })();

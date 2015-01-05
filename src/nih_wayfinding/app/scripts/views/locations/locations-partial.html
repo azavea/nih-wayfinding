@@ -28,7 +28,15 @@
             <h4>Find Address</h4>
         </div>
         <div class="col-md-6 col-xs-6">
-            <input class="form-control pull-right" type="text" placeholder="Search..." />
+            <input class="form-control pull-right"
+                   type="text"
+                   placeholder="Search Chicago..."
+                   ng-model="locations.searchText"
+                   ng-submit="locations.search()"
+                   ng-keyup="$event.keyCode === 13 ? locations.search() : null"
+                   typeahead="location for location in locations.suggest($viewValue)"
+                   typeahead-wait-ms="300"
+                   typeahead-min-length="3" />
         </div>
     </div>
     <div class="row">
