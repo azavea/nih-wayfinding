@@ -16,7 +16,8 @@
     */
     angular.module('nih', [
         'ui.bootstrap',
-        'nih.views.profile'
+        'nih.views.profile',
+        'nih.views.locations'
     ]).config(DefaultRoutingConfig);
 
 })();
