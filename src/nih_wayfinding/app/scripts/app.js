@@ -1,17 +1,22 @@
-'use strict';
+(function () {
+    'use strict';
 
-/**
- * @ngdoc overview
- * @name nihWayfindingApp
- * @description
- * # nihWayfindingApp
- *
- * Main module of the application.
- */
-angular
-  .module('nihWayfindingApp', [
-    'ngAnimate',
-    'ngAria',
-    'ngCookies',
-    'ngTouch'
-  ]);
+    /* ngInject */
+    function DefaultRoutingConfig($urlRouterProvider) {
+        $urlRouterProvider.otherwise('/');
+    }
+
+    /**
+    * @ngdoc overview
+    * @name nih
+    * @description
+    * # nih
+    *
+    * Main module of the application.
+    */
+    angular.module('nih', [
+        'ui.bootstrap',
+        'nih.views.profile'
+    ]).config(DefaultRoutingConfig);
+
+})();
