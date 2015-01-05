@@ -46,26 +46,21 @@ end
 if !ENV["VAGRANT_ENV"].nil? && ENV["VAGRANT_ENV"] == "TEST"
   ANSIBLE_ENV_GROUPS = {
     "test:children" => [
-      "app-servers", "services"
+      "app-servers"
     ]
   }
   VAGRANT_NETWORK_OPTIONS = { auto_correct: true }
 else
   ANSIBLE_ENV_GROUPS = {
     "development:children" => [
-      "app-servers", "services"
+      "app-servers"
     ]
   }
   VAGRANT_NETWORK_OPTIONS = { auto_correct: false }
 end
 
-SERVICES_IP = ENV.fetch("NIH_WAYFINDING_SERVICES_IP", "33.33.33.30")
 ANSIBLE_GROUPS = {
-  "app-servers" => [ "app" ],
-  "services" => [ "services" ]
-}
-ANSIBLE_EXTRA_VARS = {
-  postgresql_host: SERVICES_IP
+  "app-servers" => [ "app" ]
 }
 VAGRANT_PROXYCONF_ENDPOINT = ENV["VAGRANT_PROXYCONF_ENDPOINT"]
 VAGRANTFILE_API_VERSION = "2"
@@ -86,38 +81,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.proxy.no_proxy = "localhost,127.0.0.1"
   end
 
-  # VM containing PostgreSQL and any other services we need to define
-  config.vm.define "services" do |services|
-    services.vm.hostname = "services"
-    services.vm.network "private_network", ip: SERVICES_IP
-
-    services.vm.synced_folder ".", "/vagrant", disabled: true
-
-    # PostgreSQL
-    services.vm.network "forwarded_port", {
-      guest: 5432,
-      host: ENV.fetch("NIH_WAYFINDING_PORT_5432", 15432)
-    }.merge(VAGRANT_NETWORK_OPTIONS)
-
-    # Pgweb
-    services.vm.network "forwarded_port", {
-      guest: 5433,
-      host: ENV.fetch("NIH_WAYFINDING_PORT_5433", 15433)
-    }.merge(VAGRANT_NETWORK_OPTIONS)
-
-    services.vm.provider "virtualbox" do |v|
-      v.memory = 1024
-    end
-
-    services.vm.provision "ansible" do |ansible|
-      ansible.playbook = "deployment/ansible/services.yml"
-      ansible.groups = ANSIBLE_GROUPS.merge(ANSIBLE_ENV_GROUPS)
-      ansible.extra_vars = ANSIBLE_EXTRA_VARS
-      ansible.raw_arguments = ["--timeout=60"]
-    end
-  end
-
-  # VM containing web app (Angular and Scala)
   config.vm.define "app" do |app|
     app.vm.hostname = "app"
     app.vm.network "private_network", ip: ENV.fetch("NIH_WAYFINDING_APP_IP", "33.33.33.10")
@@ -137,12 +100,27 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       host: 35729,
     }.merge(VAGRANT_NETWORK_OPTIONS)
 
+    # PostgreSQL
+    app.vm.network "forwarded_port", {
+      guest: 5432,
+      host: ENV.fetch("NIH_WAYFINDING_PORT_5432", 15432)
+    }.merge(VAGRANT_NETWORK_OPTIONS)
+
+    # Pgweb
+    app.vm.network "forwarded_port", {
+      guest: 5433,
+      host: ENV.fetch("NIH_WAYFINDING_PORT_5433", 15433)
+    }.merge(VAGRANT_NETWORK_OPTIONS)
+
+    app.vm.provider "virtualbox" do |v|
+      v.memory = 1024
+    end
+
     app.ssh.forward_x11 = true
 
     app.vm.provision "ansible" do |ansible|
       ansible.playbook = "deployment/ansible/app-servers.yml"
       ansible.groups = ANSIBLE_GROUPS.merge(ANSIBLE_ENV_GROUPS)
-      ansible.extra_vars = ANSIBLE_EXTRA_VARS
       ansible.raw_arguments = ["--timeout=60"]
     end
   end

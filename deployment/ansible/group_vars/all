@@ -12,6 +12,7 @@ postgis_liblwgeom_package_version: "2.1.3+dfsg-1.pgdg12.4+7"
 postgis_package_version: "2.1.5+dfsg-1~88.git69d0152.pgdg12.4+1"
 
 postgresql_package_version: "9.3.5-2.pgdg12.4+1"
+postgresql_host: "localhost"
 postgresql_port: 5432
 postgresql_support_libpq_version: "9.3.5-2.pgdg12.4+1"
 postgresql_support_repository_channel: "9.3"
