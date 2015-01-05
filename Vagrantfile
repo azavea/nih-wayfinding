@@ -86,7 +86,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     app.vm.network "private_network", ip: ENV.fetch("NIH_WAYFINDING_APP_IP", "33.33.33.10")
 
     app.vm.synced_folder ".", "/vagrant", disabled: true
-    app.vm.synced_folder "src/nih_wayfinding", "/opt/app/"
+    app.vm.synced_folder "src/nih_wayfinding", "/opt/app/", type: "nfs"
 
     # Angular via Nginx
     app.vm.network "forwarded_port", {
