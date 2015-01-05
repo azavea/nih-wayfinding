@@ -1,0 +1,13 @@
+---
+- name: Configure Nginx site
+  template: src=nginx-nih-wayfinding-app.conf.j2
+            dest=/etc/nginx/sites-available/nih-wayfinding-app.conf
+  notify:
+    - Restart Nginx
+
+- name: Enable Nginx site
+  file: src=/etc/nginx/sites-available/nih-wayfinding-app.conf
+        dest=/etc/nginx/sites-enabled/nih-wayfinding-app
+        state=link
+  notify:
+    - Restart Nginx

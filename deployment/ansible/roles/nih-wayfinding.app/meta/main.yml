@@ -1,0 +1,9 @@
+---
+dependencies:
+  - { role: "azavea.git" }
+  - { role: "azavea.nginx", nginx_delete_default_site: True }
+  - { role: "azavea.pip" }
+  - { role: "azavea.postgresql-support" }
+  - { role: "azavea.python", python_development: True }
+  - { role: "azavea.scala" }
+  - { role: "nih-wayfinding.nodejs" }

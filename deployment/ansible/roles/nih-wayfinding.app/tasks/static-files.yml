@@ -1,0 +1,34 @@
+---
+- name: Create folders for static files
+  file: path={{ item }}
+        state=directory
+        owner=root
+        group=nih-wayfinding
+        mode=0775
+  with_items:
+    - "{{ app_static_root }}"
+    - "{{ app_media_root }}"
+    - "{{ app_static_cache }}"
+
+- name: Install Sass
+  gem: name=sass
+       version="{{ app_sass_version }}"
+       user_install=no
+       state=present
+
+- name: Install application javascript dependencies
+  command: npm install
+  args:
+    chdir: "{{ app_home }}"
+
+- name: Create static files (staging/production)
+  command: npm run build
+  args:
+    chdir: "{{ app_home }}"
+  when: not_developing
+
+- name: Create static files (development)
+  command: npm run build-debug
+  args:
+    chdir: "{{ app_home }}"
+  when: developing
