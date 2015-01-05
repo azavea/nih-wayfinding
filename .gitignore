@@ -24,10 +24,10 @@ deployment/ansible/roles/*
 !deployment/ansible/roles/nih-wayfinding.*
 
 # NodeJS
-src/nyc_trees/node_modules
+src/nih_wayfinding/node_modules
 npm-debug.log
 
-src/nyc_trees/.idea
+src/nih_wayfinding/.idea
 
 # Emacs
 *~

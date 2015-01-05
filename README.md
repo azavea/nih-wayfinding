@@ -24,12 +24,6 @@ After provisioning is complete, you can login to the application server or servi
 $ vagrant ssh [app|services]
 ```
 
-**Note**: If you get an error that resembles the following, try logging into the `app` virtual machine again for the group permissions changes to take effect:
-
-```
-envdir: fatal: unable to switch to directory /etc/nih-wayfinding.d/env: access denied
-```
-
 ### Ports
 
 The Vagrant configuration maps the following host ports to services
