@@ -16,19 +16,31 @@
        user_install=no
        state=present
 
-- name: Install application javascript dependencies
+- name: Install Compass
+  gem: name=compass
+       user_install=no
+       state=present
+
+- name: Install grunt-cli and bower
+  command: npm install -g bower grunt-cli
+  args:
+    chdir: "{{ app_home }}"
+
+- name: Install application javascript dependencies (npm)
   command: npm install
+  sudo: no
+  args:
+    chdir: "{{ app_home }}"
+
+- name: Install application javascript dependencies (bower)
+  command: bower install
+  sudo: no
   args:
     chdir: "{{ app_home }}"
 
 - name: Create static files (staging/production)
-  command: npm run build
+  command: grunt build
+  sudo: no
   args:
     chdir: "{{ app_home }}"
   when: not_developing
-
-- name: Create static files (development)
-  command: npm run build-debug
-  args:
-    chdir: "{{ app_home }}"
-  when: developing
