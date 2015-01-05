@@ -12,6 +12,7 @@
     }
 
     angular.module('nih.views.profile', [
+        'ngAria',
         'ui.router'
     ])
     .config(StateConfig);

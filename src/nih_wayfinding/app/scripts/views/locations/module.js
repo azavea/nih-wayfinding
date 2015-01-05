@@ -12,6 +12,7 @@
     }
 
     angular.module('nih.views.locations', [
+        'ngAria',
         'ui.router'
     ])
     .config(StateConfig);
