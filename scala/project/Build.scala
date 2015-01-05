@@ -43,6 +43,7 @@ object Build extends Build {
       )
     .settings(spray.revolver.RevolverPlugin.Revolver.settings:_*)
 
+  lazy val argonautSpray = RootProject(uri("git://github.com/pellucidanalytics/argonaut-spray.git"))
 }
 
 
