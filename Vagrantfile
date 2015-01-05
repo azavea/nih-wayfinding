@@ -94,6 +94,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       host: ENV.fetch("NIH_WAYFINDING_PORT_8000", 8000)
     }.merge(VAGRANT_NETWORK_OPTIONS)
 
+    # Angular via Grunt Serve
+    app.vm.network "forwarded_port", {
+      guest: 9000,
+      host: ENV.fetch("NIH_WAYFINDING_PORT_8001", 8001)
+    }.merge(VAGRANT_NETWORK_OPTIONS)
+
     # Livereload server
     app.vm.network "forwarded_port", {
       guest: 35729,
