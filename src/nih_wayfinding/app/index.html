@@ -14,29 +14,32 @@
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
   </head>
-  <body ng-app="nihWayfindingApp">
+  <body ng-app="nih">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div class="container">
-      <div class="header">
-        <ul class="nav nav-pills pull-right">
-          <li class="active"><a ng-href="#">Home</a></li>
-          <li><a ng-href="#">About</a></li>
-          <li><a ng-href="#">Contact</a></li>
-        </ul>
-        <h3 class="text-muted">nihWayfinding</h3>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand" ui-sref="profiles">Wayfinding</a>
+        </div>
+
+        <div class="btn-group nav navbar-nav navbar-right" dropdown>
+          <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>
+            Menu <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu pull-right" role="menu">
+            <li><a ui-sref="profiles">Profiles</a></li>
+            <li><a ui-sref="locations">Locations</a></li>
+          </ul>
+        </div>
       </div>
+    </nav>
 
-      <div ng-include="'views/main.html'" ng-controller="MainCtrl"></div>
-
-      <div class="footer">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
-      </div>
-    </div>
-
+    <ui-view></ui-view>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
@@ -69,9 +72,12 @@
     <!-- endbower -->
     <!-- endbuild -->
 
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/main.js"></script>
-        <!-- endbuild -->
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/views/profile/module.js"></script>
+    <script src="scripts/views/profile/profiles-controller.js"></script>
+    <script src="scripts/views/locations/module.js"></script>
+    <script src="scripts/views/locations/locations-controller.js"></script>
+    <script src="scripts/app.js"></script>
+    <!-- endbuild -->
 </body>
 </html>
