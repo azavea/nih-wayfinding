@@ -9,6 +9,7 @@
         var searchUrl = 'http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find';
         var suggestUrl = 'http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/suggest';
         var boundingBox = '-87.940101,41.643919,-87.523984,42.023022';  // Defaults to Chicago
+        var maxResults = 10;
         var searchOutFields = 'StAddr,City,Postal';
         var searchCategories = [
             'Address',
@@ -48,7 +49,7 @@
                     'bbox': boundingBox,
                     'category': searchCategories,
                     'outFields': searchOutFields,
-                    'maxLocations': 1,
+                    'maxLocations': maxResults,
                     'f': 'pjson'
                 }
             }).success(function (data) {

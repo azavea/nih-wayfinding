@@ -9,7 +9,7 @@ describe('nih.geocoder: Geocoder', function () {
 
     var httpBackend;
     var Geocoder;
-    var searchUrl = 'http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?bbox=-87.940101,41.643919,-87.523984,42.023022&category=Address,Postal&f=pjson&maxLocations=1&outFields=StAddr,City,Postal&text=one';
+    var searchUrl = 'http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?bbox=-87.940101,41.643919,-87.523984,42.023022&category=Address,Postal&f=pjson&maxLocations=10&outFields=StAddr,City,Postal&text=one';
     var searchResponse = {
         locations: [{
             feature: {
