@@ -32,7 +32,6 @@
          */
         function createProfile(name) {
             if (getProfile(name)) {
-                console.error('User ' + name + ' already exists!');
                 return false;
             }
 
