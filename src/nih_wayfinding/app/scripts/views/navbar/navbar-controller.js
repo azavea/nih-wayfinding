@@ -1,5 +1,7 @@
 (function () {
     'use strict';
+    // TODO: This should likely be a directive, something like nih-navbar once
+    //       we have profiles to link to
 
     /* ngInject */
     function NavbarController() {
