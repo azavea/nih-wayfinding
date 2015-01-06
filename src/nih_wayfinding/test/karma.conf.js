@@ -34,6 +34,8 @@ module.exports = function(config) {
       // explicitly list files here in same order as in index.html
       // (globbing fails)
       'app/scripts/profiles/module.js',
+      'app/scripts/profiles/profile-model.js',
+      'app/scripts/profiles/profile-service.js',
       'app/scripts/geocoder/module.js',
       'app/scripts/geocoder/search-service.js',
       'app/scripts/views/navbar/module.js',

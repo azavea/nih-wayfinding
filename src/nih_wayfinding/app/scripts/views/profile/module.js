@@ -13,7 +13,8 @@
 
     angular.module('nih.views.profile', [
         'ngAria',
-        'ui.router'
+        'ui.router',
+        'nih.profiles'
     ])
     .config(StateConfig);
 })();
