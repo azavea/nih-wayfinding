@@ -28,6 +28,7 @@ module.exports = function(config) {
       'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       'bower_components/ngGeolocation/ngGeolocation.js',
       'bower_components/lodash/dist/lodash.compat.js',
+      'bower_components/angular-local-storage/dist/angular-local-storage.js',
 
       // include app.js file first
       'app/scripts/app.js',

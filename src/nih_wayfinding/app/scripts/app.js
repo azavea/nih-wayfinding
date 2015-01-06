@@ -3,6 +3,7 @@
 
     /* ngInject */
     function DefaultRoutingConfig($urlRouterProvider) {
+
         $urlRouterProvider.otherwise('/');
     }
 

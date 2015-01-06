@@ -3,10 +3,7 @@
     'use strict';
 
     /* ngInject */
-    function ProfileService (ProfileProvider) {
-
-        // Private variables
-        var profilesList = [];
+    function ProfileService (ProfileProvider, localStorageService) {
 
         // Public Interface
         var module = {
@@ -21,7 +18,7 @@
          * @returns Profile for given username
          */
         function getProfile(name) {
-            return _.find(profilesList, function(obj) { return obj.username === name; });
+            return localStorageService.get(name);
         }
 
         /**
@@ -37,7 +34,7 @@
 
             var profile = ProfileProvider.getInstance();
             profile.username = name;
-            profilesList.push(profile);
+            localStorageService.set(name, profile);
             return profile;
         }
 
@@ -45,7 +42,7 @@
          * @returns Array of usernames
          */
         function getProfileNames() {
-            return _.pluck(profilesList, 'username');
+            return localStorageService.keys();
         }
 
     }
