@@ -166,7 +166,8 @@ module.exports = function (grunt) {
         src: ['<%= yeoman.app %>/index.html'],
         ignorePath:  /\.\.\//,
         exclude: [
-          'bower_components/bootstrap-sass-official/assets/javascripts'
+          'bower_components/bootstrap-sass-official/assets/javascripts',
+          'bower_components/ngGeolocation/ngGeolocation.min.js'
         ]
       },
       sass: {
