@@ -36,6 +36,7 @@ object Build extends Build {
 
           "org.scala-lang" % "scala-compiler" % "2.10.4",
 
+          "io.spray" % "spray-testkit" % "1.2.2" % "test",
           "org.scalatest" % "scalatest_2.10" % "2.1.0" % "test",
           "ch.qos.logback" % "logback-classic" % "1.1.1",
           "org.clapper" %% "grizzled-slf4j" % "1.0.2"
