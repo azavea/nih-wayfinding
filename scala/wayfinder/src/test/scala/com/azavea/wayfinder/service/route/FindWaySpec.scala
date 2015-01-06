@@ -36,8 +36,8 @@ class FindWayRouteSpec extends FunSuite
         options = "opt1|opt2|opt3"
       )
     Post("/wf/findway", testEntity) ~> root ~> check {
+      response.entity.asString should equal (f"""{"challenge\":"not so hard","options":"opt1|opt2|opt3","wheels":true,"origin":[432.1,123.4],"destination":[85.234,87.212],"walkLength":45.6}""")
       response.status should equal (StatusCodes.OK)
-      response.entity.asString should equal (f"""{"challenge\":"not so hard","options":"opt1|opt2|opt3","wheels":true,"origin":{"lng":432.1,"lat":123.4},"destination":{"lng":85.234,"lat":87.212},"walkLength":45.6}""")
     }
   }
 }

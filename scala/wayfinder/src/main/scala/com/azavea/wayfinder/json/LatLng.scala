@@ -12,12 +12,12 @@ object LatLngJson {
   implicit def LatLngCodecJson: CodecJson[LatLng] =
     CodecJson(
       (p: LatLng) =>
-        ("lat" := p.lat) ->:
-        ("lng" := p.lng) ->:
-        jEmptyObject,
+        jNumber(p.lng) -->>:
+        jNumber(p.lat) -->>:
+        jEmptyArray,
       c => for {
-        lat <- (c --\ "lat").as[Double]
-        lng <- (c --\ "lng").as[Double]
+        lng <- (c \\).as[Double] // down to array
+        lat <- ((c \\) :->- 1 ).as[Double] // down to array and to the right 1
       } yield LatLng(lat, lng))
 }
 
