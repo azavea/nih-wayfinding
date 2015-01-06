@@ -1,0 +1,22 @@
+header, footer {
+  z-index: 20;
+  background-color: LightGray;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: $header-height;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: $footer-height;
+
+    .row {
+        height: $footer-height;
+    }
+}

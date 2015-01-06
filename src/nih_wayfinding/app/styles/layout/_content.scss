@@ -1,0 +1,27 @@
+body {
+    margin: 0;
+    height: 100%;
+
+}
+
+.content.scroll {
+    margin-top: $header-height;
+    margin-bottom: $footer-height;
+}
+
+.content.map {
+    overflow: hidden;
+    position: fixed;
+    top: $header-height;
+    bottom: $footer-height;
+    left: 0;
+    right: 0;
+}
+
+.content.double-footer {
+    margin-bottom: $footer-height * 2 !important;
+
+    ~ footer {
+        height: $footer-height * 2;
+    }
+}

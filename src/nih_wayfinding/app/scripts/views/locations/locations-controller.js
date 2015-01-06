@@ -21,7 +21,7 @@
             // TODO: Create routing state which takes start/end lat/lon pairs
             //          as view parameters
             // TODO: Get current location from user to use as start lat/lon
-            //$state.go('routing');
+            $state.go('routing');
         }
     }
 

@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="content scroll double-footer container-fluid">
     <div class="row">
         <div class="col-xs-9 col-md-9">
             <h4>Locations</h4>
@@ -12,17 +12,13 @@
 
     <!-- TODO: Create these blocks dynamically via ng-repeat for each location in user's profile -->
     <div class="row">
-        <div class="col-md-4 col-xs-4 location-panel">
-            <span class="glyphicon glyphicon-th"></span>
-        </div>
-        <div class="col-md-4 col-xs-4 location-panel">
-            <span class="glyphicon glyphicon-th"></span>
-        </div>
-        <div class="col-md-4 col-xs-4 location-panel">
+        <div class="col-md-4 col-xs-4 location-panel text-center" ng-repeat="value in [1, 2, 3]">
             <span class="glyphicon glyphicon-th"></span>
         </div>
     </div>
 
+</div>
+<footer class="container-fluid">
     <div class="row">
         <div class="col-md-6 col-xs-6">
             <h4>Find Address</h4>
@@ -47,4 +43,4 @@
             <button ui-sref="goforwalk" class="btn btn-primary btn-block pull-right" type="button">Start</button>
         </div>
     </div>
-</div>
+</footer>
