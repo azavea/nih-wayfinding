@@ -29,6 +29,9 @@ module.exports = function(config) {
       'bower_components/ngGeolocation/ngGeolocation.js',
       'bower_components/lodash/dist/lodash.compat.js',
       'bower_components/angular-local-storage/dist/angular-local-storage.js',
+      'bower_components/leaflet/dist/leaflet.js',
+      'bower_components/leaflet/dist/leaflet-src.js',
+      'bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.js',
 
       // include app.js file first
       'app/scripts/app.js',
@@ -42,10 +45,13 @@ module.exports = function(config) {
       'app/scripts/geocoder/search-service.js',
       'app/scripts/views/navbar/module.js',
       'app/scripts/views/navbar/navbar-controller.js',
+      'app/scripts/views/navbar/navbar-service.js',
       'app/scripts/views/profile/module.js',
       'app/scripts/views/profile/profiles-controller.js',
       'app/scripts/views/locations/module.js',
       'app/scripts/views/locations/locations-controller.js',
+      'scripts/views/routing/module.js',
+      'scripts/views/routing/overview/overview-controller.js',
 
       'test/mock/**/*.js',
       'test/spec/**/*.js'

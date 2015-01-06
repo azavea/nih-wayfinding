@@ -1,8 +1,8 @@
 (function () {
     'use strict';
 
-    function OverviewController() {
-
+    function OverviewController(NavbarConfig) {
+        NavbarConfig.set({ title: 'Preview Route' });
     }
 
     angular.module('nih.views.routing')

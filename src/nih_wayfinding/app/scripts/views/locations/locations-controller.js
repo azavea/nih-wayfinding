@@ -2,13 +2,18 @@
     'use strict';
 
     /* ngInject */
-    function LocationsController($state, Geocoder) {
+    function LocationsController($state, Geocoder, NavbarConfig, ProfileService) {
         var ctl = this;
+        initialize();
 
-        ctl.name = 'Locations List';
-        ctl.search = search;
-        ctl.searchText = '';
-        ctl.suggest = Geocoder.suggest;
+        function initialize() {
+            ctl.search = search;
+            ctl.searchText = '';
+            ctl.suggest = Geocoder.suggest;
+
+            var usernames = ProfileService.getProfileNames();
+            NavbarConfig.set({ title: usernames[0]});
+        }
 
         function search() {
             Geocoder.search(ctl.searchText).then(function (data) {

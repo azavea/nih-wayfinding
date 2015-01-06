@@ -16,7 +16,7 @@ describe('nih.views.profile: ProfilesController', function () {
     });
   }));
 
-  it('should have a name', function () {
-    expect(ProfilesController.name).toBeDefined();
+  it('should have usernames', function () {
+    expect(ProfilesController.usernames).toBeDefined();
   });
 });
