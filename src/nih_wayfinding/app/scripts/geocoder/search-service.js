@@ -16,8 +16,23 @@
         ].join(',');
 
         // Public Interface
+        // TODO: Expose the bbox, outFields and categories vars as config options
         var module = {
+            /**
+             * Perform a geocoder search using some text
+             * @param {string} The text string to search
+             * @return {array} An array of features, where each feature has an attributes dict and
+             *                 and a geometry dict
+             */
             search: search,
+
+            /**
+             * Perform a geocoder suggest, this is faster than search and should be used e.g. to
+             *  to fill an autocomplete search box
+             *
+             * @param {string} The text string to search
+             * @return {array} An array of matching strings that relate to the searched text
+             */
             suggest: suggest
         };
 
@@ -45,9 +60,10 @@
             return dfd.promise;
         }
 
-        // Helper function transforms response to array of locations
+        // Helper function transforms response to array of features, where each feature
+        //  has an attributes and geometry dict
         function searchToList(response) {
-            return response.locations;
+            return _.pluck(response.locations, 'feature');
         }
 
         function suggest(text) {

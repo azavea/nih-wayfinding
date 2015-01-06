@@ -12,7 +12,7 @@
 
         function search() {
             Geocoder.search(ctl.searchText).then(function (data) {
-                loadRoute(data[0].feature);
+                loadRoute(data[0]);
             });
         }
 
