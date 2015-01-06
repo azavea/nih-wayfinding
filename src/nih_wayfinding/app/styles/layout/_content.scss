@@ -1,18 +1,15 @@
 body {
     margin: 0;
     height: 100%;
+
 }
 
-div.content.scroll {
+.content.scroll {
     margin-top: $header-height;
     margin-bottom: $footer-height;
 }
 
-div.content.scroll.double-footer {
-    margin-bottom: $footer-double-height;
-}
-
-div.content.map {
+.content.map {
     overflow: hidden;
     position: fixed;
     top: $header-height;
@@ -21,6 +18,10 @@ div.content.map {
     right: 0;
 }
 
-div.content.map.double-footer {
-    bottom: $footer-double-height;
+.content.double-footer {
+    margin-bottom: $footer-height * 2 !important;
+
+    ~ footer {
+        height: $footer-height * 2;
+    }
 }

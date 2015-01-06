@@ -16,11 +16,7 @@ footer {
     width: 100%;
     height: $footer-height;
 
-    div.row {
+    .row {
         height: $footer-height;
     }
-}
-
-footer.double {
-    height: $footer-double-height;
 }
