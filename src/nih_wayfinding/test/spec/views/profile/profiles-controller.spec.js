@@ -1,22 +1,22 @@
 'use strict';
 
-describe('Controller: ProfilesController', function () {
+describe('nih.views.profile: ProfilesController', function () {
 
   // load the controller's module
-  beforeEach(module('nih'));
+  beforeEach(module('nih.views.profile'));
 
-  var ProfilesCtrl;
-  var scope;
+  var ProfilesController,
+    scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    ProfilesCtrl = $controller('ProfilesController', {
+    ProfilesController = $controller('ProfilesController', {
       $scope: scope
     });
   }));
 
   it('should have a name', function () {
-    expect(ProfilesCtrl.name).toBeDefined();
+    expect(ProfilesController.name).toBeDefined();
   });
 });

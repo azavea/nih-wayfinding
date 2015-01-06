@@ -1,1 +1,50 @@
-<h3>{{ locations.name }}</h3>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-9 col-md-9">
+            <h4>Locations</h4>
+        </div>
+        <div class="col-xs-3 col-md-3">
+            <button ui-sref="addlocation" class="btn btn-default btn-block pull-right" type="button">
+                <span class="glyphicon glyphicon-plus"></span> Add Location
+            </button>
+        </div>
+    </div>
+
+    <!-- TODO: Create these blocks dynamically via ng-repeat for each location in user's profile -->
+    <div class="row">
+        <div class="col-md-4 col-xs-4 location-panel">
+            <span class="glyphicon glyphicon-th"></span>
+        </div>
+        <div class="col-md-4 col-xs-4 location-panel">
+            <span class="glyphicon glyphicon-th"></span>
+        </div>
+        <div class="col-md-4 col-xs-4 location-panel">
+            <span class="glyphicon glyphicon-th"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 col-xs-6">
+            <h4>Find Address</h4>
+        </div>
+        <div class="col-md-6 col-xs-6">
+            <input class="form-control pull-right"
+                   type="text"
+                   placeholder="Search Chicago..."
+                   ng-model="locations.searchText"
+                   ng-submit="locations.search()"
+                   ng-keyup="$event.keyCode === 13 ? locations.search() : null"
+                   typeahead="location for location in locations.suggest($viewValue)"
+                   typeahead-wait-ms="300"
+                   typeahead-min-length="3" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-xs-6">
+            <h4>Go for a Walk</h4>
+        </div>
+        <div class="col-md-6 col-xs-6">
+            <button ui-sref="goforwalk" class="btn btn-primary btn-block pull-right" type="button">Start</button>
+        </div>
+    </div>
+</div>
