@@ -2,13 +2,7 @@
     'use strict';
 
     /* ngInject */
-    function DefaultRoutingConfig($urlRouterProvider, localStorageServiceProvider) {
-
-        // set up local storage
-        localStorageServiceProvider
-            .setPrefix('nih')
-            .setStorageType('localStorage')
-            .setNotify(false, false);
+    function DefaultRoutingConfig($urlRouterProvider) {
 
         $urlRouterProvider.otherwise('/');
     }
