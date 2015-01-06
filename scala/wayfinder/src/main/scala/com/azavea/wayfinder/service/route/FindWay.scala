@@ -1,7 +1,6 @@
 package com.azavea.wayfinder.service.route
 
-import argonaut._
-import Argonaut._
+import argonaut._, Argonaut._
 
 import spray.routing._
 import spray.routing.HttpService
@@ -21,7 +20,7 @@ trait FindWay extends BaseRoute {
       post {
         entity(as[RouteParams]) { routeParams =>
           complete {
-            routeParams
+            routeParams.copy(challenge = "not so hard")
           }
         }
       }
