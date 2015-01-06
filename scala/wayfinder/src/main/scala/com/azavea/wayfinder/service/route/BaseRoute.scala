@@ -30,8 +30,8 @@ trait BaseRoute extends HttpService {
         requestUri { uri =>
           log.warning("Request to {} could not be handled normally", uri)
 
-          println(e.getMessage)
-          println(e.getStackTrace.mkString("\n"))
+          log.error(e.getMessage)
+          log.error(e.getStackTrace.mkString("\n"))
 
           complete {
             ((StatusCodes.InternalServerError.toString := failureMessage(e.getMessage)) ->: jEmptyObject).asJson
