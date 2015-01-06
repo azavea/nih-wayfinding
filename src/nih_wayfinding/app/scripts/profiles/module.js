@@ -1,6 +1,8 @@
 (function () {
     'use strict';
 
-    angular.module('nih.profiles', []);
+    angular.module('nih.profiles', [
+        'LocalStorageModule'
+    ]);
 
 })();
