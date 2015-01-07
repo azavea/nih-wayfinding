@@ -12,7 +12,8 @@
             ctl.suggest = Geocoder.suggest;
 
             var usernames = ProfileService.getProfileNames();
-            NavbarConfig.set({ title: usernames[0]});
+            var title = usernames.length ? usernames[0] : 'Profile';
+            NavbarConfig.set({ title: title});
         }
 
         function search() {

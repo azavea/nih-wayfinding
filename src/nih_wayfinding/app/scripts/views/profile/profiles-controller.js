@@ -12,6 +12,7 @@
             ProfileService.createProfile('Minnie');
 
             ctl.usernames = ProfileService.getProfileNames();
+            var title = ctl.usernames.length ? ctl.usernames[0] : 'Profile';
             NavbarConfig.set({ title: ctl.usernames[0]});
         }
     }
