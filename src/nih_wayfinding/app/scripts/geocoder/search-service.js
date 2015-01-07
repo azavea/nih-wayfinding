@@ -3,12 +3,17 @@
     'use strict';
 
     /* ngInject */
-    function Geocoder ($http, $q) {
+    function Geocoder ($http, $q, Config) {
 
         // Private variables
         var searchUrl = 'http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find';
         var suggestUrl = 'http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/suggest';
-        var boundingBox = '-87.940101,41.643919,-87.523984,42.023022';  // Defaults to Chicago
+        var boundingBox = [
+            Config.bounds.southWest.lng,
+            Config.bounds.southWest.lat,
+            Config.bounds.northEast.lng,
+            Config.bounds.northEast.lat
+        ].join(',');
         var maxResults = 10;
         var searchOutFields = 'StAddr,City,Postal';
         var searchCategories = [

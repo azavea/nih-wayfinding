@@ -34,6 +34,7 @@ module.exports = function(config) {
       'bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.js',
 
       // include app.js file first
+      'app/scripts/config.js',
       'app/scripts/app.js',
 
       // explicitly list files here in same order as in index.html
@@ -43,6 +44,12 @@ module.exports = function(config) {
       'app/scripts/profiles/profile-service.js',
       'app/scripts/geocoder/module.js',
       'app/scripts/geocoder/search-service.js',
+      'app/scripts/mapping/module.js',
+      'app/scripts/mapping/map-service.js',
+      'app/scripts/mapping/map-style-service.js',
+      'app/scripts/routing/module.js',
+      'app/scripts/routing/directions-service.js',
+      'app/scripts/routing/routing-response-stub.js',
       'app/scripts/views/navbar/module.js',
       'app/scripts/views/navbar/navbar-controller.js',
       'app/scripts/views/navbar/navbar-service.js',
@@ -50,8 +57,8 @@ module.exports = function(config) {
       'app/scripts/views/profile/profiles-controller.js',
       'app/scripts/views/locations/module.js',
       'app/scripts/views/locations/locations-controller.js',
-      'scripts/views/routing/module.js',
-      'scripts/views/routing/overview/overview-controller.js',
+      'app/scripts/views/routing/module.js',
+      'app/scripts/views/routing/overview/overview-controller.js',
 
       'test/mock/**/*.js',
       'test/spec/**/*.js'

@@ -15,6 +15,8 @@
         'ngAria',
         'leaflet-directive',
         'nih.profiles',
+        'nih.mapping',
+        'nih.routing',
         'nih.views.navbar'
     ]).config(StateConfig);
 })();
