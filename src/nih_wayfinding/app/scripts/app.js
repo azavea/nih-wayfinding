@@ -18,6 +18,7 @@
     angular.module('nih', [
         'nih.views.navbar',
         'nih.views.profile',
+        'nih.views.newprofile',
         'nih.views.locations',
         'nih.views.routing'
     ]).config(DefaultRoutingConfig);

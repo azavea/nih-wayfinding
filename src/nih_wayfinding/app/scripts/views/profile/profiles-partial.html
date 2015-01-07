@@ -1,7 +1,18 @@
 <div class="content scroll">
-    <div class="row" ng-repeat="username in profiles.usernames">
-        <div class="col-xs-12 col-md-12">
-            <p>{{ username }}</p>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Select User</h3>
         </div>
+        <ul class="list-group">
+            <a href="#" class="list-group-item" ng-click="profiles.changeUser(username)"
+                ng-class="{'active': (username === profiles.currentUser.username)}"
+                ng-repeat="username in profiles.usernames">{{ username }}
+                <i class="glyphicon glyphicon-ok" aria-hidden="true"
+                    ng-if="username === profiles.currentUser.username"></i>
+                <span ng-if="username === profiles.currentUser.username" class="sr-only">current user</span>
+            </a>
+            <a href="#" class="list-group-item" ui-sref="newprofile">
+                <i aria-hidden="true" class="glyphicon glyphicon-plus"></i> Add User</a>
+        </ul>
     </div>
 </div>

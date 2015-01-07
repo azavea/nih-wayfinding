@@ -6,14 +6,29 @@
         var ctl = this;
         initialize();
 
-        function initialize() {
-            ProfileService.createProfile('Donald');
-            ProfileService.createProfile('Mickey');
-            ProfileService.createProfile('Minnie');
+        /**
+         * Change the currently selected user
+         *
+         * @param name {String} Username to switch to
+         */
+        function changeUser(name) {
+            ProfileService.setCurrentUser(name);
+            setCurrentUser();
+        }
 
-            ctl.usernames = ProfileService.getProfileNames();
-            var title = ctl.usernames.length ? ctl.usernames[0] : 'Profile';
+        /**
+         * Private helper function to set the current user on scope and in title bar
+         */
+        function setCurrentUser() {
+            ctl.currentUser = ProfileService.getCurrentUser();
+            var title = ctl.currentUser.username ? ctl.currentUser.username : 'Profile';
             NavbarConfig.set({ title: title});
+        }
+
+        function initialize() {
+            ctl.changeUser = changeUser;
+            ctl.usernames = ProfileService.getProfileNames();
+            setCurrentUser();
         }
     }
 
