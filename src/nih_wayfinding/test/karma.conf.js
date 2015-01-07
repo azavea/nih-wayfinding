@@ -14,6 +14,8 @@ module.exports = function(config) {
     console.log('Sauce environment variables not set; testing with PhantomJS.');
   } else {
     // browsers for Sauce Labs
+    // cannot run more than 3 or 4, due to this issue:
+    // https://github.com/karma-runner/karma-sauce-launcher/issues/40
     customLaunchers = {
       chrome: {
         base: 'SauceLabs',
@@ -32,47 +34,6 @@ module.exports = function(config) {
         platform: 'Windows 8.1',
         version: '11'
       },
-      ie9: {
-        base: 'SauceLabs',
-        browserName: 'internet explorer',
-        platform: 'Windows 7',
-        version: '9'
-      },
-      opera: {
-        base: 'SauceLabs',
-        browserName: 'opera',
-        platform: 'Windows 7',
-        version: '12'
-      },
-      chromeMac: {
-        base: 'SauceLabs',
-        browserName: 'chrome',
-        platform: 'OS X 10.10'
-      },
-      firefoxMac: {
-        base: 'SauceLabs',
-        browserName: 'firefox',
-        platform: 'OS X 10.10',
-        version: '34'
-      },
-      safari: {
-        base: 'SauceLabs',
-        browserName: 'safari',
-        platform: 'OS X 10.10',
-        version: '8'
-      },
-      ipad: {
-        base: 'SauceLabs',
-        browserName: 'ipad',
-        platform: 'OS X 10.9',
-        version: '7.1',
-      },
-      android: {
-        base: 'SauceLabs',
-        browserName: 'android',
-        platform: 'Linux',
-        version: '4.3',
-      }
     };
   }
 
