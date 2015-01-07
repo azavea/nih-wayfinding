@@ -18,10 +18,14 @@ body {
     right: 0;
 }
 
-.content.double-footer {
-    margin-bottom: $footer-height * 2 !important;
+.content.double-footer.scroll {
+    margin-bottom: $footer-height * 2;
+}
 
-    ~ footer {
-        height: $footer-height * 2;
-    }
+.content.double-footer.map {
+    bottom: $footer-height * 2;
+}
+
+.content.double-footer ~ footer {
+    height: $footer-height * 2;
 }
