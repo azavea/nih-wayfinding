@@ -2,6 +2,18 @@
     height: 200px;
 }
 
-footer h4 {
-    display: inline;
+footer.expanded {
+    transition: height 0.5s ease;
+    height: $footer-height + 300 !important;
+}
+
+footer .expanded {
+    transition: height 0.5s ease;
+    height: 300px !important;
+
+    .close {
+        position: absolute;
+        top: 6px;
+        right: 22px;
+    }
 }
