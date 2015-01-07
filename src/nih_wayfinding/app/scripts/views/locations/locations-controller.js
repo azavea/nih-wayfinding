@@ -7,6 +7,9 @@
         initialize();
 
         function initialize() {
+            ctl.defaultFooterHeight = 50;
+            ctl.expandedHeight = 300;
+            ctl.findAddressHeight = ctl.defaultFooterHeight;
             ctl.search = search;
             ctl.searchText = '';
             ctl.suggest = Geocoder.suggest;

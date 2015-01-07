@@ -18,10 +18,15 @@
     </div>
 
 </div>
-<footer class="container-fluid">
-    <div class="row">
+<footer class="container-fluid" ng-style="{height: locations.findAddressHeight + locations.defaultFooterHeight}">
+    <div class="row" ng-style="{height: locations.findAddressHeight}">
         <div class="col-md-6 col-xs-6">
             <h4>Find Address</h4>
+            <button type="button" class="close" aria-label="Close"
+                    ng-if="locations.findAddressHeight > locations.defaultFooterHeight;"
+                    ng-click="locations.findAddressHeight = locations.defaultFooterHeight">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
         <div class="col-md-6 col-xs-6">
             <input class="form-control pull-right"
@@ -30,6 +35,7 @@
                    ng-model="locations.searchText"
                    ng-submit="locations.search()"
                    ng-keyup="$event.keyCode === 13 ? locations.search() : null"
+                   ng-focus="locations.findAddressHeight = locations.expandedHeight;"
                    typeahead="location for location in locations.suggest($viewValue)"
                    typeahead-wait-ms="300"
                    typeahead-min-length="3" />
