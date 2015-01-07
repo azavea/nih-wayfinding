@@ -8,3 +8,7 @@ before_script:
   - cd src/nih_wayfinding
   - npm install
   - bower install
+env:
+  global:
+  - secure: aUCLz8UqbeWRs4neCsXWRkd8lw5x5BsERGuPCxUaeNnocpzXLCy4KHTFqPMfeV34bFJQ9K5CIGCURM2oVT8++WrMkHs9qTY8OJ64jP+qs9IpUhGsMqXWzG58cdwz44WggarwNSWKgkGHLk+1IuqvZNdEqkFTmvaLi1Tbi/NahpU=
+  - secure: PkscBIQXCMmNjOMsRgYii3FA1l4+EfUePgT3a/wEDGdANaEerwQ6fFsEKCnqa6ZSRUIo/WLCAc6zgXlt0Xs9l0XkQ1vp2vNBnze68EOzXzyIxYdpP4wpSiUuTAT7Mrq7D1eROphc8ok8LHnc17sTfijuToCBqi8sir0mbUmCYQ8=

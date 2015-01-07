@@ -3,8 +3,78 @@
 // Generated on 2015-01-05 using
 // generator-karma 0.8.3
 
+
 module.exports = function(config) {
   'use strict';
+
+  var customLaunchers = {PhantomJS: {}};
+
+  // configure Sauce Labs browsers
+  if (!process.env.SAUCE_USERNAME || !process.env.SAUCE_ACCESS_KEY) {
+    console.log('Sauce environment variables not set; testing with PhantomJS.');
+  } else {
+    // browsers for Sauce Labs
+    customLaunchers = {
+      chrome: {
+        base: 'SauceLabs',
+        browserName: 'chrome',
+        platform: 'Windows 7'
+      },
+      firefox: {
+        base: 'SauceLabs',
+        browserName: 'firefox',
+        platform: 'Windows 7',
+        version: '34'
+      },
+      ie11: {
+        base: 'SauceLabs',
+        browserName: 'internet explorer',
+        platform: 'Windows 8.1',
+        version: '11'
+      },
+      ie9: {
+        base: 'SauceLabs',
+        browserName: 'internet explorer',
+        platform: 'Windows 7',
+        version: '9'
+      },
+      opera: {
+        base: 'SauceLabs',
+        browserName: 'opera',
+        platform: 'Windows 7',
+        version: '12'
+      },
+      chromeMac: {
+        base: 'SauceLabs',
+        browserName: 'chrome',
+        platform: 'OS X 10.10'
+      },
+      firefoxMac: {
+        base: 'SauceLabs',
+        browserName: 'firefox',
+        platform: 'OS X 10.10',
+        version: '34'
+      },
+      safari: {
+        base: 'SauceLabs',
+        browserName: 'safari',
+        platform: 'OS X 10.10',
+        version: '8'
+      },
+      ipad: {
+        base: 'SauceLabs',
+        browserName: 'ipad',
+        platform: 'OS X 10.9',
+        version: '7.1',
+      },
+      android: {
+        base: 'SauceLabs',
+        browserName: 'android',
+        platform: 'Linux',
+        version: '4.3',
+      }
+    };
+  }
 
   config.set({
     // enable / disable watching file and executing tests whenever any file changes
@@ -57,27 +127,30 @@ module.exports = function(config) {
     // web server port
     port: 8080,
 
-    // Start these browsers, currently available:
-    // - Chrome
-    // - ChromeCanary
-    // - Firefox
-    // - Opera
-    // - Safari (only Mac)
-    // - PhantomJS
-    // - IE (only Windows)
-    browsers: [
-      'PhantomJS'
-    ],
-
     // Which plugins to enable
     plugins: [
+      'karma-jasmine',
       'karma-phantomjs-launcher',
+      'karma-sauce-launcher',
       'karma-jasmine'
     ],
 
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
-    singleRun: false,
+    singleRun: true,
+
+    sauceLabs: {
+        testName: 'NIH Wayfinding Unit Tests'
+    },
+
+    // Increase timeout in case connection in CI is slow
+    captureTimeout: 120000,
+
+    customLaunchers: customLaunchers,
+
+    browsers: Object.keys(customLaunchers),
+
+    reporters: ['dots', 'saucelabs'],
 
     colors: true,
 

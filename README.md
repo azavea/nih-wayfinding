@@ -6,6 +6,8 @@ NIH Wayfinding Tools (Prototype)
 ## Build Status
 [![](https://travis-ci.org/azavea/nih-wayfinding.svg?branch=develop)](https://travis-ci.org/azavea/nih-wayfinding)
 
+[![Selenium Test Status](https://saucelabs.com/buildstatus/azavea-nih)](https://saucelabs.com/u/azavea-nih)
+
 ## Local Development
 
 A combination of Vagrant 1.5+ and Ansible 1.6+ is used to setup the development environment for this project. It creates the following virtual machines:
