@@ -2,7 +2,7 @@
     'use strict';
 
     /* ngInject */
-    function OverviewController(Directions, Map, MapStyle, NavbarConfig) {
+    function OverviewController($scope, leafletData, Directions, Map, MapControl, MapStyle, NavbarConfig) {
         var ctl = this;
         initialize();
 
@@ -10,6 +10,8 @@
             NavbarConfig.set({ title: 'Preview Route' });
             ctl.map = Map;
             Directions.get().then(setGeojson);
+
+            $scope.$on('leafletDirectiveMap.geojsonClick', showPopup);
         }
 
         function routeStyle(feature) {
@@ -21,7 +23,8 @@
             return {
                 color: color,
                 weight: 4,
-                opacity: 1
+                opacity: 1,
+                clickable: false
             };
         }
 
@@ -33,6 +36,10 @@
                     resetStyleOnMouseout: true
                 }
             });
+        }
+
+        function showPopup(event, feature) {
+            MapControl.showPopup(feature);
         }
     }
 
