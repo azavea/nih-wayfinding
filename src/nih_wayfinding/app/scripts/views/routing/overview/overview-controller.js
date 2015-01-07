@@ -12,11 +12,24 @@
             Directions.get().then(setGeojson);
         }
 
+        function routeStyle(feature) {
+            if (feature.geometry.type !== 'LineString') {
+                return;
+            }
+            var lastModified = feature && feature.properties ? feature.properties.lastModified : 0;
+            var color = MapStyle.getLineColor(lastModified);
+            return {
+                color: color,
+                weight: 4,
+                opacity: 1
+            };
+        }
+
         function setGeojson(geojson) {
             angular.extend(ctl.map, {
                 geojson: {
                     data: geojson,
-                    style: MapStyle.routeStyle,
+                    style: routeStyle,
                     resetStyleOnMouseout: true
                 }
             });
