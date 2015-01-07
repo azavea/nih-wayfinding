@@ -4,13 +4,13 @@
     //       we have profiles to link to
 
     /* ngInject */
-    function NavbarController() {
+    function NavbarController(NavbarConfig) {
         var ctl = this;
+        initialize();
 
-        // TODO: Replace stub with call to Profile service to retrieve current profile
-        ctl.profile = {
-            name: 'Forrest'
-        };
+        function initialize() {
+            ctl.config = NavbarConfig.config;
+        }
     }
 
     angular.module('nih.views.navbar')

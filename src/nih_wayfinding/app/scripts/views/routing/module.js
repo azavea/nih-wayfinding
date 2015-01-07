@@ -13,6 +13,8 @@
 
     angular.module('nih.views.routing', [
         'ngAria',
-        'leaflet-directive'
+        'leaflet-directive',
+        'nih.profiles',
+        'nih.views.navbar'
     ]).config(StateConfig);
 })();

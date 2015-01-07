@@ -2,26 +2,19 @@
     'use strict';
 
     /* ngInject */
-    function ProfilesController(ProfileService) {
+    function ProfilesController(NavbarConfig, ProfileService) {
         var ctl = this;
-        ctl.name = 'Profiles List';
+        initialize();
 
-        ProfileService.createProfile('Donald');
-        ProfileService.createProfile('Mickey');
-        ProfileService.createProfile('Minnie');
+        function initialize() {
+            ProfileService.createProfile('Donald');
+            ProfileService.createProfile('Mickey');
+            ProfileService.createProfile('Minnie');
 
-        ctl.usernames = ProfileService.getProfileNames();
-
-        /*
-        // Only need to inject $scope now if you do something with the actual $scope object, like
-        //  a watch or an event listener
-        // Watch example:
-        $scope.$watch(function () {
-            ctl.watchedProperty;
-        }, function (newValue) {
-            // doSomething with ctl.watchedProperty
-        })
-        */
+            ctl.usernames = ProfileService.getProfileNames();
+            var title = ctl.usernames.length ? ctl.usernames[0] : 'Profile';
+            NavbarConfig.set({ title: ctl.usernames[0]});
+        }
     }
 
     angular.module('nih.views.profile')

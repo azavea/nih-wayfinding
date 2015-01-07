@@ -14,7 +14,8 @@
     angular.module('nih.views.profile', [
         'ngAria',
         'ui.router',
-        'nih.profiles'
+        'nih.profiles',
+        'nih.views.navbar'
     ])
     .config(StateConfig);
 })();
