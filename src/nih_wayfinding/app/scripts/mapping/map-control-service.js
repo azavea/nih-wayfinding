@@ -5,10 +5,31 @@
         var popup = null;
 
         var module = {
+            cleanLonLatParam: cleanLonLatParam,
             showPopup: showPopup
         };
 
         return module;
+
+        /**
+         * Cleans string of form 'lon,lat' to an array of form [lon, lat]
+         *
+         * @param lonLat {string} String value to clean
+         * @returns {array} [lon, lat] or null if string could not be parsed
+         */
+        function cleanLonLatParam(lonLat) {
+            if (!lonLat) {
+                return null;
+            }
+            lonLat = lonLat.split(',');
+            var lon = parseFloat(lonLat[0]);
+            var lat = parseFloat(lonLat[1]);
+            if (isNaN(lon) || isNaN(lat)) {
+                return null;
+            } else {
+                return [lon, lat];
+            }
+        }
 
         /**
          * Shows popup with text of a single feature property, denoted by key

@@ -3,6 +3,7 @@
 
     /* ngInject */
     function RoutingResponseStub () {
+    /* jshint ignore:start */
         return {
           "type": "FeatureCollection",
           "features": [
@@ -259,6 +260,7 @@
             }
           ]
         };
+        /* jshint ignore:end */
     }
 
     angular.module('nih.routing')
