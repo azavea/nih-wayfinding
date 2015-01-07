@@ -3,8 +3,10 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
 
-@import 'layout/variables';
-@import 'layout/content';
-@import 'layout/header-footer';
+@import "layout/variables";
+@import "layout/content";
+@import "layout/header-footer";
 
-@import 'views/locations';
+@import "components/legend";
+
+@import "views/locations";
