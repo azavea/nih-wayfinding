@@ -18,7 +18,7 @@
          * @returns {array} [lon, lat] or null if string could not be parsed
          */
         function cleanLonLatParam(lonLat) {
-            if (!lonLat) {
+            if (!(lonLat && lonLat.split)) {
                 return null;
             }
             lonLat = lonLat.split(',');
