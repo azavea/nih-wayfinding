@@ -7,6 +7,7 @@
         initialize();
 
         function initialize() {
+            ctl.findAddressExpanded = false;
             ctl.search = search;
             ctl.searchText = '';
             ctl.suggest = Geocoder.suggest;

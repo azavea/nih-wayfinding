@@ -14,9 +14,11 @@ footer {
     position: fixed;
     bottom: 0;
     width: 100%;
+    transition: height 0.5s ease;
     height: $footer-height;
 
     .row {
+        transition: height 0.5s ease;
         height: $footer-height;
     }
 }
