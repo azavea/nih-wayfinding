@@ -13,6 +13,7 @@
 
     angular.module('nih.views.routing', [
         'ngAria',
+        'ui.router',
         'leaflet-directive',
         'ngGeolocation',
         'nih.profiles',
