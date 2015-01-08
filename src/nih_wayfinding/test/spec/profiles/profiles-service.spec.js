@@ -49,7 +49,7 @@ describe('nih.profiles: ProfileService', function () {
 
     it('should set a property on the current user', function () {
         ProfileService.setCurrentUser(testUserName);
-        ProfileService.setUserProperty('answer', 42);
+        ProfileService.setCurrentUserProperty('answer', 42);
         var user = ProfileService.getCurrentUser();
         expect(user.answer).toBe(42);
     });

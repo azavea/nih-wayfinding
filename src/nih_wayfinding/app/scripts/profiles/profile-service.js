@@ -15,7 +15,7 @@
             createProfile: createProfile,
             setCurrentUser: setCurrentUser,
             getCurrentUser: getCurrentUser,
-            setUserProperty: setUserProperty
+            setCurrentUserProperty: setCurrentUserProperty
         };
 
         return module;
@@ -49,7 +49,7 @@
          * @param property {String} Name of the property to set
          * @param value {Object} Value to set the property to
          */
-         function setUserProperty(property, value) {
+         function setCurrentUserProperty(property, value) {
             currentUser[property] = value;
             localStorageService.set(currentUser.username, currentUser);
          }

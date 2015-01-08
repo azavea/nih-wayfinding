@@ -26,16 +26,23 @@
             setStep(3);
         }
 
+        /**
+         * Set private var for profile challenge level.
+         */
         function setChallengeLevel(level) {
             challengeLevel = level;
             createNewUser();
         }
 
+        /**
+         * Create the new user profile when form completed, set current user to the new user,
+         * then go back to the main profiles page.
+         */
         function createNewUser() {
             ProfileService.createProfile(ctl.username);
             ProfileService.setCurrentUser(ctl.username);
-            ProfileService.setUserProperty('wheelchair', usingWheelchairScooter);
-            ProfileService.setUserProperty('challenge', challengeLevel);
+            ProfileService.setCurrentUserProperty('wheelchair', usingWheelchairScooter);
+            ProfileService.setCurrentUserProperty('challenge', challengeLevel);
             $state.go('profiles');
         }
 
