@@ -11,7 +11,12 @@
               "type": "Feature",
               "properties": {
                 "bench": true,
-                "lastModified": 1357571029
+                "lastModified": 1357571029,
+                "directions": {
+                    "text": "Walk N on 12th St",
+                    "turn": "straight",
+                    "distanceMeters": 133,
+                }
               },
               "geometry": {
                 "type": "LineString",
@@ -30,7 +35,12 @@
             {
               "type": "Feature",
               "properties": {
-                "lastModified": 1357571029
+                "lastModified": 1357571029,
+                "directions": {
+                    "text": "Turn right onto South St",
+                    "turn": "right",
+                    "distanceMeters": 725
+                }
               },
               "geometry": {
                 "type": "LineString",
@@ -53,7 +63,12 @@
             {
               "type": "Feature",
               "properties": {
-                "lastModified": 1420124629
+                "lastModified": 1420124629,
+                "directions": {
+                    "text": "Turn left onto 10th St",
+                    "turn": "left",
+                    "distanceMeters": 50
+                }
               },
               "geometry": {
                 "type": "LineString",
@@ -75,7 +90,12 @@
                 "lastModified": 1420124629,
                 "bench": true,
                 "hazard": true,
-                "bathroom": true
+                "bathroom": true,
+                "directions": {
+                    "text": "Turn right onto Clinton Rd",
+                    "turn": "right",
+                    "distanceMeters": 1000
+                }
               },
               "geometry": {
                 "type": "LineString",
@@ -126,7 +146,12 @@
             {
               "type": "Feature",
               "properties": {
-                "lastModified": 1357571029
+                "lastModified": 1357571029,
+                "directions": {
+                    "text": "Turn slight left onto Pine St",
+                    "turn": "slightleft",
+                    "distanceMeters": 20
+                }
               },
               "geometry": {
                 "type": "LineString",
@@ -146,7 +171,12 @@
               "type": "Feature",
               "properties": {
                 "hazard": true,
-                "lastModified": 1393686229
+                "lastModified": 1393686229,
+                "directions": {
+                    "text": "Arrive at 8th St and Pine St",
+                    "turn": "end",
+                    "distanceMeters": 20
+                }
               },
               "geometry": {
                 "type": "LineString",
