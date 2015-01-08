@@ -12,6 +12,7 @@
     function OverviewController($scope, $stateParams, $q, $geolocation, leafletData,
                                 Directions, Map, MapControl, MapStyle, NavbarConfig) {
         var ctl = this;
+        var defaultNonZeroWalkTime = 30;
         var directionsOptions = {
             walkTimeMins: 0
         };
@@ -49,10 +50,15 @@
                     var currentPosition = [position.coords.longitude, position.coords.latitude];
                     if (!destination) {
                         destination = currentPosition;
-                        directionsOptions.walkTimeMins = 30;
+                    }
+                    if (!origin) {
+                        origin = currentPosition;
+                    }
+                    if (_.isEqual(origin, destination)) {
+                        directionsOptions.walkTimeMins = defaultNonZeroWalkTime;
                     }
                     dfd.resolve({
-                        origin: currentPosition,
+                        origin: origin,
                         destination: destination
                     });
                 }, function (error) {
