@@ -9,6 +9,13 @@
             controller: 'OverviewController',
             controllerAs: 'overview'
         });
+
+        $stateProvider.state('directions', {
+            url: '/directions',
+            templateUrl: 'scripts/views/routing/directions/directions-partial.html',
+            controller: 'DirectionsController',
+            controllerAs: 'directions'
+        });
     }
 
     angular.module('nih.views.routing', [

@@ -1,0 +1,11 @@
+<div class="container-fluid content scroll">
+    <div class="row" ng-repeat="item in directions.list">
+        <div class="col-md-1 col-xs-1">
+            <span class="glyphicon" ng-class="directions.getTurnIconName(item.directions.turn)"></span>
+        </div>
+        <div class="col-md-11 col-xs-11" ng-style="{'border-right': '10px solid ' + directions.getLineColor(item.lastModified)}">
+            <span>{{ ::item.directions.text }}</span>
+            <span class="glyphicon" ng-class="directions.getFlagIconName(key)" ng-repeat="(key, value) in item.flags"></span>
+        </div>
+    </div>
+</div>

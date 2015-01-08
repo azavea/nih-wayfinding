@@ -93,6 +93,7 @@ module.exports = function(config) {
       'app/scripts/views/locations/locations-controller.js',
       'app/scripts/views/routing/module.js',
       'app/scripts/views/routing/overview/overview-controller.js',
+      'app/scripts/views/routing/directions/directions-controller.js',
 
       'test/mock/**/*.js',
       'test/spec/**/*.js'

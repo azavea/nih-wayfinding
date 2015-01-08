@@ -9,7 +9,9 @@
         var directionsUrl = 'http://localhost/directions';
 
         var module = {
-            get: get
+            get: get,
+            getFlagIconName: getFlagIconName,
+            getTurnIconName: getTurnIconName,
         };
 
         return module;
@@ -34,6 +36,39 @@
             return $timeout(function () {
                 return RoutingResponseStub;
             }, 100, false);
+        }
+
+        function getFlagIconName(flagType) {
+            // TODO: Write tests once actual icons exist
+            switch (flagType) {
+                case 'bench':
+                    return 'glyphicon-flash';
+                case 'hazard':
+                    return 'glyphicon-warning-sign';
+                case 'bathroom':
+                    return 'glyphicon-trash';
+                default:
+                    return 'glyphicon-info-sign';
+            }
+        }
+
+        function getTurnIconName(turnType) {
+            // TODO: Write tests once actual icons exist
+            switch (turnType) {
+                case 'straight':
+                    return 'glyphicon-arrow-up';
+                // Temporarily fall through to non-slight case for left/right
+                case 'left':
+                case 'slightleft':
+                    return 'glyphicon-arrow-left';
+                case 'right':
+                case 'slightright':
+                    return 'glyphicon-arrow-right';
+                case 'end':
+                    return 'glyphicon-flag';
+                default:
+                    return 'glyphicon-remove-circle';
+            }
         }
     }
 
