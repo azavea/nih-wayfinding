@@ -87,6 +87,8 @@ module.exports = function(config) {
       'app/scripts/views/navbar/navbar-service.js',
       'app/scripts/views/profile/module.js',
       'app/scripts/views/profile/profiles-controller.js',
+      'app/scripts/views/profile/new-profile/module.js',
+      'app/scripts/views/profile/new-profile/new-profile-controller.js',
       'app/scripts/views/locations/module.js',
       'app/scripts/views/locations/locations-controller.js',
       'app/scripts/views/routing/module.js',

@@ -12,8 +12,8 @@
             ctl.searchText = '';
             ctl.suggest = Geocoder.suggest;
 
-            var usernames = ProfileService.getProfileNames();
-            var title = usernames.length ? usernames[0] : 'Profile';
+            ctl.currentUser = ProfileService.getCurrentUser();
+            var title = ctl.currentUser.username ? ctl.currentUser.username : 'Profile';
             NavbarConfig.set({ title: title});
         }
 

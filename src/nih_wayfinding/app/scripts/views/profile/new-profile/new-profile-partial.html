@@ -1,0 +1,46 @@
+<div class="content scroll">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Create New User {{ newprofile.displayUsername }}</h3>
+            <p>Question {{ newprofile.step }}/3</p>
+        </div>
+        <div class="panel-body">
+            <div ng-switch="newprofile.step">
+                <div ng-switch-when="1">
+                    <form name="newprofile.newusername" ng-submit="newprofile.setStep(2)">
+                        <h2>New user name:</h2>
+                        <input type="text" ng-model="newprofile.username"
+                            ng-change="newprofile.checkUsername()"required />
+                            <span class="text-danger" aria-disabled="newprofile.newusername.$valid"
+                            ng-show="newprofile.newusername.$invalid">{{ newprofile.errorMsg }}</span>
+                        <br /><br />
+                        <button class="btn btn-primary" ng-disabled="newprofile.newusername.$invalid"
+                            ng-click="newprofile.setStep(2)">Next</button>
+                    </form>
+                </div>
+                <div ng-switch-when="2">
+                    <h2>Do you use a wheelchair or scooter?</h2>
+                    <div class="btn-group btn-group-justified" role="group"
+                        aria-label="Select yes or no">
+                        <a role="button" class="btn btn-default" href="#"
+                            ng-click="newprofile.usingWheelchair(true)">Yes</a>
+                        <a role="button" class="btn btn-default" href="#"
+                            ng-click="newprofile.usingWheelchair(false)">No</a>
+                    </div>
+                </div>
+                <div ng-switch-when="3">
+                    <h2>What level of challenge do you want in your routes?</h2>
+                    <div class="btn-group btn-group-justified" role="group"
+                        aria-label="Select challenge level">
+                        <a role="button" class="btn btn-default" href="#"
+                            ng-click="newprofile.setChallengeLevel(1)">Minimal</a>
+                        <a role="button" class="btn btn-default" href="#"
+                            ng-click="newprofile.setChallengeLevel(2)">Moderate</a>
+                        <a role="button" class="btn btn-default" href="#"
+                            ng-click="newprofile.setChallengeLevel(3)">Challenge Me</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
