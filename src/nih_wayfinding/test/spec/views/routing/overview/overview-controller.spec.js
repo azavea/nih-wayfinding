@@ -2,29 +2,135 @@
 
 describe('nih.views.routing: OverviewController', function () {
 
-  // load the controller's module
-  beforeEach(module('nih.views.routing'));
+    // load the controller's module
+    beforeEach(module('nih.views.routing'));
 
-  var OverviewController;
-  var rootScope;
-  var scope;
+    var rootScope;
+    var scope;
 
-  // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope) {
-    rootScope = $rootScope;
-    scope = $rootScope.$new();
-    OverviewController = $controller('OverviewController', {
-      $scope: scope,
-      $stateParams: {
-        destination: '20,40'
-      }
+    var geolocation;
+
+    var Directions;
+    var OverviewController;
+
+    var geolocationLat = 10;
+    var geolocationLon = 10;
+    var stateParamsLat = 20;
+    var stateParamsLon = 20;
+    var stateParamsArray = [stateParamsLon, stateParamsLat];
+    var geolocationArray = [geolocationLon, geolocationLat];
+    var stateParamsString = stateParamsArray.join(',');
+    var geolocationString = geolocationArray.join(',');
+
+    function mockGeolocation($q) {
+        return {
+            getCurrentPosition: function (options) {
+                var dfd = $q.defer();
+                dfd.resolve({
+                    coords: {
+                        latitude: geolocationLat,
+                        longitude: geolocationLon
+                    }
+                });
+                return dfd.promise;
+            }
+        };
+    }
+    function mockDirections($q) {
+        return {
+            get: function (origin, destination, options) {
+                var dfd = $q.defer();
+                dfd.resolve({});
+                return dfd.promise;
+            }
+        };
+    }
+
+    beforeEach(inject(function ($q, $rootScope) {
+        rootScope = $rootScope;
+        scope = $rootScope.$new();
+        geolocation = mockGeolocation($q);
+        Directions = mockDirections($q);
+        spyOn(geolocation, 'getCurrentPosition').and.callThrough();
+        spyOn(Directions, 'get').and.callThrough();
+    }));
+
+    describe('tests where no state params are necessary', function () {
+        beforeEach(inject(function ($controller) {
+            // TODO: Way to DRY this $controller call?
+            OverviewController = $controller('OverviewController', {
+                $scope: scope,
+                $geolocation: geolocation,
+                Directions: Directions
+            });
+        }));
+
+        it('should initialize a map object', function () {
+            expect(OverviewController.map).toBeDefined();
+        });
+
+        it('should ensure getDirections is called with origin -> geolocation, destination -> geolocation', function () {
+            rootScope.$digest();
+            expect(geolocation.getCurrentPosition).toHaveBeenCalled();
+            expect(Directions.get).toHaveBeenCalledWith(geolocationArray, geolocationArray, jasmine.any(Object));
+        });
     });
-  }));
 
-  it('should initialize a map object', function () {
-    expect(OverviewController.map).toBeDefined();
-  });
+    describe('tests where state params for destination', function () {
+        beforeEach(inject(function ($controller) {
+            OverviewController = $controller('OverviewController', {
+                $scope: scope,
+                $geolocation: geolocation,
+                Directions: Directions,
+                $stateParams: {
+                    destination: stateParamsString
+                }
+            });
+        }));
 
-  // TODO: Add test ensuring Directions.get is called
-  // TODO: Add test ensuring $geolocation is requested
+        it('should ensure getDirections is called with origin -> geolocation, destination -> stateParams', function () {
+            rootScope.$digest();
+            expect(geolocation.getCurrentPosition).toHaveBeenCalled();
+            expect(Directions.get).toHaveBeenCalledWith(geolocationArray, stateParamsArray, jasmine.any(Object));
+        });
+    });
+
+    describe('tests where state params for origin', function () {
+        beforeEach(inject(function ($controller) {
+            OverviewController = $controller('OverviewController', {
+                $scope: scope,
+                $geolocation: geolocation,
+                Directions: Directions,
+                $stateParams: {
+                    origin: stateParamsString
+                }
+            });
+        }));
+
+        it('should ensure getDirections is called with origin -> stateParams, destination -> geolocation', function () {
+            rootScope.$digest();
+            expect(geolocation.getCurrentPosition).toHaveBeenCalled();
+            expect(Directions.get).toHaveBeenCalledWith(stateParamsArray, geolocationArray, jasmine.any(Object));
+        });
+    });
+
+    describe('tests where state params for origin + destination', function () {
+        beforeEach(inject(function ($controller) {
+            OverviewController = $controller('OverviewController', {
+                $scope: scope,
+                $geolocation: geolocation,
+                Directions: Directions,
+                $stateParams: {
+                    origin: stateParamsString,
+                    destination: stateParamsString
+                }
+            });
+        }));
+
+        it('should ensure getDirections is called with origin -> stateParams, destination -> stateParams', function () {
+            rootScope.$digest();
+            expect(geolocation.getCurrentPosition).not.toHaveBeenCalled();
+            expect(Directions.get).toHaveBeenCalledWith(stateParamsArray, stateParamsArray, jasmine.any(Object));
+        });
+    });
 });
