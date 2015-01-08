@@ -10,8 +10,10 @@
             {
               "type": "Feature",
               "properties": {
-                "bench": true,
                 "lastModified": 1357571029,
+                "flags": {
+                    "bench": true
+                },
                 "directions": {
                     "text": "Walk N on 12th St",
                     "turn": "straight",
@@ -88,9 +90,11 @@
               "type": "Feature",
               "properties": {
                 "lastModified": 1420124629,
-                "bench": true,
-                "hazard": true,
-                "bathroom": true,
+                "flags": {
+                    "bench": true,
+                    "hazard": true,
+                    "bathroom": true
+                },
                 "directions": {
                     "text": "Turn right onto Clinton Rd",
                     "turn": "right",
@@ -170,8 +174,10 @@
             {
               "type": "Feature",
               "properties": {
-                "hazard": true,
                 "lastModified": 1393686229,
+                "flags": {
+                    "hazard": true
+                },
                 "directions": {
                     "text": "Arrive at 8th St and Pine St",
                     "turn": "end",
