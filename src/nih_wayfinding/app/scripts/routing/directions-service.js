@@ -57,6 +57,7 @@
             switch (turnType) {
                 case 'straight':
                     return 'glyphicon-arrow-up';
+                // Temporarily fall through to non-slight case for left/right
                 case 'left':
                 case 'slightleft':
                     return 'glyphicon-arrow-left';
