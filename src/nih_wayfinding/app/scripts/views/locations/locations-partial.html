@@ -10,12 +10,7 @@
         </div>
     </div>
 
-    <!-- TODO: Create these blocks dynamically via ng-repeat for each location in user's profile -->
-    <div class="row">
-        <div class="col-md-4 col-xs-4 location-panel text-center" ng-repeat="value in [1, 2, 3]">
-            <span class="glyphicon glyphicon-th"></span>
-        </div>
-    </div>
+    <nih-options-grid options="locations.gridOptions"></nih-options-grid>
 
 </div>
 <footer class="container-fluid" ng-class="{expanded: locations.findAddressExpanded}">

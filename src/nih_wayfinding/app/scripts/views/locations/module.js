@@ -16,7 +16,8 @@
         'ui.router',
         'nih.geocoder',
         'nih.profiles',
-        'nih.views.navbar'
+        'nih.views.navbar',
+        'nih.views.optionsgrid'
     ])
     .config(StateConfig);
 })();

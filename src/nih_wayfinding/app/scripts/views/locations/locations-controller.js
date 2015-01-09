@@ -2,12 +2,13 @@
     'use strict';
 
     /* ngInject */
-    function LocationsController($state, Geocoder, NavbarConfig, ProfileService) {
+    function LocationsController($scope, $state, Geocoder, NavbarConfig, ProfileService, UserLocations) {
         var ctl = this;
         initialize();
 
         function initialize() {
             ctl.findAddressExpanded = false;
+            ctl.gridOptions = UserLocations.locationsForUser();
             ctl.search = search;
             ctl.searchText = '';
             ctl.suggest = Geocoder.suggest;
@@ -15,6 +16,12 @@
             ctl.currentUser = ProfileService.getCurrentUser();
             var title = ctl.currentUser.username ? ctl.currentUser.username : 'Profile';
             NavbarConfig.set({ title: title});
+
+            $scope.$on('nih.optionsgrid.clicked', optionClicked);
+        }
+
+        function optionClicked(event, option) {
+            loadRoute(option.feature);
         }
 
         function search() {
