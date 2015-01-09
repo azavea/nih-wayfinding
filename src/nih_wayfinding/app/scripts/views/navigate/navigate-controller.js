@@ -14,21 +14,16 @@
             NavbarConfig.set({ title: 'Navigate Route' });
             ctl.map = Map;
 
-            Navigation.setInterval(800);
+            Navigation.setIntervalMillis(800);
             var directionQ = Directions.get();
             directionQ.then(setGeojson);
             directionQ.then(Navigation.walkTheLine);
-            directionQ.then(function() {
-                // Zoom in for navigation purposes
-                leafletData.getMap().then(function(map) {
-                    map.setZoom(19);
-                });
-            });
 
             // Subscribe to the location update event
             $scope.$on('nih.navigation.locationUpdated', function(event, data) {
                 MapControl.trackUser(data);
                 angular.extend(ctl.map.center, {
+                    zoom: 19,
                     lat: data[1],
                     lng: data[0]
                 });

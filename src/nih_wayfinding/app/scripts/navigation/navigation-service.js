@@ -10,13 +10,13 @@
     ) {
 
         var stepsLeft = [];
-        var navInterval = 1000; // 1 second default interval
+        var navIntervalMillis = 1000; // 1 second default interval
         var mockRun;
         var pollRun;
         var module = {
             walkTheLine: walkTheLine,
             pollLocation: pollLocation,
-            setInterval: setInterval,
+            setIntervalMillis: setIntervalMillis,
             stopIntervalTask: stopIntervalTask
         };
 
@@ -28,18 +28,8 @@
          *  @param interval {number} The walk/read interval in milliseconds
          *  @return undefined
          */
-        function setInterval(interval) {
-            navInterval = interval;
-        }
-
-        /**
-         *  Return the steps that remain for walking the line
-         *
-         * @return {array} The steps that have been generated
-         *
-         */
-        function getSteps() {
-            return stepsLeft;
+        function setIntervalMillis(interval) {
+            navIntervalMillis = interval;
         }
 
         /**
@@ -76,7 +66,7 @@
                             stopIntervalTask();
                         }
                     },
-                    navInterval);
+                    navIntervalMillis);
             };
             runMock();
         }
@@ -98,7 +88,7 @@
                                               })
                         );
                     },
-                    navInterval);
+                    navIntervalMillis);
             };
             runPoll();
         }
