@@ -11,10 +11,11 @@
 
         var stepsLeft = [];
         var navInterval = 1000; // 1 second default interval
+        var mockRun;
+        var pollRun;
         var module = {
             walkTheLine: walkTheLine,
             pollLocation: pollLocation,
-            getSteps: getSteps,
             setInterval: setInterval,
             stopIntervalTask: stopIntervalTask
         };
@@ -55,7 +56,6 @@
             }
         }
 
-        var mockRun;
         /**
          * Take the next step on the path as created by genSteps
          *
@@ -71,7 +71,7 @@
                 mockRun = $interval(
                     function() {
                         if (stepsLeft.length > 0) {
-                            $rootScope.$broadcast('scanLoc', stepsLeft.shift());
+                            $rootScope.$broadcast('nih.navigation.locationUpdated', stepsLeft.shift());
                         } else {
                             stopIntervalTask();
                         }
@@ -81,7 +81,6 @@
             runMock();
         }
 
-        var pollRun;
         /**
          * Poll for location using ngGeolocation module
          *
@@ -90,8 +89,8 @@
         function pollLocation() {
             var runPoll = function() {
                 pollRun = $interval(
-                    function() {
-                        $rootScope.$broadcast('scanLoc',
+                    function() { // TODO: use $geolocation.watchPosition instead of getCurrentPosition
+                        $rootScope.$broadcast('nih.navigation.locationUpdated',
                                               $geolocation.getCurrentPosition({
                                                   enableHighAccuracy: true,
                                                   timeout: 6000,

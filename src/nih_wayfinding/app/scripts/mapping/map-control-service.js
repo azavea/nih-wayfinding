@@ -69,7 +69,6 @@
                 var lnglat = [point[1], point[0]];
                 if (userMarker) {
                   userMarker.setLatLng(lnglat);
-                  map.setZoom(19);
                 } else {
                   userMarker = new L.CircleMarker(lnglat);
                   map.addLayer(userMarker);

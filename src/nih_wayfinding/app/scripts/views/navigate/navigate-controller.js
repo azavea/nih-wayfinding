@@ -4,6 +4,7 @@
     /* ngInject */
     function NavigateController(
         $scope,
+        leafletData,
         Navigation, Directions, Map, MapStyle, NavbarConfig, MapControl
     ) {
         var ctl = this;
@@ -17,9 +18,15 @@
             var directionQ = Directions.get();
             directionQ.then(setGeojson);
             directionQ.then(Navigation.walkTheLine);
+            directionQ.then(function() {
+                // Zoom in for navigation purposes
+                leafletData.getMap().then(function(map) {
+                    map.setZoom(19);
+                });
+            });
 
-            // Subscribe to the 'scan location' event
-            $scope.$on('scanLoc', function(event, data) {
+            // Subscribe to the location update event
+            $scope.$on('nih.navigation.locationUpdated', function(event, data) {
                 MapControl.trackUser(data);
                 angular.extend(ctl.map.center, {
                     lat: data[1],
@@ -38,6 +45,7 @@
                     resetStyleOnMouseout: true
                 }
             });
+
         }
     }
 

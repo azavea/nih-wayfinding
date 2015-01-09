@@ -1,4 +1,8 @@
-
+/*
+ * The code in this file is kept here in case we need to mock arbitrary routes. If the one-off
+ *  solution currently being used is sufficient for dev purposes, deletion of this file is
+ *  to be considered warranted.
+ */
 (function () {
     'use strict';
 
@@ -9,9 +13,9 @@
 
         var stepsLeft = [];
         var navInterval = 1000; // 1 second default interval
+        var mockRun;
         var module = {
             walkTheLine: walkTheLine,
-            getSteps: getSteps,
             setInterval: setInterval,
             stopIntervalTask: stopIntervalTask
         };
@@ -131,7 +135,6 @@
             }
         }
 
-        var mockRun;
         /**
          * Take the next step on the path as created by genSteps
          *
