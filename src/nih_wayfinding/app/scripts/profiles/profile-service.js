@@ -13,6 +13,7 @@
             getProfile: getProfile,
             getProfileNames: getProfileNames,
             createProfile: createProfile,
+            deleteProfile: deleteProfile,
             setCurrentUser: setCurrentUser,
             getCurrentUser: getCurrentUser,
             setCurrentUserProperty: setCurrentUserProperty
@@ -76,6 +77,10 @@
             profile.username = name;
             localStorageService.set(name, profile);
             return profile;
+        }
+
+        function deleteProfile(name) {
+            alert('Deleted ' + name);
         }
 
         /**
