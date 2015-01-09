@@ -1,4 +1,4 @@
-<div class="content scroll">
+<div class="content scroll container-fluid">
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">Select User</h3>
@@ -10,9 +10,21 @@
                 <i class="glyphicon glyphicon-ok" aria-hidden="true"
                     ng-if="username === profiles.currentUser.username"></i>
                 <span ng-if="username === profiles.currentUser.username" class="sr-only">current user</span>
+                <span class="glyphicon glyphicon-trash pull-right" ng-show="profiles.deleteMode"></span>
             </a>
-            <a href="#" class="list-group-item" ui-sref="newprofile">
-                <i aria-hidden="true" class="glyphicon glyphicon-plus"></i> Add User</a>
         </ul>
     </div>
 </div>
+<footer class="container-fluid">
+    <div class="row">
+        <div class="col-md-6 col-xs-6">
+            <button ui-sref="newprofile" class="btn btn-primary btn-block" type="button">New Profile</button>
+        </div>
+        <div class="col-md-6 col-xs-6">
+            <button ng-click="profiles.deleteMode = !profiles.deleteMode"
+                    class="btn btn-primary btn-block pull-right"
+                    ng-class="{'btn-danger': deleteMode}"
+                    type="button">Delete Profile</button>
+        </div>
+    </div>
+</footer>

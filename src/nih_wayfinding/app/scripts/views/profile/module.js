@@ -12,6 +12,7 @@
     }
 
     angular.module('nih.views.profile', [
+        'ngAnimate',
         'ngAria',
         'ui.router',
         'nih.profiles',
