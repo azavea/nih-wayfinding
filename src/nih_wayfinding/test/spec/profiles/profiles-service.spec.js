@@ -47,6 +47,20 @@ describe('nih.profiles: ProfileService', function () {
         expect(user.username).toBe(testUserName);
     });
 
+    it('should delete the specified user', function () {
+        var found = ProfileService.getProfile(testUserName);
+        expect(found.username).toBe(testUserName);
+        ProfileService.deleteProfile(testUserName);
+        found = ProfileService.getProfile(testUserName);
+        expect(found).toBeNull();
+    });
+
+    it('should delete the currentUser if currentUser is deleted', function () {
+        ProfileService.setCurrentUser(testUserName);
+        ProfileService.deleteProfile(testUserName);
+        expect(ProfileService.getCurrentUser().username).toBeUndefined();
+    });
+
     it('should set a property on the current user', function () {
         ProfileService.setCurrentUser(testUserName);
         ProfileService.setCurrentUserProperty('answer', 42);

@@ -16,19 +16,27 @@
             setCurrentUser();
         }
 
+        /**
+         * Open a modal to confirm user deletion, the delete it and unset the currentUser if necessary
+         * @param  {string} name Username of the user to delete
+         */
         function deleteUser(name) {
             Modals.openConfirm({
                 text: 'You are about to delete the profile for ' + name + '.',
                 confirmClass: 'btn-danger'
             }).result.then(function () {
                 ProfileService.deleteProfile(name);
+                refreshUserList();
             });
         }
 
+        /**
+         * Take action on row select, either delete user or set as current user
+         * @param  {string} name Username of the user to take action on
+         */
         function onProfileSelect(name) {
             if (ctl.deleteMode) {
                 deleteUser(name);
-                // handle profile delete
             } else {
                 changeUser(name);
             }
@@ -43,10 +51,14 @@
             NavbarConfig.set({ title: title});
         }
 
-        function initialize() {
-            ctl.onProfileSelect = onProfileSelect;
+        function refreshUserList() {
             ctl.usernames = ProfileService.getProfileNames();
             setCurrentUser();
+        }
+
+        function initialize() {
+            ctl.onProfileSelect = onProfileSelect;
+            refreshUserList();
         }
     }
 

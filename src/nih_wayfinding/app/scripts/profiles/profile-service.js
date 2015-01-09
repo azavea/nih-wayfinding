@@ -2,11 +2,11 @@
 (function () {
     'use strict';
 
-    // private variables
-    var currentUser = {};
-
     /* ngInject */
     function ProfileService (ProfileProvider, localStorageService) {
+
+        // private variables
+        var currentUser = {};
 
         // Public Interface
         var module = {
@@ -20,6 +20,13 @@
         };
 
         return module;
+
+        /**
+         * Unset the currentUser
+         */
+        function deleteCurrentUser() {
+            currentUser = {};
+        }
 
         /**
          * Get the currently active user.
@@ -79,8 +86,17 @@
             return profile;
         }
 
+        /**
+         * Delete the user profile for a given user
+         * Unsets currentUser if the current user is the one being deleted
+         *
+         * @param  {string} name username of the profile to delete
+         */
         function deleteProfile(name) {
-            alert('Deleted ' + name);
+            if (currentUser.username === name) {
+                deleteCurrentUser();
+            }
+            localStorageService.remove(name);
         }
 
         /**
