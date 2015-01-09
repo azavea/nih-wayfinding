@@ -20,7 +20,8 @@
         'nih.views.profile',
         'nih.views.newprofile',
         'nih.views.locations',
-        'nih.views.routing'
+        'nih.views.routing',
+        'nih.views.navigate'
     ]).config(DefaultRoutingConfig);
 
 })();
