@@ -6,7 +6,8 @@
 
         var module = {
             cleanLonLatParam: cleanLonLatParam,
-            showPopup: showPopup
+            showPopup: showPopup,
+            trackUser: trackUser
         };
 
         return module;
@@ -37,7 +38,7 @@
          *
          * @param feature {object} geojson feature to display
          * @param key {string} key for the properties object to show in popup
-         * @return Shows popup or does nothing if feature not a Point
+         * @return undefined Shows popup or does nothing if feature not a Point
          */
         function showPopup(feature, key) {
             key = key || 'type';
@@ -53,6 +54,26 @@
                 .setLatLng([feature.geometry.coordinates[1], feature.geometry.coordinates[0]])
                 .setContent(feature.properties[key])
                 .openOn(map);
+            });
+        }
+
+        var userMarker = null;
+        /**
+         * For a given point attach a marker on that point
+         *
+         * @param point {array} [Lng, Lat] array of coordinates
+         * @return undefined Shows (or moves) a marker
+         */
+        function trackUser(point) {
+            leafletData.getMap().then(function(map) {
+                var lnglat = [point[1], point[0]];
+                if (userMarker) {
+                  userMarker.setLatLng(lnglat);
+                  map.setZoom(19);
+                } else {
+                  userMarker = new L.CircleMarker(lnglat);
+                  map.addLayer(userMarker);
+                }
             });
         }
     }
