@@ -12,10 +12,12 @@
     }
 
     angular.module('nih.views.profile', [
+        'ngAnimate',
         'ngAria',
         'ui.router',
         'nih.profiles',
-        'nih.views.navbar'
+        'nih.views.navbar',
+        'nih.views.modals'
     ])
     .config(StateConfig);
 })();

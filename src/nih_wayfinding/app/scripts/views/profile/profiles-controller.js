@@ -2,7 +2,7 @@
     'use strict';
 
     /* ngInject */
-    function ProfilesController(NavbarConfig, ProfileService) {
+    function ProfilesController(Modals, NavbarConfig, ProfileService) {
         var ctl = this;
         initialize();
 
@@ -17,6 +17,32 @@
         }
 
         /**
+         * Open a modal to confirm user deletion, the delete it and unset the currentUser if necessary
+         * @param  {string} name Username of the user to delete
+         */
+        function deleteUser(name) {
+            Modals.openConfirm({
+                text: 'You are about to delete the profile for ' + name + '.',
+                confirmClass: 'btn-danger'
+            }).result.then(function () {
+                ProfileService.deleteProfile(name);
+                refreshUserList();
+            });
+        }
+
+        /**
+         * Take action on row select, either delete user or set as current user
+         * @param  {string} name Username of the user to take action on
+         */
+        function onProfileSelect(name) {
+            if (ctl.deleteMode) {
+                deleteUser(name);
+            } else {
+                changeUser(name);
+            }
+        }
+
+        /**
          * Private helper function to set the current user on scope and in title bar
          */
         function setCurrentUser() {
@@ -25,10 +51,14 @@
             NavbarConfig.set({ title: title});
         }
 
-        function initialize() {
-            ctl.changeUser = changeUser;
+        function refreshUserList() {
             ctl.usernames = ProfileService.getProfileNames();
             setCurrentUser();
+        }
+
+        function initialize() {
+            ctl.onProfileSelect = onProfileSelect;
+            refreshUserList();
         }
     }
 
