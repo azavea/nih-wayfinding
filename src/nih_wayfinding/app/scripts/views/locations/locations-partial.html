@@ -10,7 +10,8 @@
         </div>
     </div>
 
-    <nih-options-grid options="locations.gridOptions"></nih-options-grid>
+    <!-- Must pass the 'option' argument to the function in on-option-clicked for this to work -->
+    <nih-options-grid options="locations.gridOptions" on-option-clicked="locations.optionClicked(option)"></nih-options-grid>
 
 </div>
 <footer class="container-fluid" ng-class="{expanded: locations.findAddressExpanded}">

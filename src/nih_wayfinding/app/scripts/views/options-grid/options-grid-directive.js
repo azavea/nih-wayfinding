@@ -12,28 +12,37 @@
      * }
      * and displays them in a grid.
      *
-     * Events:
-     *     'nih.optionsgrid.clicked': event, option
+     * onOptionClicked should be a function that takes a single argument, which will be the object
+     * from the options array that was clicked on.
+     *
+     * See LocationsController for example usage
      */
     /* ngInject */
     function OptionsGrid() {
 
-        var templateUrl = 'scripts/views/options-grid/options-grid-partial.html';
+        var template = [
+            '<div class="options-grid">',
+                '<button ng-click="optionClicked(option)" ng-repeat="option in options">',
+                    '<span class="glyphicon" ng-class="option.img"></span> {{ ::option.text }}',
+                '</button>',
+            '</div>',
+        ].join('');
 
         var module = {
             restrict: 'E',
             scope: {
-                options: '='
+                options: '=',
+                onOptionClicked: '&'
             },
-            templateUrl: templateUrl,
+            template: template,
             link: link,
         };
 
         return module;
 
         function link(scope) {
-            scope.onOptionClicked = function(index) {
-                scope.$emit('nih.optionsgrid.clicked', scope.options[index]);
+            scope.optionClicked = function(option) {
+                scope.onOptionClicked({option: option});
             };
         }
     }
