@@ -7,16 +7,31 @@ describe('nih.views.routing: WalkController', function () {
     var rootScope;
     var scope;
     var state;
+    var Modals;
 
     var WalkController;
 
-    beforeEach(inject(function ($controller, $rootScope, $state) {
+    function mockModals($q) {
+        return {
+            openInput: function () {
+                var dfd = $q.defer();
+                dfd.resolve(100);
+                return {
+                    result: dfd.promise
+                };
+            }
+        };
+    }
+
+    beforeEach(inject(function ($controller, $q, $rootScope, $state) {
         rootScope = $rootScope;
         scope = $rootScope.$new();
         state = $state;
+        Modals = mockModals($q);
         WalkController = $controller('WalkController', {
             $scope: scope,
-            $state: state
+            $state: state,
+            Modals: Modals
         });
     }));
 
@@ -29,5 +44,19 @@ describe('nih.views.routing: WalkController', function () {
         WalkController.optionClicked(option);
         rootScope.$digest();
         expect(state.transitionTo).toHaveBeenCalledWith('routing', {walkTimeMins: 15}, jasmine.any(Object));
+    });
+
+    it('should ensure that an option with !walkTimeMins opens modal to let user choose value', function () {
+        spyOn(Modals, 'openInput').and.callThrough();
+        spyOn(state, 'transitionTo');
+        var option = {
+            text: 'Other',
+            walkTimeMins: 0
+        };
+        WalkController.optionClicked(option);
+        rootScope.$digest();
+        expect(Modals.openInput).toHaveBeenCalled();
+        // Our mock modal service returns a value, so expect this as well
+        expect(state.transitionTo).toHaveBeenCalled();
     });
 });

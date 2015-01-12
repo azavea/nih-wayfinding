@@ -2,7 +2,7 @@
     'use strict';
 
     /* ngInject */
-    function WalkController($state, $stateParams, NavbarConfig) {
+    function WalkController($state, $stateParams, Modals, NavbarConfig, Notifications) {
         var ctl = this;
         initialize();
 
@@ -25,14 +25,36 @@
             }, {
                 text: '1 hour and 30 minutes',
                 walkTimeMins: 90
+            }, {
+                text: 'Other',
+                walkTimeMins: 0
             }];
             ctl.optionClicked = optionClicked;
 
             NavbarConfig.set({title: 'Take a Walk'});
         }
 
+        function handleModalResponse(value) {
+            var walkTimeMins = parseInt(value, 10);
+            if (isNaN(walkTimeMins)) {
+                Notifications.show({
+                    timeout: 2000,
+                    text: 'Unable to parse entered value'
+                });
+            } else {
+                $state.go('routing', {walkTimeMins: walkTimeMins});
+            }
+        }
+
         function optionClicked(option) {
-            $state.go('routing', {walkTimeMins: option.walkTimeMins});
+            if (option.walkTimeMins) {
+                $state.go('routing', {walkTimeMins: option.walkTimeMins});
+            } else {
+                Modals.openInput({
+                    title: 'Enter walk time',
+                    label: 'Walk time in minutes'
+                }).result.then(handleModalResponse);
+            }
         }
     }
 

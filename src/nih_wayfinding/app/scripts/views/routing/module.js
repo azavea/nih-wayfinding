@@ -39,6 +39,7 @@
         'nih.profiles',
         'nih.mapping',
         'nih.routing',
+        'nih.views.modals',
         'nih.views.navbar',
         'nih.views.optionsgrid'
     ]).config(StateConfig);

@@ -33,7 +33,6 @@
             params.destination = destination;
             return $http.post(directionsUrl, params, {});
 */
-            console.log(options);
             return $timeout(function () {
                 return RoutingResponseStub;
             }, 100, false);
