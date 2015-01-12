@@ -16,6 +16,13 @@
             controller: 'SelectTypeController',
             controllerAs: 'locationsSelectType'
         });
+
+        $stateProvider.state('locationsProfile', {
+            url: '/locations/:username/:locationID/',
+            templateUrl: 'scripts/views/locations/add-location/location-profile/location-profile-partial.html',
+            controller: 'LocationsProfileController',
+            controllerAs: 'locationsProfile'
+        });
     }
 
     angular.module('nih.views.locations', [

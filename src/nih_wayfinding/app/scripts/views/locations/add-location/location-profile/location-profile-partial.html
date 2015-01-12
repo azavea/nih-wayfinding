@@ -1,0 +1,60 @@
+<div class="content scroll">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <form name="locationsProfile.profile">
+                <div class="row">
+                    <h4>Label</h4>
+                    <div class="col-xs-12 col-md-12">
+                        <input class="form-control pull-right"
+                            ng-model="newprofile.username"
+                            ng-change="newprofile.checkUsername()"required />
+                        <span class="text-danger"
+                              aria-disabled="newprofile.newusername.$valid"
+                              ng-show="newprofile.newusername.$invalid">{{ newprofile.errorMsg }}
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <h4>Address</h4>
+                    <div class="col-md-12 col-xs-12">
+                        <input class="form-control pull-right"
+                               type="text"
+                               placeholder="Search Chicago..."
+                               ng-model="locations.searchText"
+                               ng-submit="locations.search()"
+                               ng-keyup="$event.keyCode === 13 ? locations.search() : null"
+                               ng-focus="locations.findAddressExpanded = true"
+                               typeahead="location for location in locations.suggest($viewValue)"
+                               typeahead-wait-ms="300"
+                               typeahead-min-length="3" />
+                    </div>
+                </div>
+                <div class="row">
+                    <h4>Icon</h4>
+                    <div class="thumbnail col-xs-6 col-md-3">
+                        <span class="glyphicon {{ locationsProfile.glyphiconClass }}" style="height:180px"></span>
+                    </div>
+                    <div class="col-xs-6 col-md-9">
+                        <div class="btn-group btn-group-justified" role="group">
+                            <a role="button" class="btn form-btn" href="#"
+                                ng-click="">Select Icon
+                            </a>
+                        </div>
+                        <div class="btn-group btn-group-justified" role="group">
+                            <a role="button" class="btn form-btn" href="#"
+                                ng-click="">Upload Photo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="btn-group btn-group-justified" role="group">
+                        <a role="button" class="btn form-btn" href="#"
+                            ng-click="">test
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

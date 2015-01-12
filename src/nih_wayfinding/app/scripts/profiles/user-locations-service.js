@@ -13,12 +13,13 @@
         var module = {
             newLocation: newLocation,
             locationsForUser: locationsForUser,
-            changeLocationType: changeLocationType,
-            changeLocationLabel: changeLocationLabel,
-            changeLocationIcon: changeLocationIcon,
-            changeLocationAddress: changeLocationAddress,
+            setLocationType: setLocationType,
+            setLocationLabel: setLocationLabel,
+            setLocationIcon: setLocationIcon,
+            setLocationAddress: setLocationAddress,
             addLocation: addLocation,
-            removeLocation: removeLocation
+            removeLocation: removeLocation,
+            getLocationID: getLocationID
         };
         return module;
 
@@ -27,38 +28,55 @@
             return UserLocationsStub;
         }
 
-        function newLocation() {
-            location = {};
+        function newLocation(username) {
+            // Grab user data
+            var user = localStorageService.get(username);
+            var oldLocations = typeof user.locations === 'undefined' ? [] : user.locations;
+            // Handle ID
+            var maxID = _.max(oldLocations, function(loc) { return loc.id; }).id;
+            var newID = isNaN(maxID) ? 1 : maxID + 1;
+            svcLocation = { id: newID };
         }
 
-        function changeLocationType(type) {
-            location.type = type;
+        function getLocationID() {
+            return svcLocation.id;
         }
 
-        function changeLocationLabel(label) {
-            location.label = label;
+        function setLocationType(type) {
+            svcLocation.type = type;
         }
 
-        function changeLocationIcon(address) {
-            location.address = address;
+        function setLocationLabel(label) {
+            svcLocation.label = label;
         }
 
-        function changeLocationAddress(address) {
-            location.address = address;
+        function setLocationIcon(address) {
+            svcLocation.address = address;
+        }
+
+        function setLocationAddress(address) {
+            svcLocation.address = address;
         }
 
         function addLocation(username) {
-            var oldValue = localStorage.get('locations');
-            var newID = null ? 1 : _.max(oldValue, function(loc) { return loc.id; }).id + 1;
-            location.id = newID;
-            var newValue = oldValue.concat(svcLocation);
-            localStorageService.set('locations', newValue);
+            // Grab user data
+            var user = localStorageService.get(username);
+            var oldLocations = typeof user.locations === 'undefined' ? [] : user.locations;
+
+            // Store new value
+            user.locations = oldLocations.concat(svcLocation);
+            localStorageService.set(username, user);
         }
 
-        function removeLocation(id) {
-            var oldValue = localStorage.get('locations');
-            var newValue = _.filter(oldValue, function(loc) { return loc.id !== id; });
-            localStorageService.set('locations', newValue);
+        function removeLocation(username, id) {
+            // Grab user data
+            var user = localStorageService.get(username);
+            var oldLocations = typeof user.locations === 'undefined' ? [] : user.locations;
+            // Remove matching on ID
+            var newLocations = _.filter(oldLocations, function(loc) { return loc.id !== id; });
+            user.locations = newLocations;
+            // Store Val
+            localStorageService.set(username, user);
         }
 
     }
