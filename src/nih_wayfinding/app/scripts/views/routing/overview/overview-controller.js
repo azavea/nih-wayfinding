@@ -28,7 +28,10 @@
         }
 
         function initialize() {
-            NavbarConfig.set({ title: 'Preview Route' });
+            NavbarConfig.set({
+                title: 'Preview Route',
+                back: 'locations'
+            });
             ctl.map = Map;
             ctl.stateParams = $stateParams;
             readStateParams().then(getDirections, function () {

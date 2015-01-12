@@ -11,7 +11,10 @@
         initialize();
 
         function initialize() {
-            NavbarConfig.set({ title: 'Navigate Route' });
+            NavbarConfig.set({
+                title: 'Navigate Route',
+                back: 'routing'
+            });
             ctl.map = Map;
 
             Navigation.setIntervalMillis(800);

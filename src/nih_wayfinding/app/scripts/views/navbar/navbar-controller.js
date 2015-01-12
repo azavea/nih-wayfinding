@@ -27,11 +27,24 @@
             });
         }
 
+        /**
+         * Navigate backwards, with the following logic
+         * If config.back === true, use history to get last state
+         * If config.back === String, use the value of config.back as the state name to go to
+         * Default navigate in all other cases to defaultBackState
+         */
         function back() {
-            // Get the last two states from the history array
-            //  [0] is last state, [1] is current state
-            // and return the state name
-            var stateName = history.length > 1 ? history.splice(-2)[0].name : defaultBackState;
+            var stateName;
+            if (ctl.config.back === true && history.length > 1) {
+                // Get the last two states from the history array
+                //  [0] is last state, [1] is current state
+                // and return the state name
+                stateName = history.splice(-2)[0].name;
+            } else if (_.isString(ctl.config.back)) {
+                stateName = ctl.config.back;
+            } else {
+                stateName = defaultBackState;
+            }
             $state.go(stateName);
         }
 

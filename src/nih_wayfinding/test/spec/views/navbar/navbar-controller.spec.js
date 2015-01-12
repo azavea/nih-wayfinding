@@ -11,13 +11,15 @@ describe('nih.views.navbar: NavbarController', function () {
   var rootScope;
   var scope;
   var timeout;
+  var state;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope, $timeout, _NavbarConfig_, _Notifications_) {
+  beforeEach(inject(function ($controller, $rootScope, $timeout, $state, _NavbarConfig_, _Notifications_) {
     NavbarConfig = _NavbarConfig_;
     Notifications = _Notifications_;
     rootScope = $rootScope;
     scope = $rootScope.$new();
+    state = $state;
     timeout = $timeout;
     NavbarController = $controller('NavbarController', {
       $scope: scope
@@ -70,5 +72,14 @@ describe('nih.views.navbar: NavbarController', function () {
     NavbarController.hideAlert();
     expect(NavbarController.alertHeight).toEqual(0);
     timeout.verifyNoPendingTasks();
+  });
+
+  it('should ensure that back reverts to named view if specified', function () {
+    var toStateName = 'overview';
+    spyOn(state, 'transitionTo');
+    NavbarConfig.set({back: toStateName});
+    NavbarController.back();
+    rootScope.$digest();
+    expect(state.transitionTo).toHaveBeenCalledWith(toStateName, undefined, jasmine.any(Object));
   });
 });
