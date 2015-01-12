@@ -19,7 +19,7 @@
         initialize();
 
         function getDirections(data) {
-            Directions.get(data.origin, data.destination, directionsOptions).then(setGeojson, function (error) {
+            Directions.get(data.origin, data.destination, directionsOptions).then(setGeojson, function () {
                 Notifications.show({
                     error: 'Unable to load route. Please try again later.',
                     timeout: 3000
@@ -31,7 +31,7 @@
             NavbarConfig.set({ title: 'Preview Route' });
             ctl.map = Map;
             ctl.stateParams = $stateParams;
-            readStateParams().then(getDirections, function (error) {
+            readStateParams().then(getDirections, function () {
                 Notifications.show({
                     text: 'Please allow geolocation in your browser to retrieve walking routes.'
                 });
@@ -49,6 +49,7 @@
             var dfd = $q.defer();
             var destination = MapControl.cleanLonLatParam($stateParams.destination);
             var origin = MapControl.cleanLonLatParam($stateParams.origin);
+            directionsOptions.walkTimeMins = $stateParams.walkTimeMins || 0;
 
             if (origin && destination) {
                 dfd.resolve({

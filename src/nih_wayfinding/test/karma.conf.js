@@ -104,6 +104,7 @@ module.exports = function(config) {
       'app/scripts/views/routing/overview/overview-controller.js',
       'app/scripts/views/routing/directions/directions-controller.js',
       'app/scripts/views/routing/changeroute/changeroute-controller.js',
+      'app/scripts/views/routing/goforwalk/goforwalk-controller.js',
 
       'test/mock/**/*.js',
       'test/spec/**/*.js'
