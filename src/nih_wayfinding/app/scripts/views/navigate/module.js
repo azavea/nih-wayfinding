@@ -9,6 +9,20 @@
             controller: 'NavigateController',
             controllerAs: 'navigate'
         });
+
+        $stateProvider.state('reroute', {
+            url: '/navigate/reroute',
+            templateUrl: 'scripts/views/navigate/reroute/reroute-partial.html',
+            controller: 'RerouteController',
+            controllerAs: 'reroute'
+        });
+
+        $stateProvider.state('report', {
+            url: '/navigate/report',
+            templateUrl: 'scripts/views/navigate/report/report-partial.html',
+            controller: 'ReportController',
+            controllerAs: 'report'
+        });
     }
 
     angular.module('nih.views.navigate', [
