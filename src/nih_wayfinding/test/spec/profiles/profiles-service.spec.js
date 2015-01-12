@@ -11,6 +11,7 @@ describe('nih.profiles: ProfileService', function () {
     // Initialize the controller and a mock scope
     beforeEach(inject(function (_ProfileService_) {
         ProfileService = _ProfileService_;
+        ProfileService.deleteProfile(testUserName);
         profile = ProfileService.createProfile(testUserName);
     }));
 
