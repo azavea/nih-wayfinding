@@ -3,9 +3,10 @@
     'use strict';
 
     /* ngInject */
-    function TurnAmenitys ($http) {
+    function TurnAmenities ($http) {
 
         var overpassUrl = 'http://overpass-api.de/api/interpreter';
+        var radiusMeters = 75;  // radius around point to search
 
         var module = {
             get: get,
@@ -15,9 +16,8 @@
         return module;
 
         function overpassQuery(x, y) {
-            var meters = 75;
             var q = '[out:json];' +
-                    'node(around:' + meters +
+                    'node(around:' + radiusMeters +
                     ',' + y +
                     ',' + x +
                     ')' +
@@ -28,7 +28,7 @@
 
         /**
          * Look up an amenity from OpenStreetMap to add to the turn by turn
-         * directions. Returns a promise.
+         * directions. Promise resolves with an OSM node object.
          *
          * @param x longitude
          * @param y latitude
@@ -39,9 +39,6 @@
                 params: {
                     'data': overpassQuery(x, y)
                 }
-               // headers: {
-               //     'Origin': 'http://localhost:8001/'
-               // }
             }).then(function (data) {
                 if(data.data.elements.length === 0) {
                     return null;
@@ -57,6 +54,7 @@
          * @param geojson
          */
         function attach(geojson) {
+            // TODO: add $q.all so that this function returns a promise
             _.chain(geojson.features)
                 .filter(function (feature) {
                     return feature.geometry.type === 'LineString';
@@ -71,6 +69,6 @@
     }
 
     angular.module('nih.routing')
-    .factory('TurnAmenitys', TurnAmenitys);
+    .factory('TurnAmenities', TurnAmenities);
 
 })();
