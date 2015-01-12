@@ -10,6 +10,7 @@ describe('nih.views.routing: OverviewController', function () {
 
     var geolocation;
 
+    var Config;
     var Directions;
     var OverviewController;
 
@@ -46,10 +47,11 @@ describe('nih.views.routing: OverviewController', function () {
         };
     }
 
-    beforeEach(inject(function ($q, $rootScope) {
+    beforeEach(inject(function ($q, $rootScope, _Config_) {
         rootScope = $rootScope;
         scope = $rootScope.$new();
         geolocation = mockGeolocation($q);
+        Config = _Config_;
         Directions = mockDirections($q);
         spyOn(geolocation, 'getCurrentPosition').and.callThrough();
         spyOn(Directions, 'get').and.callThrough();
@@ -61,12 +63,18 @@ describe('nih.views.routing: OverviewController', function () {
             OverviewController = $controller('OverviewController', {
                 $scope: scope,
                 $geolocation: geolocation,
+                Config: Config,
                 Directions: Directions
             });
         }));
 
         it('should initialize a map object', function () {
             expect(OverviewController.map).toBeDefined();
+        });
+
+        it('should ensure ctl.map is initialized to Config.bounds and Config.center', function () {
+            expect(OverviewController.map.center).toEqual(Config.center);
+            expect(OverviewController.map.bounds).toEqual(Config.bounds);
         });
 
         it('should ensure getDirections is called with origin -> geolocation, destination -> geolocation', function () {
