@@ -29,3 +29,7 @@ body {
 .content.double-footer ~ footer {
     height: $footer-height * 2;
 }
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
