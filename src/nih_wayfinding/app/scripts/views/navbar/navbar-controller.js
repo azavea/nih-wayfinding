@@ -7,6 +7,7 @@
     function NavbarController($scope, $timeout, $state, NavbarConfig) {
         var ctl = this;
         var defaultAlertHeight = 50;
+        var defaultBackState = 'locations';
         var alertTimeout = null;
         var history = [];
         initialize();
@@ -27,7 +28,10 @@
         }
 
         function back() {
-            var stateName = history.length > 1 ? history.splice(-2)[0].name : 'profiles';
+            // Get the last two states from the history array
+            //  [0] is last state, [1] is current state
+            // and return the state name
+            var stateName = history.length > 1 ? history.splice(-2)[0].name : defaultBackState;
             $state.go(stateName);
         }
 
