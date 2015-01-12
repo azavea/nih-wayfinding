@@ -23,9 +23,7 @@ describe('nih.views.routing: DirectionsController', function () {
     beforeEach(inject(function ($controller, $q, $rootScope, RoutingResponseStub) {
         rootScope = $rootScope;
         scope = $rootScope.$new();
-        //Directions = _Directions_;
         Map = mockMap(RoutingResponseStub);
-        //MapStyle = _MapStyle_;
         DirectionsController = $controller('DirectionsController', {
             $scope: scope,
             Map: Map

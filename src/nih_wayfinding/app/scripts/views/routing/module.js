@@ -16,6 +16,13 @@
             controller: 'DirectionsController',
             controllerAs: 'directions'
         });
+
+        $stateProvider.state('changeroute', {
+            url: '/routing/changeroute?origin&destination',
+            templateUrl: 'scripts/views/routing/changeroute/changeroute-partial.html',
+            controller: 'ChangeRouteController',
+            controllerAs: 'change'
+        });
     }
 
     angular.module('nih.views.routing', [
@@ -26,6 +33,7 @@
         'nih.profiles',
         'nih.mapping',
         'nih.routing',
-        'nih.views.navbar'
+        'nih.views.navbar',
+        'nih.views.optionsgrid'
     ]).config(StateConfig);
 })();

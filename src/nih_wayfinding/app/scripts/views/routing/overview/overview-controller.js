@@ -25,6 +25,7 @@
         function initialize() {
             NavbarConfig.set({ title: 'Preview Route' });
             ctl.map = Map;
+            ctl.stateParams = $stateParams;
             readStateParams().then(getDirections);
 
             $scope.$on('leafletDirectiveMap.geojsonClick', showPopup);
