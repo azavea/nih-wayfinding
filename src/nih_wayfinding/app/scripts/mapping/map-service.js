@@ -5,8 +5,8 @@
     /* ngInject */
     function Map (leafletBoundsHelpers, Config, MapStyle) {
 
-        var defaultBounds = Config.bounds;
-        var defaultCenter = Config.center;
+        var defaultBounds = angular.extend({}, Config.bounds);
+        var defaultCenter = angular.extend({}, Config.center);
         var defaultLayers = {
             baselayers: Config.baseLayers
         };

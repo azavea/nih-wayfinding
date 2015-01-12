@@ -10,7 +10,8 @@
 
     /* ngInject */
     function OverviewController($scope, $stateParams, $q, $geolocation, leafletData,
-                                Directions, Map, MapControl, MapStyle, NavbarConfig, Notifications) {
+                                Config, Directions, Map, MapControl, MapStyle, NavbarConfig, 
+                                Notifications) {
         var ctl = this;
         var defaultNonZeroWalkTime = 30;
         var directionsOptions = {
@@ -30,6 +31,8 @@
         function initialize() {
             NavbarConfig.set({ title: 'Preview Route' });
             ctl.map = Map;
+            angular.extend(ctl.map.center, Config.center);
+            angular.extend(ctl.map.bounds, Config.bounds);
             ctl.stateParams = $stateParams;
             readStateParams().then(getDirections, function () {
                 Notifications.show({
