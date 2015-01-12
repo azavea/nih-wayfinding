@@ -3,7 +3,8 @@
 
     function ModalService($modal) {
         var module = {
-            openConfirm: openConfirm
+            openConfirm: openConfirm,
+            openInput: openInput
         };
 
         return module;
@@ -35,6 +36,29 @@
                     },
                     confirmClass: function () {
                         return config.confirmClass;
+                    }
+                }
+            });
+        }
+
+        function openInput(options) {
+            var defaults = {
+                title: 'Enter a value',
+                label: 'Input:',
+                size: 'sm'
+            };
+            var config = angular.extend({}, defaults, options);
+            return $modal.open({
+                templateUrl: 'scripts/views/modals/input-modal-partial.html',
+                controller: 'InputModalController',
+                controllerAs: 'modal',
+                size: config.size,
+                resolve: {
+                    title: function () {
+                        return config.title;
+                    },
+                    label: function () {
+                        return config.label;
                     }
                 }
             });

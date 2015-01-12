@@ -17,4 +17,12 @@ describe('nih.views.modals: Modals', function () {
         expect(modal.close).toBeDefined();
         expect(modal.opened).toBeDefined();
     });
+
+    it('should ensure openInput matches the ui-bootstrap $modal response', function () {
+        var modal = Modals.openInput({});
+        expect(modal.result).toBeDefined();
+        expect(modal.dismiss).toBeDefined();
+        expect(modal.close).toBeDefined();
+        expect(modal.opened).toBeDefined();
+    });
 });

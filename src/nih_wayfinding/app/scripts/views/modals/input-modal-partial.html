@@ -1,0 +1,18 @@
+
+ <div class="modal-header">
+    <h3 class="modal-title">{{ ::modal.title }}</h3>
+</div>
+<div class="modal-body">
+    <div class="form-group">
+        <label for="modalInputValue">{{ ::modal.label }}</label>
+        <input id="modalInputValue"
+               class="form-control"
+               type="text"
+               placeholder="Enter a value..."
+               ng-model="modal.value" />
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-class="modal.confirmClass" ng-click="modal.ok()">OK</button>
+    <button class="btn" ng-click="modal.cancel()">Cancel</button>
+</div>

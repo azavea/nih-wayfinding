@@ -88,6 +88,7 @@ module.exports = function(config) {
       'app/scripts/routing/routing-response-stub.js',
       'app/scripts/views/modals/module.js',
       'app/scripts/views/modals/confirm-controller.js',
+      'app/scripts/views/modals/input-modal-controller.js',
       'app/scripts/views/modals/modal-service.js',
       'app/scripts/views/options-grid/module.js',
       'app/scripts/views/options-grid/options-grid-directive.js',
@@ -104,6 +105,7 @@ module.exports = function(config) {
       'app/scripts/views/routing/overview/overview-controller.js',
       'app/scripts/views/routing/directions/directions-controller.js',
       'app/scripts/views/routing/changeroute/changeroute-controller.js',
+      'app/scripts/views/routing/goforwalk/goforwalk-controller.js',
 
       'test/mock/**/*.js',
       'test/spec/**/*.js'

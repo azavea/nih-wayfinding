@@ -4,14 +4,14 @@
     /* ngInject */
     function StateConfig($stateProvider) {
         $stateProvider.state('routing', {
-            url: '/routing?origin&destination',
+            url: '/routing?origin&destination&walkTimeMins',
             templateUrl: 'scripts/views/routing/overview/overview-partial.html',
             controller: 'OverviewController',
             controllerAs: 'overview'
         });
 
         $stateProvider.state('directions', {
-            url: '/directions',
+            url: '/routing/directions',
             templateUrl: 'scripts/views/routing/directions/directions-partial.html',
             controller: 'DirectionsController',
             controllerAs: 'directions'
@@ -23,6 +23,12 @@
             controller: 'ChangeRouteController',
             controllerAs: 'change'
         });
+        $stateProvider.state('goforwalk', {
+            url: '/routing/walk',
+            templateUrl: 'scripts/views/routing/goforwalk/goforwalk-partial.html',
+            controller: 'WalkController',
+            controllerAs: 'walk'
+        });
     }
 
     angular.module('nih.views.routing', [
@@ -33,6 +39,7 @@
         'nih.profiles',
         'nih.mapping',
         'nih.routing',
+        'nih.views.modals',
         'nih.views.navbar',
         'nih.views.optionsgrid'
     ]).config(StateConfig);
