@@ -20,7 +20,6 @@
 
         function getDirections(data) {
             Directions.get(data.origin, data.destination, directionsOptions).then(setGeojson, function (error) {
-                console.error(error);
                 Notifications.show({
                     error: 'Unable to load route. Please try again later.',
                     timeout: 3000
@@ -33,7 +32,6 @@
             ctl.map = Map;
             ctl.stateParams = $stateParams;
             readStateParams().then(getDirections, function (error) {
-                console.log(error);
                 Notifications.show({
                     text: 'Please allow geolocation in your browser to retrieve walking routes.'
                 });
