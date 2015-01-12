@@ -24,12 +24,12 @@
     <header ng-controller="NavbarController as navbar" class="navbar">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" ui-sref="profiles">{{ navbar.config.title }}</a>
+          <a class="navbar-brand" ng-cloak ui-sref="profiles">{{ navbar.config.title }}</a>
         </div>
 
         <div class="navbar-header pull-right">
           <div class="btn-group" dropdown>
-            <button type="button" class="btn btn-primary navbar-button dropdown-toggle" dropdown-toggle>
+            <button type="button" class="btn btn-primary navbar-button dropdown-toggle" dropdown-toggle ng-cloak>
               {{ navbar.config.rightButton.text }} <span ng-class="navbar.config.rightButton.imgclass"></span>
             </button>
             <ul class="dropdown-menu pull-right" role="menu">
@@ -37,6 +37,15 @@
               <li><a ui-sref="locations">Locations</a></li>
             </ul>
           </div>
+        </div>
+        <div class="notification" ng-style="{height: navbar.alertHeight}">
+            <span class="glyphicon"
+                  ng-class="navbar.alert.imageClass"
+                  ng-if="navbar.alert.imageClass"></span>
+            <span>{{ navbar.alert.text }}</span>
+            <span class="glyphicon glyphicon-remove pull-right"
+                  ng-if="navbar.alert.closeButton"
+                  ng-click="navbar.hideAlert()"></span>
         </div>
       </div>
     </header>
@@ -93,6 +102,8 @@
     <script src="scripts/mapping/map-service.js"></script>
     <script src="scripts/mapping/map-control-service.js"></script>
     <script src="scripts/mapping/map-style-service.js"></script>
+    <script src="scripts/notifications/module.js"></script>
+    <script src="scripts/notifications/notifications-service.js"></script>
     <script src="scripts/routing/module.js"></script>
     <script src="scripts/routing/directions-service.js"></script>
     <script src="scripts/navigation/module.js"></script>

@@ -2,7 +2,8 @@
     'use strict';
 
     angular.module('nih.views.navbar', [
-        'ui.bootstrap'
+        'ui.bootstrap',
+        'nih.notifications'
     ]);
 
 })();

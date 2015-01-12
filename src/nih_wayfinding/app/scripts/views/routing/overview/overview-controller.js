@@ -10,7 +10,7 @@
 
     /* ngInject */
     function OverviewController($scope, $stateParams, $q, $geolocation, leafletData,
-                                Directions, Map, MapControl, MapStyle, NavbarConfig) {
+                                Directions, Map, MapControl, MapStyle, NavbarConfig, Notifications) {
         var ctl = this;
         var defaultNonZeroWalkTime = 30;
         var directionsOptions = {
@@ -19,14 +19,25 @@
         initialize();
 
         function getDirections(data) {
-            Directions.get(data.origin, data.destination, directionsOptions).then(setGeojson);
+            Directions.get(data.origin, data.destination, directionsOptions).then(setGeojson, function (error) {
+                console.error(error);
+                Notifications.show({
+                    error: 'Unable to load route. Please try again later.',
+                    timeout: 3000
+                });
+            });
         }
 
         function initialize() {
             NavbarConfig.set({ title: 'Preview Route' });
             ctl.map = Map;
             ctl.stateParams = $stateParams;
-            readStateParams().then(getDirections);
+            readStateParams().then(getDirections, function (error) {
+                console.log(error);
+                Notifications.show({
+                    text: 'Please allow geolocation in your browser to retrieve walking routes.'
+                });
+            });
 
             $scope.$on('leafletDirectiveMap.geojsonClick', showPopup);
         }
@@ -47,7 +58,12 @@
                     destination: destination
                 });
             } else {
+                Notifications.show({
+                    text: 'Click \'Allow\' in your browser\'s location prompt to request your route.',
+                    imageClass: 'glyphicon-info-sign'
+                });
                 $geolocation.getCurrentPosition({}).then(function (position) {
+                    Notifications.hide();
                     var currentPosition = [position.coords.longitude, position.coords.latitude];
                     if (!destination) {
                         destination = currentPosition;
