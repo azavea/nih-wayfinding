@@ -1,23 +1,10 @@
 <div class="content scroll">
-    <div class="panel-body">
-        <h2>What do you want to report?</h2>
-        <div class="btn-group btn-group-justified" role="group"
-            aria-label="Select the option you'd like to report">
-            <a role="button" class="btn form-btn" href="#"
-                ng-click="">Sidewalk</a>
-            <a role="button" class="btn form-btn" href="#"
-                ng-click="">Light</a>
-            <a role="button" class="btn form-btn" href="#"
-                ng-click="">Incomplete Data</a>
-        </div>
-        <div class="btn-group btn-group-justified" role="group"
-            aria-label="Select the option you'd like to report">
-            <a role="button" class="btn form-btn" href="#"
-                ng-click="">Traffic</a>
-            <a role="button" class="btn form-btn" href="#"
-                ng-click="">Scenic</a>
-            <a role="button" class="btn form-btn" href="#"
-                ng-click="">More Options</a>
+    <div class="row">
+        <div class="col-xs-9 col-md-9">
+            <h4>What do you want to report?</h4>
         </div>
     </div>
+
+    <nih-options-grid options="report.gridOptions" on-option-clicked="report.optionClicked(option)"></nih-options-grid>
+
 </div>

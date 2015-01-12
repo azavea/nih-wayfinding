@@ -1,14 +1,10 @@
 <div class="content scroll">
-    <div class="panel-body">
-        <h2>How would you like to be rerouted?</h2>
-        <div class="btn-group btn-group-justified" role="group"
-            aria-label="Select mode of reroute">
-            <a role="button" class="btn form-btn" href="#"
-                ng-click="">Bathroom</a>
-            <a role="button" class="btn form-btn" href="#"
-                ng-click="">Bench</a>
-            <a role="button" class="btn form-btn" href="#"
-                ng-click="">More Options</a>
+    <div class="row">
+        <div class="col-xs-9 col-md-9">
+            <h4>How would you like to be rerouted?</h4>
         </div>
     </div>
+
+    <nih-options-grid options="reroute.gridOptions" on-option-clicked="reroute.optionClicked(option)"></nih-options-grid>
+
 </div>
