@@ -2,7 +2,7 @@
     'use strict';
 
     /* ngInject */
-    function LocationsController($scope, $state, Geocoder, NavbarConfig, ProfileService, UserLocations) {
+    function LocationsController($scope, $state, Geocoder, NavbarConfig, Notifications, ProfileService, UserLocations) {
         var ctl = this;
         initialize();
 
@@ -23,10 +23,19 @@
             loadRoute(option.feature);
         }
 
-        function search() {
-            Geocoder.search(ctl.searchText).then(function (data) {
+        function onGeocoderResponse(data) {
+            if (data && data.length) {
                 loadRoute(data[0]);
-            });
+            } else {
+                Notifications.show({
+                    text: 'Unable to find the selected address. Please try a different one.',
+                    timeout: 3000
+                });
+            }
+        }
+
+        function search() {
+            Geocoder.search(ctl.searchText).then(onGeocoderResponse);
         }
 
         function loadRoute(feature) {

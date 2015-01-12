@@ -15,6 +15,7 @@
         'ngAria',
         'ui.router',
         'nih.geocoder',
+        'nih.notifications',
         'nih.profiles',
         'nih.views.navbar',
         'nih.views.optionsgrid'
