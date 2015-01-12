@@ -24,10 +24,9 @@
                    type="text"
                    placeholder="Search Chicago..."
                    ng-model="locations.searchText"
-                   ng-submit="locations.search()"
-                   ng-keyup="$event.keyCode === 13 ? locations.search() : null"
                    ng-focus="locations.findAddressExpanded = true"
                    typeahead="location for location in locations.suggest($viewValue)"
+                   typeahead-on-select="locations.search($item)"
                    typeahead-wait-ms="300"
                    typeahead-min-length="3" />
             <button type="button" class="close" aria-label="Close"

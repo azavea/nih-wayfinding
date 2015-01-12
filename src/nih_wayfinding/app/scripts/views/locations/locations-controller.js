@@ -37,8 +37,8 @@
             }
         }
 
-        function search() {
-            Geocoder.search(ctl.searchText).then(onGeocoderResponse);
+        function search(searchText) {
+            Geocoder.search(searchText).then(onGeocoderResponse);
         }
 
         function loadRoute(feature) {
