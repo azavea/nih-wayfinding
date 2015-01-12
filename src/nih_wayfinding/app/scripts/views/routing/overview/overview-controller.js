@@ -29,7 +29,10 @@
         }
 
         function initialize() {
-            NavbarConfig.set({ title: 'Preview Route' });
+            NavbarConfig.set({
+                title: 'Preview Route',
+                back: 'locations'
+            });
             ctl.map = Map;
             angular.extend(ctl.map.center, Config.center);
             angular.extend(ctl.map.bounds, Config.bounds);
