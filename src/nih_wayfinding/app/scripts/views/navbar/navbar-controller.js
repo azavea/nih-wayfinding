@@ -14,6 +14,7 @@
             ctl.config = NavbarConfig.config;
             ctl.alert = {};
             ctl.hideAlert = hideAlert;
+            ctl.alertHeight = 0;
 
             $scope.$on('nih.notifications.hide', hideAlert);
             $scope.$on('nih.notifications.show', showAlert);
