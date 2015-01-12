@@ -9,6 +9,13 @@
             controller: 'LocationsController',
             controllerAs: 'locations'
         });
+
+        $stateProvider.state('locationsSelectType', {
+            url: '/locations/new/select-type',
+            templateUrl: 'scripts/views/locations/add-location/select-type/select-type-partial.html',
+            controller: 'SelectTypeController',
+            controllerAs: 'locationsSelectType'
+        });
     }
 
     angular.module('nih.views.locations', [
