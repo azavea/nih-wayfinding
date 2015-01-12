@@ -9,6 +9,7 @@
         function initialize() {
             ctl.findAddressExpanded = false;
             ctl.gridOptions = UserLocations.locationsForUser();
+            ctl.optionClicked = optionClicked;
             ctl.search = search;
             ctl.searchText = '';
             ctl.suggest = Geocoder.suggest;
@@ -16,11 +17,9 @@
             ctl.currentUser = ProfileService.getCurrentUser();
             var title = ctl.currentUser.username ? ctl.currentUser.username : 'Profile';
             NavbarConfig.set({ title: title});
-
-            $scope.$on('nih.optionsgrid.clicked', optionClicked);
         }
 
-        function optionClicked(event, option) {
+        function optionClicked(option) {
             loadRoute(option.feature);
         }
 
