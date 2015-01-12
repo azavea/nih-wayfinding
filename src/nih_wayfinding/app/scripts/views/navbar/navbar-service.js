@@ -25,7 +25,10 @@
         return module;
 
         function set(options) {
-            angular.extend(config, options);
+            var defaults = {
+                back: true      // display back button to prev view if true, display menu if false
+            };
+            angular.extend(config, defaults, options);
             $rootScope.$broadcast(events.updated);
         }
     }

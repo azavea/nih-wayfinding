@@ -4,20 +4,31 @@
     //       we have profiles to link to
 
     /* ngInject */
-    function NavbarController($scope, $timeout, NavbarConfig) {
+    function NavbarController($scope, $timeout, $state, NavbarConfig) {
         var ctl = this;
         var defaultAlertHeight = 50;
         var alertTimeout = null;
+        var history = [];
         initialize();
 
         function initialize() {
             ctl.config = NavbarConfig.config;
             ctl.alert = {};
-            ctl.hideAlert = hideAlert;
             ctl.alertHeight = 0;
+
+            ctl.back = back;
+            ctl.hideAlert = hideAlert;
 
             $scope.$on('nih.notifications.hide', hideAlert);
             $scope.$on('nih.notifications.show', showAlert);
+            $scope.$on('$stateChangeSuccess', function (event, toState) {
+                history.push(toState);
+            });
+        }
+
+        function back() {
+            var stateName = history.length > 1 ? history.splice(-2)[0].name : 'profiles';
+            $state.go(stateName);
         }
 
         function showAlert(event, alert) {

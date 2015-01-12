@@ -48,7 +48,10 @@
         function setCurrentUser() {
             ctl.currentUser = ProfileService.getCurrentUser();
             var title = ctl.currentUser.username ? ctl.currentUser.username : 'Profile';
-            NavbarConfig.set({ title: title});
+            NavbarConfig.set({
+                title: title,
+                back: false
+            });
         }
 
         function refreshUserList() {
