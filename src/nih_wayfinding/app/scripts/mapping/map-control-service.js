@@ -7,7 +7,8 @@
         var module = {
             cleanLonLatParam: cleanLonLatParam,
             showPopup: showPopup,
-            trackUser: trackUser
+            trackUser: trackUser,
+            markLocation: markLocation
         };
 
         return module;
@@ -57,9 +58,24 @@
             });
         }
 
+        /**
+         * For a given point, attach a location marker on that point
+         *
+         * @param point {array} [Lng, Lat] array of coordinates
+         * @return undefined Shows marker
+         *
+         */
+        function markLocation(point) {
+            leafletData.getMap().then(function(map) {
+                var lnglat = [point[1], point[0]];
+                var locationMarker = new L.Marker(lnglat);
+                map.addLayer(locationMarker);
+            });
+        }
+
         var userMarker = null;
         /**
-         * For a given point attach a marker on that point
+         * For a given point attach a user marker on that point
          *
          * @param point {array} [Lng, Lat] array of coordinates
          * @return undefined Shows (or moves) a marker

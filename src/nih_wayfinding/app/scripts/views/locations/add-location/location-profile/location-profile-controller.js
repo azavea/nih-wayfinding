@@ -12,8 +12,9 @@
         ctl.glyphiconClass = 'glyphicon-star';
         function initialize() {
             NavbarConfig.set({ title: 'Location Profile' });
-            var currentUser = ProfileService.getCurrentUser().username;
-            ctl.currentLocation = UserLocations.getLocationByID(currentUser, $stateParams.id);
+            ctl.currentLocation = UserLocations.getLocationByID($stateParams.id) ||
+                UserLocations.getWorkingLocation();
+            console.log(ctl.currentLocation);
             ctl.saveCurrent = saveCurrent;
 
             // Search vars
@@ -30,6 +31,7 @@
             if (data.length) { // If non-empty result
                 var geom = data[0].geometry; // Grab first result
                 var xyString = geom.x.toString() + ',' + geom.y.toString(); // Cast to string
+                saveCurrent(ctl.currentLocation);
                 $state.go('locationsReview', { destination: xyString }); // Use as url params
             } else { // If empty result
                 console.log('sorry, no data here!'); // ?
@@ -37,6 +39,7 @@
         }
 
         function saveCurrent(location) {
+            console.log('address here', location.address);
             UserLocations.setLocationLabel(location.label);
             UserLocations.setLocationIcon(location.icon);
             UserLocations.setLocationAddress(location.address);

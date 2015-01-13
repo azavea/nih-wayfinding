@@ -17,8 +17,6 @@
                 { text: 'Donut Shop' },
                 { text: 'Other' }
             ];
-            var currentUser = ProfileService.getCurrentUser().username;
-            UserLocations.newLocation(currentUser); // Clear any held data
         }
 
       function optionClicked(option) {

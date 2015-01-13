@@ -9,7 +9,7 @@
 */
 
     /* ngInject */
-    function OverviewController($q, $scope, $stateParams, $timeout, $geolocation, leafletData,
+    function OverviewController($scope, $stateParams, $q, $geolocation, leafletData,
                                 Config, Directions, Map, MapControl, MapStyle, NavbarConfig,
                                 Notifications) {
         var ctl = this;
