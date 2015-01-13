@@ -86,7 +86,7 @@ module.exports = function(config) {
       'app/scripts/routing/module.js',
       'app/scripts/routing/directions-service.js',
       'app/scripts/routing/routing-response-stub.js',
-      'app/scripts/routing/turnamenitys-service.js',
+      'app/scripts/routing/turnamenities-service.js',
       'app/scripts/views/modals/module.js',
       'app/scripts/views/modals/confirm-controller.js',
       'app/scripts/views/modals/modal-service.js',

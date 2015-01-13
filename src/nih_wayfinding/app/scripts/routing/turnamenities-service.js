@@ -3,7 +3,7 @@
     'use strict';
 
     /* ngInject */
-    function TurnAmenities ($http) {
+    function TurnAmenities ($http, $q) {
 
         var overpassUrl = 'http://overpass-api.de/api/interpreter';
         var radiusMeters = 75;  // radius around point to search
@@ -54,17 +54,21 @@
          * @param geojson
          */
         function attach(geojson) {
-            // TODO: add $q.all so that this function returns a promise
+            var promises = [];
             _.chain(geojson.features)
                 .filter(function (feature) {
                     return feature.geometry.type === 'LineString';
                 })
                 .forEach(function (feature) {
                     var coords = _.first(feature.geometry.coordinates);
-                    get(coords[0], coords[1]).then(function (amenity) {
-                        feature.properties.turnamenity = amenity;
-                    });
+                    promises.push(
+                        get(coords[0], coords[1]).then(function (amenity) {
+                            feature.properties.turnamenity = amenity;
+                            return amenity;
+                        })
+                    );
                 });
+            return $q.all(promises);
         }
     }
 
