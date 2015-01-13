@@ -6,17 +6,19 @@
 
         var svcLocation = {
             type: '', // e.g. cafe, park, school
-            label: '', // e.g. 'Martha's house'
-            icon: '', // e.g. 'glyphicon-letter'
-            address: '' // e.g. 'Cathedral of Learning, Pittsburgh' or '1234 Main Street'
+            text: '', // e.g. 'Martha's house'
+            img: '', // e.g. 'glyphicon-letter'
+            address: '', // e.g. 'Cathedral of Learning, Pittsburgh' or '1234 Main Street'
+            feature: {} // i.e. geojson feature
         };
         var module = {
             newLocation: newLocation,
             locationsForUser: locationsForUser,
             setLocationType: setLocationType,
-            setLocationLabel: setLocationLabel,
-            setLocationIcon: setLocationIcon,
+            setLocationText: setLocationText,
+            setLocationImg: setLocationImg,
             setLocationAddress: setLocationAddress,
+            setLocationFeature: setLocationFeature,
             addLocation: addLocation,
             removeLocation: removeLocation,
             getWorkingLocation: getWorkingLocation,
@@ -25,8 +27,13 @@
         return module;
 
         function locationsForUser() {
+            var user = ProfileService.getCurrentUser();
+            console.log(user);
+            var userLocations = user.locations || [];
+            var stubLocations = UserLocationsStub;
+            console.log(userLocations.concat(stubLocations));
             // STUB
-            return UserLocationsStub;
+            return UserLocationsStub.concat(userLocations);
         }
 
         function createLocationID() {
@@ -63,24 +70,30 @@
             svcLocation.type = type;
         }
 
-        function setLocationLabel(label) {
-            svcLocation.label = label;
+        function setLocationText(text) {
+            svcLocation.text = text;
         }
 
-        function setLocationIcon(icon) {
-            svcLocation.icon = icon;
+        function setLocationImg(img) {
+            svcLocation.img = img;
         }
 
         function setLocationAddress(address) {
             svcLocation.address = address;
         }
 
+        function setLocationFeature(feature) {
+            svcLocation.feature = feature;
+        }
+
         function addLocation() {
             var user = ProfileService.getCurrentUser();
             var oldLocations = typeof user.locations === 'undefined' ? [] : user.locations;
+            console.log(oldLocations);
 
             // Store new value
             user.locations = oldLocations.concat(svcLocation);
+            console.log(user);
             localStorageService.set(user.username, user);
         }
 

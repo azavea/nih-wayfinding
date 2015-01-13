@@ -5,9 +5,10 @@
                 <div class="row">
                     <h4>Label</h4>
                     <div class="col-xs-12 col-md-12">
-                        {{ locationsProfile.obj.label }}
+                        {{ locationsProfile.obj.text }}
                         <input class="form-control pull-right"
-                               ng-model="locationsProfile.currentLocation.label"/>
+                               placeholder="Enter a location name here..."
+                               ng-model="locationsProfile.currentLocation.text"/>
                     </div>
                 </div>
                 <div class="row">
@@ -17,6 +18,7 @@
                                type="text"
                                placeholder="Search Chicago..."
                                ng-model="locationsProfile.currentLocation.address"
+                               ng-change="locationsProfile.addressError = false"
                                ng-focus="locationsProfile.findAddressExpanded = true"
                                typeahead="location for location in locationsProfile.suggest($viewValue)"
                                typeahead-on-select="locations.search($item)"
@@ -31,8 +33,8 @@
                     </div>
                     <div class="col-xs-6 col-md-9">
                         <div class="btn-group btn-group-justified" role="group">
-                            <a role="button" class="btn form-btn" href="#"
-                                ng-click="">Select Icon
+                            <a role="button" class="btn form-btn"
+                                ng-click="locationsProfile.showIconSelect = !locationsProfile.showIconSelect">Select Icon
                             </a>
                         </div>
                         <div class="btn-group btn-group-justified" role="group">
@@ -55,3 +57,18 @@
         </div>
     </div>
 </div>
+<footer class="hide-bottom" ng-class="{dialogReveal: locationsProfile.showIconSelect}">
+    <div class="col-md-12 col-xs-12">
+        <h4>Find Address</h4>
+        <button type="button" class="close" aria-label="Close"
+                ng-if="locationsProfile.showIconSelect"
+                ng-click="locationsProfile.showIconSelect = false">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="col-md-12 col-xs-12">
+        <!-- Must pass the 'option' argument to the function in on-option-clicked for this to work -->
+        <nih-options-grid options="locationsProfile.imgOpts" on-option-clicked="locationsProfile.imgOptionClicked(option)"></nih-options-grid>
+    </div>
+</footer>
+

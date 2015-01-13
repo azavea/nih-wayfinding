@@ -20,7 +20,7 @@
         }
 
       function optionClicked(option) {
-          setLocationType(option);
+          setLocationType(option.text);
       }
 
       function setLocationType(type) {

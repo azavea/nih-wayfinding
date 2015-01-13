@@ -14,6 +14,7 @@
             });
             ctl.currentLocation = UserLocations.getWorkingLocation();
             ctl.currentUser = ProfileService.getCurrentUser().username;
+            ctl.confirmLocation = confirmLocation;
 
             // Map stuff
             ctl.map = Map;
@@ -25,6 +26,11 @@
             });
             angular.extend(ctl.map.bounds, Config.bounds);
             MapControl.markLocation(ctl.coordinates);
+        }
+
+        function confirmLocation() {
+            console.log(UserLocations.getWorkingLocation());
+            UserLocations.addLocation();
         }
 
     }

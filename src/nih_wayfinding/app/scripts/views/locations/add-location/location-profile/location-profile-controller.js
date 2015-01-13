@@ -4,7 +4,7 @@
     /* ngInject */
     function LocationsProfileController(
         $stateParams, $state,
-        Geocoder, NavbarConfig, UserLocations, ProfileService
+        Geocoder, NavbarConfig, UserLocations, Notifications
     ) {
         var ctl = this;
         initialize();
@@ -14,8 +14,17 @@
             NavbarConfig.set({ title: 'Location Profile' });
             ctl.currentLocation = UserLocations.getLocationByID($stateParams.id) ||
                 UserLocations.getWorkingLocation();
-            console.log(ctl.currentLocation);
             ctl.saveCurrent = saveCurrent;
+            ctl.showIconSelect = false;
+            ctl.imgOpts = [
+                { img: 'http://lorempixel.com/200/100/' },
+                { img: 'http://lorempixel.com/200/100/' },
+                { img: 'http://lorempixel.com/200/100/' },
+                { img: 'http://lorempixel.com/200/100/' },
+                { img: 'http://lorempixel.com/200/100/' },
+                { img: 'http://lorempixel.com/200/100/' },
+            ];
+            ctl.imgOptionClicked = imgOptionClicked;
 
             // Search vars
             ctl.findAddressExpanded = false;
@@ -29,20 +38,31 @@
 
         function onGeocoderResponse(data) {
             if (data.length) { // If non-empty result
+                // Add geometric features to location tracker
+                ctl.currentLocation.feature = data[0];
+                saveCurrent(ctl.currentLocation);
+
                 var geom = data[0].geometry; // Grab first result
                 var xyString = geom.x.toString() + ',' + geom.y.toString(); // Cast to string
-                saveCurrent(ctl.currentLocation);
                 $state.go('locationsReview', { destination: xyString }); // Use as url params
             } else { // If empty result
-                console.log('sorry, no data here!'); // ?
+                Notifications.show({
+                    text: 'Unable to find the selected address. Please try a different one.',
+                    timeout: 3000
+                });
             }
         }
 
+        function imgOptionClicked(option) {
+            ctl.showIconSelect = false;
+            ctl.currentLocation.img = option.img;
+        }
+
         function saveCurrent(location) {
-            console.log('address here', location.address);
-            UserLocations.setLocationLabel(location.label);
-            UserLocations.setLocationIcon(location.icon);
+            UserLocations.setLocationText(location.text);
+            UserLocations.setLocationImg(location.img);
             UserLocations.setLocationAddress(location.address);
+            UserLocations.setLocationFeature(location.feature);
         }
 
     }
