@@ -29,7 +29,7 @@
           UserLocations.setLocationType(type); // Set location type for temporary representation
 
           var currentUser = ProfileService.getCurrentUser().username;
-          var id = UserLocations.getLocationID();
+          var id = UserLocations.getWorkingLocation().id;
           $state.go('locationsProfile', { username: currentUser, locationID: id });
       }
 

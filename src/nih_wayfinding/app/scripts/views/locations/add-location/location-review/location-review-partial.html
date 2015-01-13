@@ -1,0 +1,26 @@
+<leaflet class="content map double-footer"
+         bounds="overview.map.bounds"
+         center="overview.map.center"
+         layers="overview.map.layers"
+         legend="overview.map.legend"
+         geojson="overview.map.geojson">
+</leaflet>
+
+<footer class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-md-4">
+            <p>45 Mins, 2.5 Miles, 5 Turns</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4 col-md-4">
+            <button ui-sref="directions" type="button" class="btn btn-primary btn-block">Directions</button>
+        </div>
+        <div class="col-xs-4 col-md-4">
+            <button ui-sref="changeroute(overview.stateParams)" type="button" class="btn btn-primary btn-block">Change Route</button>
+        </div>
+        <div class="col-xs-4 col-md-4">
+            <button ui-sref="navigate" type="button" class="btn btn-primary btn-block"><b>Navigate</b></button>
+        </div>
+    </div>
+</footer>

@@ -19,7 +19,8 @@
             setLocationAddress: setLocationAddress,
             addLocation: addLocation,
             removeLocation: removeLocation,
-            getLocationID: getLocationID
+            getWorkingLocation: getWorkingLocation,
+            getLocationByID: getLocationByID
         };
         return module;
 
@@ -38,8 +39,19 @@
             svcLocation = { id: newID };
         }
 
-        function getLocationID() {
-            return svcLocation.id;
+        function getWorkingLocation() {
+            return svcLocation;
+        }
+
+        function getLocationByID(username, id) {
+            // Grab user data
+            var user = localStorageService.get(username);
+            if (user && user.locations) {
+                var location = _.filter(user.locations, function(loc) {
+                    return loc.id === id;
+                });
+                return location === [] ? {} : location;
+            }
         }
 
         function setLocationType(type) {

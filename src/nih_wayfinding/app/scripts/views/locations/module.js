@@ -18,10 +18,17 @@
         });
 
         $stateProvider.state('locationsProfile', {
-            url: '/locations/:username/:locationID/',
+            url: '/locations/profile/:username/:locationID/',
             templateUrl: 'scripts/views/locations/add-location/location-profile/location-profile-partial.html',
             controller: 'LocationsProfileController',
             controllerAs: 'locationsProfile'
+        });
+
+        $stateProvider.state('locationsReview', {
+            url: '/locations/review?destination',
+            templateUrl: 'scripts/views/locations/add-location/location-review/location-review-partial.html',
+            controller: 'LocationsReviewController',
+            controllerAs: 'locationsReview'
         });
     }
 
