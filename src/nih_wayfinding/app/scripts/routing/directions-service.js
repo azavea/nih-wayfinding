@@ -3,7 +3,7 @@
     'use strict';
 
     /* ngInject */
-    function Directions ($http, $timeout, RoutingResponseStub) {
+    function Directions ($http, $timeout, RoutingResponseStub, TurnAmenities) {
 
         // TODO: Wire to actual service
         var directionsUrl = 'http://localhost/directions';
@@ -34,7 +34,9 @@
             return $http.post(directionsUrl, params, {});
 */
             return $timeout(function () {
-                return RoutingResponseStub;
+                var res = RoutingResponseStub;
+                TurnAmenities.attach(res);
+                return res;
             }, 100, false);
         }
 

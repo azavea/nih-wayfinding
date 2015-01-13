@@ -5,6 +5,7 @@
         </div>
         <div class="col-md-11 col-xs-11" ng-style="{'border-right': '10px solid ' + directions.getLineColor(item.lastModified)}">
             <span>{{ ::item.directions.text }}</span>
+            <span ng-if="item.turnamenity">at {{ ::item.turnamenity.tags.name }}</span>
             <span class="glyphicon" ng-class="directions.getFlagIconName(key)" ng-repeat="(key, value) in item.flags"></span>
         </div>
     </div>
