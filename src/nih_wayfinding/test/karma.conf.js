@@ -85,6 +85,7 @@ module.exports = function(config) {
       'app/scripts/notifications/notifications-service.js',
       'app/scripts/routing/module.js',
       'app/scripts/routing/directions-service.js',
+      'app/scripts/routing/distance-filter.js',
       'app/scripts/routing/routing-response-stub.js',
       'app/scripts/routing/turnamenities-service.js',
       'app/scripts/views/modals/module.js',
