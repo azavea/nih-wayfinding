@@ -45,6 +45,7 @@ describe('nih.views.navbar: NavbarController', function () {
     var testText = 'test';
     expect(NavbarController.alertHeight).toEqual(0);
     Notifications.show({text: testText});
+    timeout.flush(1);
     rootScope.$digest();
     expect(NavbarController.alert.text).toEqual(testText);
     expect(NavbarController.alertHeight).toBeGreaterThan(0);

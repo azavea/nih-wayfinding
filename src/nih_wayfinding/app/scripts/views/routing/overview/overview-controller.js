@@ -9,11 +9,12 @@
 */
 
     /* ngInject */
-    function OverviewController($scope, $stateParams, $q, $geolocation, leafletData,
-                                Config, Directions, Map, MapControl, MapStyle, NavbarConfig, 
+    function OverviewController($q, $scope, $stateParams, $timeout, $geolocation, leafletData,
+                                Config, Directions, Map, MapControl, MapStyle, NavbarConfig,
                                 Notifications) {
         var ctl = this;
         var defaultNonZeroWalkTime = 30;
+        var geolocationAlertDelay = 400;
         var directionsOptions = {
             walkTimeMins: 0
         };
@@ -65,7 +66,8 @@
             } else {
                 Notifications.show({
                     text: 'Click \'Allow\' in your browser\'s location prompt to request your route.',
-                    imageClass: 'glyphicon-info-sign'
+                    imageClass: 'glyphicon-info-sign',
+                    delay: geolocationAlertDelay
                 });
                 $geolocation.getCurrentPosition({}).then(function (position) {
                     Notifications.hide();
