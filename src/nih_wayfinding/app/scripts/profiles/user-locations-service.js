@@ -4,7 +4,7 @@
     /* ngInject */
     function UserLocations(UserLocationsStub, localStorageService, ProfileService) {
 
-        var workingLocation;
+        var workingLocation = null;
         /* This is the basic format of a working location
         {
             id: 0, // i.e. an integer-based unique identifier
@@ -25,12 +25,20 @@
         };
         return module;
 
+        /**
+         * Return all locations for a user
+         * @return {array} Array of locations
+         */
         function locationsForUser() {
             var user = ProfileService.getCurrentUser();
             var userLocations = user.locations || [];
             return UserLocationsStub.concat(userLocations);
         }
 
+        /**
+         * Create an iterated location ID for a given user
+         * @return {int}
+         */
         function createLocationID() {
             var user = ProfileService.getCurrentUser();
             var locationList = user.locations === 'undefined' ? [] : user.locations;
@@ -39,11 +47,20 @@
             return newID;
         }
 
+        /**
+         * Create a base location object with an incremented ID
+         * @return {object}
+         */
         function newLocation() {
             var newID = createLocationID();
             return { id: newID };
         }
 
+        /**
+         * Get a specific location by id
+         * @param id {int}
+         * @return {object} A location object
+         */
         function getLocationByID(id) {
             var user = ProfileService.getCurrentUser();
             if (user && user.locations) {
@@ -54,30 +71,39 @@
             }
         }
 
+        /**
+         * Add the current workingLocation to the currentUser's locations
+         * @param location {object} A location object
+         * @return undefined
+         */
         function addLocation(location) {
+            module.workingLocation = null;
             var user = ProfileService.getCurrentUser();
             var oldLocations = user.locations || [];
-            console.log(oldLocations);
-            console.log(user.locations);
-            console.log(location);
 
             // Store new value
             user.locations = oldLocations.concat(location);
-            workingLocation = undefined;
             localStorageService.set(user.username, user);
         }
 
         // Specify username here for safety's sake and in case we ever need to delete
         // locations of another user
+        /**
+         * Specify a username and id here and it will be deleted
+         * @param username {string}
+         * @param id {int}
+         * @return undefined
+         */
         function removeLocation(username, id) {
             // Grab user data
             var user = localStorageService.get(username);
-            var oldLocations = typeof user.locations === 'undefined' ? [] : user.locations;
+            var oldLocations = user.locations === undefined ? [] : user.locations;
             // Remove matching on ID
             var newLocations = _.filter(oldLocations, function(loc) { return loc.id !== id; });
             user.locations = newLocations;
             // Store Val
             localStorageService.set(username, user);
+
         }
 
     }

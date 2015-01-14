@@ -28,6 +28,9 @@
             MapControl.markLocation(ctl.coordinates);
         }
 
+        /**
+         * Call location service's addLocation method to add the current working model
+         */
         function confirmLocation() {
             UserLocations.addLocation(UserLocations.workingLocation);
         }

@@ -10,7 +10,6 @@
         initialize();
 
         function initialize() {
-            console.log(UserLocations.workingLocation);
             NavbarConfig.set({ title: 'Location Profile' });
             ctl.workingLocation = UserLocations.getLocationByID($stateParams.id) ||
                 UserLocations.workingLocation;
@@ -46,10 +45,20 @@
             ctl.validateBeforeReview = validateBeforeReview;
         }
 
+        /**
+         * Geocode an address and pass it to onGeocoderResponse
+         * @param searchText {string} an address
+         * @return {undefined}
+         */
         function search(searchText) {
             Geocoder.search(searchText).then(onGeocoderResponse);
         }
 
+        /**
+         * Save geocoded data or notify of geocoding failure
+         * @param data {object} data from Geocoder service
+         * @return undefined
+         */
         function onGeocoderResponse(data) {
             if (data.length) { // If non-empty result
                 // Add geometric features to location tracker
@@ -63,26 +72,43 @@
             }
         }
 
+        /**
+         * Select img option
+         * @param option {object} the object corresponding to an option-directive option
+         */
         function imgOptionClicked(option) {
             ctl.showIconSelect = false;
             ctl.showUploadDialog = false;
             ctl.workingLocation.img = option.img;
         }
 
+        /**
+         * Select upload option
+         * @param option {object} the object corresponding to an option-directive option
+         */
         function uploadOptionClicked(option) {
             console.log(option.text);
         }
 
+        /**
+         * DOM wrestling for handling dialogs
+         */
         function toggleIconSelectDialog() {
             ctl.showIconUpload = false;
             ctl.showIconSelect = !ctl.showIconSelect;
         }
 
+        /**
+         * DOM wrestling for handling dialogs
+         */
         function toggleIconUploadDialog() {
             ctl.showIconSelect = false;
             ctl.showIconUpload = !ctl.showIconUpload;
         }
 
+        /**
+         * Validate the model's data to ensure it will produce a satisfactory location
+         */
         function validateBeforeReview() {
             if (ctl.workingLocation.text === undefined) { // If there's no label
                 Notifications.show({
@@ -97,9 +123,7 @@
             } else { // If we have both a label and an address
                 var geom = ctl.workingLocation.feature.geometry;
                 var xyString = geom.x.toString() + ',' + geom.y.toString(); // Cast to string
-                console.log(UserLocations.workingLocation);
                 UserLocations.workingLocation = ctl.workingLocation;
-                console.log(ctl.workingLocation);
                 $state.go('locationsReview', { destination: xyString }); // Use as url params
             }
         }

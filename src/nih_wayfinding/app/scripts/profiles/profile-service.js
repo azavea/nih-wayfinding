@@ -34,6 +34,7 @@
          * @returns Profile object for selected user
          */
         function getCurrentUser() {
+            currentUser = getProfile(localStorage.getItem('mostCurrentUser')) || {};
             return currentUser;
         }
 

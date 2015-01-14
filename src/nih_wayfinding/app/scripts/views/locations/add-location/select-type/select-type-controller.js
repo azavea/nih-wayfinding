@@ -8,7 +8,6 @@
 
         function initialize() {
             UserLocations.workingLocation = UserLocations.newLocation();
-            console.log(UserLocations.workingLocation);
             NavbarConfig.set({ title: 'Location Type' });
             ctl.optionClicked = optionClicked;
             ctl.gridOptions = [
@@ -21,19 +20,26 @@
             ];
         }
 
-      function optionClicked(option) {
-          setLocationType(option.text);
-      }
+        /**
+         * Select upload option
+         * @param option {object} the object corresponding to an option-directive option
+         */
+        function optionClicked(option) {
+            setLocationType(option.text);
+        }
 
-      function setLocationType(type) {
-          UserLocations.workingLocation.type = type;
+        /**
+         * Set the location type for our current location model
+         */
+        function setLocationType(type) {
+            UserLocations.workingLocation.type = type;
 
-          var currentUser = ProfileService.getCurrentUser().username;
-          $state.go('locationsProfile', {
-              username: currentUser,
-              locationID: UserLocations.workingLocation.id
-          });
-      }
+            var currentUser = ProfileService.getCurrentUser().username;
+            $state.go('locationsProfile', {
+                username: currentUser,
+                locationID: UserLocations.workingLocation.id
+            });
+        }
 
     }
 

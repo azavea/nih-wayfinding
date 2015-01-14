@@ -21,9 +21,13 @@
             ];
         }
 
-      function optionClicked(option) {
-          $state.go(option.toState);
-      }
+        /**
+         * Select option
+         * @param option {object} the object corresponding to an option-directive option
+         */
+        function optionClicked(option) {
+            $state.go(option.toState);
+        }
 
     }
 
