@@ -54,6 +54,7 @@
         </div>
     </div>
 </div>
+
 <footer class="hide-bottom" ng-class="{iconSelectReveal: locationsProfile.showIconSelect}">
     <div class="col-md-12 col-xs-12">
         <h4>Select Image</h4>
@@ -64,7 +65,6 @@
         </button>
     </div>
     <div class="col-md-12 col-xs-12">
-        <!-- Must pass the 'option' argument to the function in on-option-clicked for this to work -->
         <nih-options-grid options="locationsProfile.imgOpts" on-option-clicked="locationsProfile.imgOptionClicked(option)"></nih-options-grid>
     </div>
 </footer>
@@ -79,7 +79,6 @@
         </button>
     </div>
     <div class="col-md-12 col-xs-12">
-        <!-- Must pass the 'option' argument to the function in on-option-clicked for this to work -->
         <nih-options-grid options="locationsProfile.uploadOpts" on-option-clicked="locationsProfile.uploadOptionClicked(option)"></nih-options-grid>
     </div>
 </footer>

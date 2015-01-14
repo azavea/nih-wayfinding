@@ -4,6 +4,14 @@
     /* ngInject */
     function UserLocations(UserLocationsStub, localStorageService, ProfileService) {
 
+        /**
+         * TODO: The deserialization being done in angular-localStorage doesn't allow any
+         *       obvious way modify how deserialization occurs. As such, we should define
+         *       a factory which takes a bare object and returns a userprofile (and move
+         *       much of this code to profile-service.js) so that we can define methods
+         *       for adding and removing locations from a given user's profile
+         */
+
         var workingLocation = null;
         /* This is the basic format of a working location
         {
@@ -41,7 +49,7 @@
          */
         function createLocationID() {
             var user = ProfileService.getCurrentUser();
-            var locationList = user.locations === 'undefined' ? [] : user.locations;
+            var locationList = user.locations || [];
             var maxID = _.max(locationList, function(loc) { return loc.id; }).id;
             var newID = isNaN(maxID) ? 1 : maxID + 1;
             return newID;

@@ -24,14 +24,10 @@
             // Subscribe to the location update event
             $scope.$on('nih.navigation.locationUpdated', function(event, data) {
                 MapControl.trackUser(data);
-                angular.extend(ctl.map, {
-                    bounds: {
-                    },
-                    center: {
-                        lat: data[1],
-                        lng: data[0],
-                        zoom: 19
-                    }
+                angular.extend(ctl.map.center, {
+                    lat: data[1],
+                    lng: data[0],
+                    zoom: 19
                 });
             });
             $scope.$on('$stateChangeStart', Navigation.stopIntervalTask);
