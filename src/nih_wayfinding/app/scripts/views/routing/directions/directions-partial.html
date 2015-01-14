@@ -4,7 +4,7 @@
             <span class="glyphicon" ng-class="directions.getTurnIconName(item.directions.turn)"></span>
         </div>
         <div class="col-md-11 col-xs-11" ng-style="{'border-right': '10px solid ' + directions.getLineColor(item.lastModified)}">
-            <span>{{ ::item.directions.text }}</span>
+            <h4>{{ ::item.directions.text }}</h4>
             <span ng-if="item.turnamenity"> at {{ ::item.turnamenity.tags.name }}</span>
             <span ng-if="item.directions.distanceMeters">{{ ::item.directions.distanceMeters | distance }}</span>
             <span class="glyphicon" ng-class="directions.getFlagIconName(key)" ng-repeat="(key, value) in item.flags"></span>
