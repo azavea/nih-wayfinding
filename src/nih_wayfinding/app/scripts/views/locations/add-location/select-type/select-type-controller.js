@@ -7,6 +7,8 @@
         initialize();
 
         function initialize() {
+            UserLocations.workingLocation = UserLocations.newLocation();
+            console.log(UserLocations.workingLocation);
             NavbarConfig.set({ title: 'Location Type' });
             ctl.optionClicked = optionClicked;
             ctl.gridOptions = [
@@ -24,11 +26,13 @@
       }
 
       function setLocationType(type) {
-          UserLocations.setLocationType(type); // Set location type for temporary representation
+          UserLocations.workingLocation.type = type;
 
           var currentUser = ProfileService.getCurrentUser().username;
-          var id = UserLocations.getWorkingLocation().id;
-          $state.go('locationsProfile', { username: currentUser, locationID: id });
+          $state.go('locationsProfile', {
+              username: currentUser,
+              locationID: UserLocations.workingLocation.id
+          });
       }
 
     }

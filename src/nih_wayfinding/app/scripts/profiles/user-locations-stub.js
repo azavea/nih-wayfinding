@@ -3,7 +3,7 @@
 
     var UserLocationsStub = [{
         text: 'Post Office',
-        img: 'glyphicon-envelope',
+        img: 'http://lorempixel.com/210/110',
         feature: {
             geometry: {
                 x: 10,
@@ -12,7 +12,7 @@
         }
     }, {
         text: 'Home',
-        img: 'glyphicon-home',
+        img: 'http://lorempixel.com/210/110',
         feature: {
             geometry: {
                 x: 10,
@@ -21,7 +21,7 @@
         }
     }, {
         text: 'Park',
-        img: 'glyphicon-tree-deciduous',
+        img: 'http://lorempixel.com/210/110',
         feature: {
             geometry: {
                 x: 10,
@@ -30,7 +30,7 @@
         }
     }, {
         text: 'Jennifer\'s House',
-        img: 'glyphicon-user',
+        img: 'http://lorempixel.com/210/110',
         feature: {
             geometry: {
                 x: 10,
@@ -39,7 +39,7 @@
         }
     }, {
         text: 'Grocery',
-        img: 'glyphicon-cutlery',
+        img: 'http://lorempixel.com/210/110',
         feature: {
             geometry: {
                 x: 10,
@@ -48,7 +48,7 @@
         }
     }, {
         text: 'Cafe',
-        img: 'glyphicon-cutlery',
+        img: 'http://lorempixel.com/210/110',
         feature: {
             geometry: {
                 x: 10,

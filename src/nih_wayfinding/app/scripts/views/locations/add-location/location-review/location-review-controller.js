@@ -8,11 +8,11 @@
         initialize();
 
         function initialize() {
+            ctl.currentLocations = UserLocations.workingLocation;
             NavbarConfig.set({
                 title: 'Review Location',
                 back: 'locationsProfile'
             });
-            ctl.currentLocation = UserLocations.getWorkingLocation();
             ctl.currentUser = ProfileService.getCurrentUser().username;
             ctl.confirmLocation = confirmLocation;
 
@@ -29,8 +29,7 @@
         }
 
         function confirmLocation() {
-            console.log(UserLocations.getWorkingLocation());
-            UserLocations.addLocation();
+            UserLocations.addLocation(UserLocations.workingLocation);
         }
 
     }

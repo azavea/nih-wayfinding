@@ -9,12 +9,11 @@
         var ctl = this;
         initialize();
 
-        ctl.glyphiconClass = 'glyphicon-star';
         function initialize() {
+            console.log(UserLocations.workingLocation);
             NavbarConfig.set({ title: 'Location Profile' });
-            ctl.currentLocation = UserLocations.getLocationByID($stateParams.id) ||
-                UserLocations.getWorkingLocation();
-            ctl.saveCurrent = saveCurrent;
+            ctl.workingLocation = UserLocations.getLocationByID($stateParams.id) ||
+                UserLocations.workingLocation;
 
             // Hidden image selection dialog
             ctl.showIconSelect = false;
@@ -54,9 +53,9 @@
         function onGeocoderResponse(data) {
             if (data.length) { // If non-empty result
                 // Add geometric features to location tracker
-                ctl.currentLocation.feature = data[0];
+                ctl.workingLocation.feature = data[0];
             } else { // If empty result
-                ctl.currentLocation.feature = undefined;
+                ctl.workingLocation.feature = undefined;
                 Notifications.show({
                     text: 'Unable to find the selected address. Please try a different one.',
                     timeout: 3000
@@ -67,14 +66,7 @@
         function imgOptionClicked(option) {
             ctl.showIconSelect = false;
             ctl.showUploadDialog = false;
-            ctl.currentLocation.img = option.img;
-        }
-
-        function saveCurrent(location) {
-            UserLocations.setLocationText(location.text);
-            UserLocations.setLocationImg(location.img);
-            UserLocations.setLocationAddress(location.address);
-            UserLocations.setLocationFeature(location.feature);
+            ctl.workingLocation.img = option.img;
         }
 
         function uploadOptionClicked(option) {
@@ -82,28 +74,32 @@
         }
 
         function toggleIconSelectDialog() {
+            ctl.showIconUpload = false;
             ctl.showIconSelect = !ctl.showIconSelect;
         }
 
         function toggleIconUploadDialog() {
+            ctl.showIconSelect = false;
             ctl.showIconUpload = !ctl.showIconUpload;
         }
 
         function validateBeforeReview() {
-            if (ctl.currentLocation.text === undefined) { // If there's no label
+            if (ctl.workingLocation.text === undefined) { // If there's no label
                 Notifications.show({
                     text: 'No label specified - please label this location.',
                     timeout: 3000
                 });
-            } else if (ctl.currentLocation.feature === undefined) { // If address fails to validate
+            } else if (ctl.workingLocation.feature === undefined) { // If address fails to validate
                 Notifications.show({
                     text: 'No coordinates found for this address - please choose an address.',
                     timeout: 3000
                 });
             } else { // If we have both a label and an address
-                saveCurrent(ctl.currentLocation);
-                var geom = ctl.currentLocation.feature.geometry;
+                var geom = ctl.workingLocation.feature.geometry;
                 var xyString = geom.x.toString() + ',' + geom.y.toString(); // Cast to string
+                console.log(UserLocations.workingLocation);
+                UserLocations.workingLocation = ctl.workingLocation;
+                console.log(ctl.workingLocation);
                 $state.go('locationsReview', { destination: xyString }); // Use as url params
             }
         }

@@ -4,35 +4,30 @@
     /* ngInject */
     function UserLocations(UserLocationsStub, localStorageService, ProfileService) {
 
-        var svcLocation = {
-            type: '', // e.g. cafe, park, school
+        var workingLocation;
+        /* This is the basic format of a working location
+        {
+            id: 0, // i.e. an integer-based unique identifier
+            type: '', // e.g. cafe, park, school *OPTIONAL*
             text: '', // e.g. 'Martha's house'
-            img: '', // e.g. 'glyphicon-letter'
-            address: '', // e.g. 'Cathedral of Learning, Pittsburgh' or '1234 Main Street'
+            img: '', // e.g. 'glyphicon-letter' *OPTIONAL*
+            address: '', // e.g. 'Cathedral of Learning, Pittsburgh' or '1234 Main Street' *OPTIONAL*
             feature: {} // i.e. geojson feature
-        };
+        }
+        */
         var module = {
             newLocation: newLocation,
+            workingLocation: workingLocation,
             locationsForUser: locationsForUser,
-            setLocationType: setLocationType,
-            setLocationText: setLocationText,
-            setLocationImg: setLocationImg,
-            setLocationAddress: setLocationAddress,
-            setLocationFeature: setLocationFeature,
             addLocation: addLocation,
             removeLocation: removeLocation,
-            getWorkingLocation: getWorkingLocation,
             getLocationByID: getLocationByID
         };
         return module;
 
         function locationsForUser() {
             var user = ProfileService.getCurrentUser();
-            console.log(user);
             var userLocations = user.locations || [];
-            var stubLocations = UserLocationsStub;
-            console.log(userLocations.concat(stubLocations));
-            // STUB
             return UserLocationsStub.concat(userLocations);
         }
 
@@ -46,14 +41,7 @@
 
         function newLocation() {
             var newID = createLocationID();
-            svcLocation = { id: newID };
-        }
-
-        function getWorkingLocation() {
-            if (svcLocation.id === undefined) {
-                svcLocation.id = createLocationID();
-            }
-            return svcLocation;
+            return { id: newID };
         }
 
         function getLocationByID(id) {
@@ -62,38 +50,20 @@
                 var location = _.filter(user.locations, function(loc) {
                     return loc.id === id;
                 });
-                return location === [] ? {} : location;
+                return location[0];
             }
         }
 
-        function setLocationType(type) {
-            svcLocation.type = type;
-        }
-
-        function setLocationText(text) {
-            svcLocation.text = text;
-        }
-
-        function setLocationImg(img) {
-            svcLocation.img = img;
-        }
-
-        function setLocationAddress(address) {
-            svcLocation.address = address;
-        }
-
-        function setLocationFeature(feature) {
-            svcLocation.feature = feature;
-        }
-
-        function addLocation() {
+        function addLocation(location) {
             var user = ProfileService.getCurrentUser();
-            var oldLocations = typeof user.locations === 'undefined' ? [] : user.locations;
+            var oldLocations = user.locations || [];
             console.log(oldLocations);
+            console.log(user.locations);
+            console.log(location);
 
             // Store new value
-            user.locations = oldLocations.concat(svcLocation);
-            console.log(user);
+            user.locations = oldLocations.concat(location);
+            workingLocation = undefined;
             localStorageService.set(user.username, user);
         }
 

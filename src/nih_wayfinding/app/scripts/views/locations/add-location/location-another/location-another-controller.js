@@ -2,7 +2,7 @@
     'use strict';
 
     /* ngInject */
-    function LocationsAnotherController($state, NavbarConfig, UserLocations, ProfileService) {
+    function LocationsAnotherController($state, NavbarConfig) {
         var ctl = this;
         initialize();
 
@@ -10,22 +10,19 @@
             NavbarConfig.set({ title: 'Custom Locations' });
             ctl.optionClicked = optionClicked;
             ctl.gridOptions = [
-                { text: 'Yes' },
-                { text: 'No thanks' }
+                {
+                    text: 'Yes',
+                    toState: 'locationsSelectType'
+                },
+                {
+                    text: 'No thanks',
+                    toState: 'locations'
+                }
             ];
         }
 
       function optionClicked(option) {
-          goNext(option.text);
-      }
-
-      function goNext(answer) {
-          console.log(answer);
-          if (answer === 'yes') {
-              $state.go('locationsSetType');
-          } else {
-              $state.go('locations');
-          }
+          $state.go(option.toState);
       }
 
     }
