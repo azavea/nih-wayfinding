@@ -22,7 +22,7 @@ footer.hide-bottom {
     height: 0px;
 }
 
-footer.dialogReveal {
+footer.iconSelectReveal {
     transition: height 0.4s ease;
     height: 450px !important;
     .close {
@@ -31,5 +31,16 @@ footer.dialogReveal {
         right: 22px;
     }
 }
+
+footer.iconUploadReveal {
+    transition: height 0.4s ease;
+    height: 250px !important;
+    .close {
+        position: absolute;
+        top: 6px;
+        right: 22px;
+    }
+}
+
 
 

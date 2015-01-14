@@ -34,12 +34,12 @@
                     <div class="col-xs-6 col-md-9">
                         <div class="btn-group btn-group-justified" role="group">
                             <a role="button" class="btn form-btn"
-                                ng-click="locationsProfile.showIconSelect = !locationsProfile.showIconSelect">Select Icon
+                                ng-click="locationsProfile.toggleIconSelectDialog()">Select Icon
                             </a>
                         </div>
                         <div class="btn-group btn-group-justified" role="group">
-                            <a role="button" class="btn form-btn" href="#"
-                                ng-click="">Upload Photo
+                            <a role="button" class="btn form-btn"
+                                ng-click="locationsProfile.toggleIconUploadDialog()">Upload Photo
                             </a>
                         </div>
                     </div>
@@ -57,9 +57,9 @@
         </div>
     </div>
 </div>
-<footer class="hide-bottom" ng-class="{dialogReveal: locationsProfile.showIconSelect}">
+<footer class="hide-bottom" ng-class="{iconSelectReveal: locationsProfile.showIconSelect}">
     <div class="col-md-12 col-xs-12">
-        <h4>Find Address</h4>
+        <h4>Select Image</h4>
         <button type="button" class="close" aria-label="Close"
                 ng-if="locationsProfile.showIconSelect"
                 ng-click="locationsProfile.showIconSelect = false">
@@ -69,6 +69,21 @@
     <div class="col-md-12 col-xs-12">
         <!-- Must pass the 'option' argument to the function in on-option-clicked for this to work -->
         <nih-options-grid options="locationsProfile.imgOpts" on-option-clicked="locationsProfile.imgOptionClicked(option)"></nih-options-grid>
+    </div>
+</footer>
+
+<footer class="hide-bottom" ng-class="{iconUploadReveal: locationsProfile.showIconUpload}">
+    <div class="col-md-12 col-xs-12">
+        <h4>Upload an Image</h4>
+        <button type="button" class="close" aria-label="Close"
+                ng-if="locationsProfile.showIconUpload"
+                ng-click="locationsProfile.showIconUpload = false">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="col-md-12 col-xs-12">
+        <!-- Must pass the 'option' argument to the function in on-option-clicked for this to work -->
+        <nih-options-grid options="locationsProfile.uploadOpts" on-option-clicked="locationsProfile.uploadOptionClicked(option)"></nih-options-grid>
     </div>
 </footer>
 

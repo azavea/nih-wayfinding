@@ -16,6 +16,9 @@
                 UserLocations.getWorkingLocation();
             ctl.saveCurrent = saveCurrent;
             ctl.showIconSelect = false;
+            ctl.toggleIconSelectDialog = toggleIconSelectDialog;
+            ctl.showIconUpload = false;
+            ctl.toggleIconUploadDialog = toggleIconUploadDialog;
             ctl.imgOpts = [
                 { img: 'http://lorempixel.com/200/100/' },
                 { img: 'http://lorempixel.com/200/100/' },
@@ -23,6 +26,10 @@
                 { img: 'http://lorempixel.com/200/100/' },
                 { img: 'http://lorempixel.com/200/100/' },
                 { img: 'http://lorempixel.com/200/100/' },
+            ];
+            ctl.uploadOpts = [
+                { text: 'Select File' },
+                { text: 'Use Camera' }
             ];
             ctl.imgOptionClicked = imgOptionClicked;
 
@@ -55,6 +62,7 @@
 
         function imgOptionClicked(option) {
             ctl.showIconSelect = false;
+            ctl.showUploadDialog = false;
             ctl.currentLocation.img = option.img;
         }
 
@@ -63,6 +71,14 @@
             UserLocations.setLocationImg(location.img);
             UserLocations.setLocationAddress(location.address);
             UserLocations.setLocationFeature(location.feature);
+        }
+
+        function toggleIconSelectDialog() {
+            ctl.showIconSelect = !ctl.showIconSelect;
+        }
+
+        function toggleIconUploadDialog() {
+            ctl.showIconUpload = !ctl.showIconUpload;
         }
 
     }
