@@ -4,7 +4,6 @@
     /* ngInject */
     function NavigateController(
         $scope,
-        leafletData,
         Navigation, Directions, Map, MapStyle, NavbarConfig, MapControl
     ) {
         var ctl = this;
@@ -26,9 +25,9 @@
             $scope.$on('nih.navigation.locationUpdated', function(event, data) {
                 MapControl.trackUser(data);
                 angular.extend(ctl.map.center, {
-                    zoom: 19,
                     lat: data[1],
-                    lng: data[0]
+                    lng: data[0],
+                    zoom: 19
                 });
             });
             $scope.$on('$stateChangeStart', Navigation.stopIntervalTask);

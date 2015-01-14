@@ -6,7 +6,7 @@
     function ProfileService (ProfileProvider, localStorageService) {
 
         // private variables
-        var currentUser = {};
+        var currentUser = getProfile(localStorage.getItem('mostCurrentUser')) || {};
 
         // Public Interface
         var module = {
@@ -34,6 +34,7 @@
          * @returns Profile object for selected user
          */
         function getCurrentUser() {
+            currentUser = getProfile(localStorage.getItem('mostCurrentUser')) || {};
             return currentUser;
         }
 
@@ -46,6 +47,7 @@
             var user = getProfile(name);
             if (user) {
                 currentUser = user;
+                localStorage.setItem('mostCurrentUser', name); // Save state for page refresh
             } else {
                 console.error('User ' + name + ' does not exist!  Not setting current user.');
             }

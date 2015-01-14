@@ -23,7 +23,7 @@
         var template = [
             '<div class="options-grid">',
                 '<button ng-click="optionClicked(option)" ng-repeat="option in options">',
-                    '<span class="glyphicon" ng-class="option.img"></span> {{ ::option.text }}',
+                    '<img ng-src="{{option.img}}"/> {{ ::option.text }}',
                 '</button>',
             '</div>',
         ].join('');
@@ -45,6 +45,7 @@
                 scope.onOptionClicked({option: option});
             };
         }
+
     }
 
     angular.module('nih.views.optionsgrid')

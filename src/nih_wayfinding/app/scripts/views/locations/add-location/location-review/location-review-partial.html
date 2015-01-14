@@ -1,0 +1,27 @@
+<leaflet class="content map double-footer"
+         center="locationsReview.map.center"
+         bounds="locationsReview.map.bounds"
+         layers="locationsReview.map.layers">
+</leaflet>
+
+<footer class="container-fluid">
+    <div class="row"></div>
+    <div class="row">
+        <div class="col-xs-6 col-md-6">
+            <button ui-sref="locationsProfile({ username: locationsReview.currentUser, locationID: locationsReview.currentLocation.id })"
+                    type="button"
+                    class="btn btn-primary
+                    btn-block">
+              Edit
+            </button>
+        </div>
+        <div class="col-xs-6 col-md-6">
+            <button ui-sref="locationsAnother"
+                    ng-click="locationsReview.confirmLocation()"
+                    type="button"
+                    class="btn btn-primary btn-block">
+              Confirm Location
+            </button>
+        </div>
+    </div>
+</footer>

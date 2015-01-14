@@ -9,11 +9,41 @@
             controller: 'LocationsController',
             controllerAs: 'locations'
         });
+
+        $stateProvider.state('locationsSelectType', {
+            url: '/locations/new/select-type',
+            templateUrl: 'scripts/views/locations/add-location/select-type/select-type-partial.html',
+            controller: 'SelectTypeController',
+            controllerAs: 'locationsSelectType'
+        });
+
+        $stateProvider.state('locationsProfile', {
+            url: '/locations/profile/:username/:locationID/',
+            templateUrl: 'scripts/views/locations/add-location/location-profile/location-profile-partial.html',
+            controller: 'LocationsProfileController',
+            controllerAs: 'locationsProfile'
+        });
+
+        $stateProvider.state('locationsReview', {
+            url: '/locations/review?destination',
+            templateUrl: 'scripts/views/locations/add-location/location-review/location-review-partial.html',
+            controller: 'LocationsReviewController',
+            controllerAs: 'locationsReview'
+        });
+
+        $stateProvider.state('locationsAnother', {
+            url: '/locations/another',
+            templateUrl: 'scripts/views/locations/add-location/location-another/location-another-partial.html',
+            controller: 'LocationsAnotherController',
+            controllerAs: 'locationsAnother'
+        });
     }
 
     angular.module('nih.views.locations', [
         'ngAria',
         'ui.router',
+        'leaflet-directive',
+        'nih.mapping',
         'nih.geocoder',
         'nih.notifications',
         'nih.profiles',
