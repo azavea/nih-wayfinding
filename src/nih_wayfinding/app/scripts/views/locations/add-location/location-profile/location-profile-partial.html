@@ -18,10 +18,8 @@
                                type="text"
                                placeholder="Search Chicago..."
                                ng-model="locationsProfile.currentLocation.address"
-                               ng-change="locationsProfile.addressError = false"
-                               ng-focus="locationsProfile.findAddressExpanded = true"
                                typeahead="location for location in locationsProfile.suggest($viewValue)"
-                               typeahead-on-select="locations.search($item)"
+                               typeahead-on-select="locationsProfile.search($item)"
                                typeahead-wait-ms="300"
                                typeahead-min-length="3" />
                     </div>
@@ -48,8 +46,8 @@
                     <div class="btn-group btn-group-justified" role="group">
                         <a role="button"
                            class="btn form-btn"
-                           ng-click="locationsProfile.search(locationsProfile.currentLocation.address)"
-                           ui-sref-opts="{}">Finish
+                           ng-click="locationsProfile.validateBeforeReview()">
+                            Finish
                         </a>
                     </div>
                 </div>
