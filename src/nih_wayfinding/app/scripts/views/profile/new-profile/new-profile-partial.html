@@ -10,7 +10,7 @@
                     <form name="newprofile.newusername" ng-submit="newprofile.setStep(2)">
                         <h2>New user name:</h2>
                         <input type="text" ng-model="newprofile.username"
-                            ng-change="newprofile.checkUsername()"required />
+                            ng-change="newprofile.checkUsername()" autofocus required />
                             <span class="text-danger" aria-disabled="newprofile.newusername.$valid"
                             ng-show="newprofile.newusername.$invalid">{{ newprofile.errorMsg }}</span>
                         <br /><br />
@@ -22,22 +22,29 @@
                     <h2>Do you use a wheelchair or scooter?</h2>
                     <div class="btn-group btn-group-justified" role="group"
                         aria-label="Select yes or no">
-                        <a role="button" class="btn form-btn" href="#"
-                            ng-click="newprofile.usingWheelchair(true)">Yes</a>
-                        <a role="button" class="btn form-btn" href="#"
-                            ng-click="newprofile.usingWheelchair(false)">No</a>
+                        <nih-options-grid options="newprofile.yesNoOpts"
+                                          on-option-clicked="newprofile.usingWheelchair(option)">
+                        </nih-options-grid>
                     </div>
                 </div>
                 <div ng-switch-when="3">
                     <h2>What level of challenge do you want in your routes?</h2>
                     <div class="btn-group btn-group-justified" role="group"
                         aria-label="Select challenge level">
-                        <a role="button" class="btn form-btn" href="#"
-                            ng-click="newprofile.setChallengeLevel(1)">Minimal</a>
-                        <a role="button" class="btn form-btn" href="#"
-                            ng-click="newprofile.setChallengeLevel(2)">Moderate</a>
-                        <a role="button" class="btn form-btn" href="#"
-                            ng-click="newprofile.setChallengeLevel(3)">Challenge Me</a>
+                        <nih-options-grid options="newprofile.challengeOpts"
+                                          on-option-clicked="newprofile.setChallengeLevel(option)">
+                        </nih-options-grid>
+                    </div>
+                </div>
+                <div ng-switch-when="4">
+                    <h2>Favorite Locations</h2>
+                    <p>If there are any locations you visit regularly, it can be useful to save them
+                        as favorites Would you like to register a location now?</p>
+                    <div class="btn-group btn-group-justified" role="group"
+                        aria-label="Select whether to create a location">
+                        <nih-options-grid options="newprofile.newLocOpts"
+                                          on-option-clicked="newprofile.willCreateLocations(option)">
+                        </nih-options-grid>
                     </div>
                 </div>
             </div>
