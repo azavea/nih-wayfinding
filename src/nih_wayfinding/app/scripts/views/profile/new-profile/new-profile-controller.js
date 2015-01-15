@@ -10,6 +10,43 @@
 
         initialize();
 
+        function initialize() {
+            ctl.step = 1;
+            ctl.setStep = setStep;
+            ctl.checkUsername = checkUsername;
+            ctl.usingWheelchair = usingWheelchair;
+            ctl.setChallengeLevel = setChallengeLevel;
+            ctl.willCreateLocations = willCreateLocations;
+            ctl.errorMsg = '';
+            ctl.displayUsername = '';
+
+            ctl.yesNoOpts = [{
+                text: 'Yes',
+                value: true
+            }, {
+                text: 'No',
+                value: false
+            }];
+
+            ctl.newLocOpts = [{
+                text: 'Create locations',
+                value: true
+            }, {
+                text: 'No thanks',
+                value: false
+            }];
+
+            ctl.challengeOpts = [{
+                text: 'Minimal',
+                value: 1
+            }, {
+                text: 'Moderate',
+                value: 5
+            }, {
+                text: 'Challenge Me',
+                value: 10
+            }];
+        }
         /**
          * Progress through the form sections.
          */
@@ -22,7 +59,7 @@
          * Set private var for whether using a wheelchair or scooter.
         */
         function usingWheelchair(amUsing) {
-            usingWheelchairScooter = amUsing;
+            usingWheelchairScooter = amUsing.value;
             setStep(3);
         }
 
@@ -30,8 +67,20 @@
          * Set private var for profile challenge level.
          */
         function setChallengeLevel(level) {
-            challengeLevel = level;
+            challengeLevel = level.value;
+            setStep(4);
+        }
+
+        /**
+         * Decide whether or not to create new locations
+         */
+        function willCreateLocations(willCreate) {
             createNewUser();
+            if (willCreate.value) {
+                $state.go('locationsSelectType');
+            } else {
+                $state.go('locations');
+            }
         }
 
         /**
@@ -43,7 +92,6 @@
             ProfileService.setCurrentUser(ctl.username);
             ProfileService.setCurrentUserProperty('wheelchair', usingWheelchairScooter);
             ProfileService.setCurrentUserProperty('challenge', challengeLevel);
-            $state.go('profiles');
         }
 
         /**
@@ -64,15 +112,6 @@
             }
         }
 
-        function initialize() {
-            ctl.step = 1;
-            ctl.setStep = setStep;
-            ctl.checkUsername = checkUsername;
-            ctl.usingWheelchair = usingWheelchair;
-            ctl.setChallengeLevel = setChallengeLevel;
-            ctl.errorMsg = '';
-            ctl.displayUsername = '';
-        }
     }
 
     angular.module('nih.views.newprofile')
