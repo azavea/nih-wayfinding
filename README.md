@@ -10,7 +10,7 @@ NIH Wayfinding Tools (Prototype)
 
 ## Local Development
 
-A combination of Vagrant 1.5+ and Ansible 1.6+ is used to setup the development environment for this project. It creates the following virtual machines:
+A combination of Vagrant 1.5+ and Ansible 1.8+ is used to setup the development environment for this project. It creates the following virtual machines:
 
 - `app`
 - `services`
