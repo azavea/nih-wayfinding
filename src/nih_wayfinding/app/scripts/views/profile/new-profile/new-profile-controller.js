@@ -2,7 +2,7 @@
     'use strict';
 
     /* ngInject */
-    function NewProfileController($state, ProfileService) {
+    function NewProfileController($state, ProfileService, Notifications) {
 
         var ctl = this;
         var usingWheelchairScooter = false;
@@ -13,6 +13,8 @@
         function initialize() {
             ctl.step = 1;
             ctl.setStep = setStep;
+            ctl.newUser = ProfileService.createBaseProfile();
+            console.log(ctl.newUser);
             ctl.checkUsername = checkUsername;
             ctl.usingWheelchair = usingWheelchair;
             ctl.setChallengeLevel = setChallengeLevel;
@@ -59,7 +61,9 @@
          * Set private var for whether using a wheelchair or scooter.
         */
         function usingWheelchair(amUsing) {
-            usingWheelchairScooter = amUsing.value;
+            console.log(ctl.newUser);
+            console.log(ctl.newUser.setPreference);
+            ctl.newUser.setPreference('wheelchair', amUsing.value);
             setStep(3);
         }
 
@@ -67,7 +71,7 @@
          * Set private var for profile challenge level.
          */
         function setChallengeLevel(level) {
-            challengeLevel = level.value;
+            ctl.newUser.setPreference('challenge', level.value);
             setStep(4);
         }
 
@@ -88,13 +92,19 @@
          * then go back to the main profiles page.
          */
         function createNewUser() {
-            ProfileService.createProfile(ctl.username);
-            ProfileService.setCurrentUser(ctl.username);
-            ProfileService.setCurrentUserProperty('wheelchair', usingWheelchairScooter);
-            ProfileService.setCurrentUserProperty('challenge', challengeLevel);
+            ctl.newUser.username = ctl.username;
+            if (ctl.newUser.save()) {
+                ProfileService.setCurrentUser(ctl.username);
+            } else {
+                Notifications.show({
+                    text: 'There was a problem saving this profile. Make sure the username is unique.',
+                    timeout: 3000
+                });
+            }
         }
 
-        /**
+        /*k
+         *
          * Check entered username is valid, and set error message if not.
          */
         function checkUsername() {
@@ -103,7 +113,7 @@
                 return; // 'required' check will set validity
             }
 
-            if (ProfileService.getProfile(ctl.username)) {
+            if (ProfileService.profileExists(ctl.username)) {
                 ctl.errorMsg = 'User already exists';
                 ctl.newusername.$setValidity('newprofile.username', false);
             } else {

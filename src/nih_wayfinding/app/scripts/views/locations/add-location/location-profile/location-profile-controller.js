@@ -4,15 +4,15 @@
     /* ngInject */
     function LocationsProfileController(
         $stateParams, $state,
-        Geocoder, NavbarConfig, UserLocations, Notifications
+        Geocoder, NavbarConfig, Notifications, ProfileService
     ) {
         var ctl = this;
         initialize();
 
         function initialize() {
             NavbarConfig.set({ title: 'Location Profile' });
-            ctl.workingLocation = UserLocations.getLocationByID($stateParams.id) ||
-                UserLocations.workingLocation;
+            ctl.user = ProfileService.getCurrentUser();
+            console.log(ctl.user);
 
             // Hidden image selection dialog
             ctl.showIconSelect = false;
@@ -62,9 +62,9 @@
         function onGeocoderResponse(data) {
             if (data.length) { // If non-empty result
                 // Add geometric features to location tracker
-                ctl.workingLocation.feature = data[0];
+                ctl.user.extendTempLocation('feature', data[0]);
             } else { // If empty result
-                ctl.workingLocation.feature = undefined;
+                ctl.user.extendTempLocation('feature', undefined);
                 Notifications.show({
                     text: 'Unable to find the selected address. Please try a different one.',
                     timeout: 3000
@@ -79,7 +79,7 @@
         function imgOptionClicked(option) {
             ctl.showIconSelect = false;
             ctl.showUploadDialog = false;
-            ctl.workingLocation.img = option.img;
+            ctl.user.extendTempLocation('img', option.img);
         }
 
         /**
@@ -110,20 +110,21 @@
          * Validate the model's data to ensure it will produce a satisfactory location
          */
         function validateBeforeReview() {
-            if (ctl.workingLocation.text === undefined) { // If there's no label
+            console.log(ctl.user, ctl.user.text);
+            if (ctl.user.tempLocation.text === undefined) { // If there's no label
                 Notifications.show({
                     text: 'No label specified - please label this location.',
                     timeout: 3000
                 });
-            } else if (ctl.workingLocation.feature === undefined) { // If address fails to validate
+            } else if (ctl.user.tempLocation.feature === undefined) { // If address fails to validate
                 Notifications.show({
                     text: 'No coordinates found for this address - please choose an address.',
                     timeout: 3000
                 });
             } else { // If we have both a label and an address
-                var geom = ctl.workingLocation.feature.geometry;
+                var geom = ctl.user.tempLocation.feature.geometry;
                 var xyString = geom.x.toString() + ',' + geom.y.toString(); // Cast to string
-                UserLocations.workingLocation = ctl.workingLocation;
+                ctl.user.save();
                 $state.go('locationsReview', { destination: xyString }); // Use as url params
             }
         }

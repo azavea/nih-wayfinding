@@ -2,19 +2,19 @@
     'use strict';
 
     /* ngInject */
-    function LocationsController($scope, $state, Geocoder, NavbarConfig, Notifications, ProfileService, UserLocations) {
+    function LocationsController($scope, $state, Geocoder, NavbarConfig, Notifications, ProfileService) {
         var ctl = this;
         initialize();
 
         function initialize() {
             ctl.findAddressExpanded = false;
-            ctl.gridOptions = UserLocations.locationsForUser();
+            ctl.currentUser = ProfileService.getCurrentUser();
+            ctl.gridOptions = ctl.locations;
             ctl.optionClicked = optionClicked;
             ctl.search = search;
             ctl.searchText = '';
             ctl.suggest = Geocoder.suggest;
 
-            ctl.currentUser = ProfileService.getCurrentUser();
             var title = ctl.currentUser.username ? ctl.currentUser.username : 'Profile';
             NavbarConfig.set({
                 title: title,
