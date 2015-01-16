@@ -18,7 +18,8 @@
         var searchOutFields = 'StAddr,City,Postal';
         var searchCategories = [
             'Address',
-            'Postal'
+            'Postal',
+            'POI'
         ].join(',');
 
         // Public Interface
