@@ -7,7 +7,8 @@
                     <div class="col-xs-12 col-md-12">
                         <input class="form-control pull-right"
                                placeholder="Enter a location name here..."
-                               ng-model="locationsProfile.workingLocation.text"/>
+                               ng-model="locationsProfile.user.tempLocation.text"
+                               autofocus/>
                     </div>
                 </div>
                 <div class="row">
@@ -16,7 +17,7 @@
                         <input class="form-control pull-right"
                                type="text"
                                placeholder="Search Chicago..."
-                               ng-model="locationsProfile.workingLocation.address"
+                               ng-model="locationsProfile.user.tempLocation.address"
                                typeahead="location for location in locationsProfile.suggest($viewValue)"
                                typeahead-on-select="locationsProfile.search($item)"
                                typeahead-wait-ms="300"

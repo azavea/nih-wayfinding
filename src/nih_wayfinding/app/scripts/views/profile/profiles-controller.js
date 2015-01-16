@@ -6,6 +6,11 @@
         var ctl = this;
         initialize();
 
+        function initialize() {
+            ctl.onProfileSelect = onProfileSelect;
+            refreshUserList();
+        }
+
         /**
          * Change the currently selected user
          *
@@ -57,11 +62,6 @@
         function refreshUserList() {
             ctl.usernames = ProfileService.getProfileNames();
             setCurrentUser();
-        }
-
-        function initialize() {
-            ctl.onProfileSelect = onProfileSelect;
-            refreshUserList();
         }
     }
 

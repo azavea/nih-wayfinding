@@ -6,13 +6,14 @@
     function ProfileService (ProfileProvider, localStorageService) {
 
         // private variables
-        var currentUser = getProfile(localStorage.getItem('mostCurrentUser')) || {};
+        var currentUser = ProfileProvider.deserialize((localStorage.getItem('lastUser')));
 
         // Public Interface
         var module = {
-            getProfile: getProfile,
+            fetchProfile: fetchProfile,
+            profileExists: profileExists,
             getProfileNames: getProfileNames,
-            createProfile: createProfile,
+            createBlankProfile: createBlankProfile,
             deleteProfile: deleteProfile,
             setCurrentUser: setCurrentUser,
             getCurrentUser: getCurrentUser,
@@ -34,7 +35,7 @@
          * @returns Profile object for selected user
          */
         function getCurrentUser() {
-            currentUser = getProfile(localStorage.getItem('mostCurrentUser')) || {};
+            currentUser = fetchProfile(localStorage.getItem('lastUser'));
             return currentUser;
         }
 
@@ -44,10 +45,10 @@
          * @param name {String} User name to set
          */
         function setCurrentUser(name) {
-            var user = getProfile(name);
+            var user = fetchProfile(name);
             if (user) {
                 currentUser = user;
-                localStorage.setItem('mostCurrentUser', name); // Save state for page refresh
+                localStorage.setItem('lastUser', name); // Save state for page refresh
             } else {
                 console.error('User ' + name + ' does not exist!  Not setting current user.');
             }
@@ -65,27 +66,30 @@
          }
 
         /**
-         * @returns Profile for given username
+         * Return an empty user object
          */
-        function getProfile(name) {
-            return localStorageService.get(name);
+        function createBlankProfile() {
+            return ProfileProvider.deserialize();
         }
 
         /**
-         * Creates a new profile with a given user name.
+         * Find profile by name in localstorage
          *
-         * @param name {String} Username
-         * @returns Profile, or `false` if a profile already exists for that name.
+         * @param name {string} username
+         * @return {object} The user object, deserialized
          */
-        function createProfile(name) {
-            if (getProfile(name)) {
-                return false;
-            }
+        function fetchProfile(name) {
+            return ProfileProvider.deserialize(localStorageService.get(name));
+        }
 
-            var profile = ProfileProvider.getInstance();
-            profile.username = name;
-            localStorageService.set(name, profile);
-            return profile;
+        /**
+         * Helper method to check on existence of a given profile
+         *
+         * @param name {string} username
+         * @return {boolean} Whether or not a given user exists and persists
+         */
+        function profileExists(name) {
+            return localStorageService.get(name) ? true : false;
         }
 
         /**

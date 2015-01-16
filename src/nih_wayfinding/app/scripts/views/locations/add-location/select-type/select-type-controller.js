@@ -2,12 +2,13 @@
     'use strict';
 
     /* ngInject */
-    function SelectTypeController($state, NavbarConfig, UserLocations, ProfileService) {
+    function SelectTypeController($state, NavbarConfig, ProfileService) {
         var ctl = this;
         initialize();
 
         function initialize() {
-            UserLocations.workingLocation = UserLocations.newLocation();
+            ctl.user = ProfileService.getCurrentUser();
+            ctl.user.startTempLocation();
             NavbarConfig.set({ title: 'Location Type' });
             ctl.optionClicked = optionClicked;
             ctl.gridOptions = [
@@ -32,12 +33,12 @@
          * Set the location type for our current location model
          */
         function setLocationType(type) {
-            UserLocations.workingLocation.type = type;
+            ctl.user.setTempLocationProperty('type', type);
+            ctl.user.save();
 
-            var currentUser = ProfileService.getCurrentUser().username;
             $state.go('locationsProfile', {
-                username: currentUser,
-                locationID: UserLocations.workingLocation.id
+                username: ctl.user,
+                locationID: ctl.user.tempLocation.id
             });
         }
 

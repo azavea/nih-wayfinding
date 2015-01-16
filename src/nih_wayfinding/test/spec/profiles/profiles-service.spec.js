@@ -12,27 +12,35 @@ describe('nih.profiles: ProfileService', function () {
     beforeEach(inject(function (_ProfileService_) {
         ProfileService = _ProfileService_;
         ProfileService.deleteProfile(testUserName);
-        profile = ProfileService.createProfile(testUserName);
+        profile = ProfileService.createBlankProfile();
+        profile.username = testUserName;
+        profile.save();
     }));
 
     it('should create a new profile', function () {
-        expect(profile.username).toBe(testUserName);
+        expect(ProfileService.fetchProfile(testUserName).username).toEqual(testUserName);
     });
 
     it('should not allow two profiles with the same username', function () {
-        var profile2 = ProfileService.createProfile(testUserName);
-        expect(profile2).toBeFalsy();
+        var profile2 = ProfileService.createBlankProfile(testUserName);
+        profile2.username = testUserName;
+        expect(profile2.save()).toBeFalsy();
     });
 
     it('should get profile by username', function () {
-        var found = ProfileService.getProfile(testUserName);
+        var found = ProfileService.fetchProfile(testUserName);
         expect(found.username).toBe(testUserName);
     });
 
     it('should get list of all usernames', function () {
 
-        ProfileService.createProfile('bar');
-        ProfileService.createProfile('baz');
+        var profile2 = ProfileService.createBlankProfile();
+        profile2.username = 'bar';
+        profile2.save();
+
+        var profile3 = ProfileService.createBlankProfile();
+        profile3.username = 'baz';
+        profile3.save();
 
         var haveNames = ProfileService.getProfileNames();
 
@@ -49,23 +57,73 @@ describe('nih.profiles: ProfileService', function () {
     });
 
     it('should delete the specified user', function () {
-        var found = ProfileService.getProfile(testUserName);
+        var found = ProfileService.fetchProfile(testUserName);
         expect(found.username).toBe(testUserName);
         ProfileService.deleteProfile(testUserName);
-        found = ProfileService.getProfile(testUserName);
-        expect(found).toBeNull();
+        found = ProfileService.fetchProfile(testUserName);
+        expect(found.transient).toEqual(true);
     });
 
     it('should delete the currentUser if currentUser is deleted', function () {
         ProfileService.setCurrentUser(testUserName);
         ProfileService.deleteProfile(testUserName);
-        expect(ProfileService.getCurrentUser().username).toBeUndefined();
+        expect(ProfileService.getCurrentUser().transient).toEqual(true);
     });
 
     it('should set a property on the current user', function () {
         ProfileService.setCurrentUser(testUserName);
-        ProfileService.setCurrentUserProperty('answer', 42);
         var user = ProfileService.getCurrentUser();
+        user.answer = 42;
         expect(user.answer).toBe(42);
+        user.setProperty('otherAnswer', 'the transcendental deduction of the categories of understanding');
+        expect(user.otherAnswer).toBe('the transcendental deduction of the categories of understanding');
     });
+
+    it('should be capable of spinning up a temporary location', function () {
+        profile.startTempLocation();
+        expect(profile.tempLocation.text).toEqual(null);
+    });
+
+    it('should reliably generate the next id', function () {
+        profile.startTempLocation();
+        expect(profile.tempLocation.id).toEqual(1);
+        profile.finishTempLocation();
+
+        profile.startTempLocation();
+        expect(profile.tempLocation.id).toEqual(2);
+
+        profile.finishTempLocation();
+        expect(profile.newLocationID()).toEqual(3);
+    });
+
+    it('should move tempLocation into locations', function () {
+        profile.startTempLocation();
+        profile.finishTempLocation();
+
+        profile.startTempLocation();
+        var temp = profile.tempLocation;
+        profile.finishTempLocation();
+        expect(profile.locations[1]).toEqual(temp);
+    });
+
+    it('should set a property of tempLocation and, later, find that location', function () {
+        profile.startTempLocation();
+        profile.finishTempLocation();
+
+        profile.startTempLocation();
+        profile.setTempLocationProperty('zipzap', 'flimflam');
+        expect(profile.tempLocation.zipzap).toEqual('flimflam');
+        profile.finishTempLocation();
+        expect(profile.locationByID(2).zipzap).toEqual('flimflam');
+    });
+
+    it('should set a property of tempLocation and, later, find that location', function () {
+        profile.startTempLocation();
+        profile.finishTempLocation();
+        profile.startTempLocation();
+        profile.finishTempLocation();
+        profile.removeLocation(2);
+        expect(profile.locations.length).toEqual(1);
+    });
+
 });

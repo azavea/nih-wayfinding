@@ -19,30 +19,83 @@
                     </form>
                 </div>
                 <div ng-switch-when="2">
-                    <h2>Do you use a wheelchair or scooter?</h2>
-                    <div class="btn-group btn-group-justified" role="group"
-                        aria-label="Select yes or no">
-                        <nih-options-grid options="newprofile.yesNoOpts"
-                                          on-option-clicked="newprofile.usingWheelchair(option)">
-                        </nih-options-grid>
+                    <div ng-hide="newprofile.wheelchairTypeDialog" class="fade">
+                        <h2>Do you use a wheelchair or scooter?</h2>
+                        <div class="btn-group btn-group-justified" role="group"
+                             aria-label="Select whether or not you use a wheelchair">
+                            <nih-options-grid options="newprofile.preferenceOpts.wheelchairUseOpts"
+                                              on-option-clicked="newprofile.setUsingWheelchair(option)">
+                            </nih-options-grid>
+                        </div>
+                    </div>
+                    <div ng-hide="!newprofile.wheelchairTypeDialog" class="fade">
+                        <h2>Is your chair electric or manual?</h2>
+                        <div class="btn-group btn-group-justified" role="group"
+                             aria-label="Select wheelchair type">
+                            <nih-options-grid options="newprofile.preferenceOpts.wheelchairTypeOpts"
+                                              on-option-clicked="newprofile.setWheelchairType(option)">
+                            </nih-options-grid>
+                        </div>
                     </div>
                 </div>
                 <div ng-switch-when="3">
                     <h2>What level of challenge do you want in your routes?</h2>
                     <div class="btn-group btn-group-justified" role="group"
                         aria-label="Select challenge level">
-                        <nih-options-grid options="newprofile.challengeOpts"
+                        <nih-options-grid options="newprofile.preferenceOpts.challengeOpts"
                                           on-option-clicked="newprofile.setChallengeLevel(option)">
                         </nih-options-grid>
                     </div>
                 </div>
                 <div ng-switch-when="4">
+                    <h2>Uneven Terrain</h2>
+                    <p>Many people have difficulty on uneven terrain. It is therefore helpful for us
+                       to know how comfortable you are with ground that might not be level. Are you:</p>
+                    <div class="btn-group btn-group-justified" role="group"
+                        aria-label="Select comfort on uneven terrain">
+                        <nih-options-grid options="newprofile.preferenceOpts.steepTerrainOpts"
+                                          on-option-clicked="newprofile.setSteepTerrainComfort(option)">
+                        </nih-options-grid>
+                    </div>
+                </div>
+                <div ng-switch-when="5">
+                    <h2>Travel Speed</h2>
+                    <p>In order to best estimate travel times, we need to get a sense of how quickly
+                        you are relative to the average person. How quickly do you?</p>
+                    <div class="btn-group btn-group-justified" role="group"
+                        aria-label="Select movement speed">
+                        <nih-options-grid options="newprofile.preferenceOpts.speedOpts"
+                                          on-option-clicked="newprofile.setSpeed(option)">
+                        </nih-options-grid>
+                    </div>
+                </div>
+                <div ng-switch-when="6">
+                    <h2>Peace & Quiet</h2>
+                    <p>How important is it that the walks you go on avoid crowds and noise?</p>
+                    <div class="btn-group btn-group-justified" role="group"
+                        aria-label="Select importance of quiet">
+                        <nih-options-grid options="newprofile.preferenceOpts.peaceOpts"
+                                          on-option-clicked="newprofile.setPeace(option)">
+                        </nih-options-grid>
+                    </div>
+                </div>
+                <div ng-switch-when="7">
+                    <h2>Frequency of Rest</h2>
+                    <p>About how often do you need to sit down and rest during moderate physical activity?</p>
+                    <div class="btn-group btn-group-justified" role="group"
+                        aria-label="Select frequency of rest">
+                        <nih-options-grid options="newprofile.preferenceOpts.restOpts"
+                                          on-option-clicked="newprofile.setRestFrequency(option)">
+                        </nih-options-grid>
+                    </div>
+                </div>
+                <div ng-switch-when="8">
                     <h2>Favorite Locations</h2>
                     <p>If there are any locations you visit regularly, it can be useful to save them
                         as favorites Would you like to register a location now?</p>
                     <div class="btn-group btn-group-justified" role="group"
                         aria-label="Select whether to create a location">
-                        <nih-options-grid options="newprofile.newLocOpts"
+                        <nih-options-grid options="newprofile.preferenceOpts.newLocOpts"
                                           on-option-clicked="newprofile.willCreateLocations(option)">
                         </nih-options-grid>
                     </div>

@@ -2,50 +2,30 @@
     'use strict';
 
     /* ngInject */
-    function NewProfileController($state, ProfileService) {
-
+    function NewProfileController($state, ProfileService, ProfilePreferenceOptions, Notifications) {
         var ctl = this;
-        var usingWheelchairScooter = false;
-        var challengeLevel = 2;
-
         initialize();
 
         function initialize() {
             ctl.step = 1;
             ctl.setStep = setStep;
-            ctl.checkUsername = checkUsername;
-            ctl.usingWheelchair = usingWheelchair;
-            ctl.setChallengeLevel = setChallengeLevel;
-            ctl.willCreateLocations = willCreateLocations;
+            ctl.newUser = ProfileService.createBlankProfile();
             ctl.errorMsg = '';
             ctl.displayUsername = '';
+            console.log(ctl.displayUsername);
 
-            ctl.yesNoOpts = [{
-                text: 'Yes',
-                value: true
-            }, {
-                text: 'No',
-                value: false
-            }];
-
-            ctl.newLocOpts = [{
-                text: 'Create locations',
-                value: true
-            }, {
-                text: 'No thanks',
-                value: false
-            }];
-
-            ctl.challengeOpts = [{
-                text: 'Minimal',
-                value: 1
-            }, {
-                text: 'Moderate',
-                value: 5
-            }, {
-                text: 'Challenge Me',
-                value: 10
-            }];
+            // Functions and values pertaining to questionnaire
+            ctl.preferenceOpts = ProfilePreferenceOptions;
+            ctl.checkUsername = checkUsername;
+            ctl.setUsingWheelchair = setUsingWheelchair;
+            ctl.wheelchairTypeDialog = false;
+            ctl.setWheelchairType = setWheelchairType;
+            ctl.setChallengeLevel = setChallengeLevel;
+            ctl.setSteepTerrainComfort = setSteepTerrainComfort;
+            ctl.setSpeed = setSpeed;
+            ctl.setPeace = setPeace;
+            ctl.setRestFrequency = setRestFrequency;
+            ctl.willCreateLocations = willCreateLocations;
         }
         /**
          * Progress through the form sections.
@@ -58,17 +38,61 @@
         /**
          * Set private var for whether using a wheelchair or scooter.
         */
-        function usingWheelchair(amUsing) {
-            usingWheelchairScooter = amUsing.value;
+        function setUsingWheelchair(amUsing) {
+            ctl.newUser.setPreference('wheelchairRequired', amUsing.value);
+            if (amUsing.value) {
+                ctl.wheelchairTypeDialog = true;
+            } else {
+                ctl.setWheelchairType({ value: null });
+            }
+        }
+
+        /**
+         * Set private var for whether using a wheelchair or scooter.
+        */
+        function setWheelchairType(chairType) {
+            ctl.newUser.setPreference('wheelchairPowered', chairType.value);
             setStep(3);
         }
 
         /**
          * Set private var for profile challenge level.
          */
-        function setChallengeLevel(level) {
-            challengeLevel = level.value;
+        function setChallengeLevel(challenge) {
+            ctl.newUser.setPreference('challenge', challenge.value);
             setStep(4);
+        }
+
+        /**
+         * Set private var for profile steepTerrainComfort level.
+         */
+        function setSteepTerrainComfort(comfort) {
+            ctl.newUser.setPreference('steepTerrainComfort', comfort.value);
+            setStep(5);
+        }
+
+        /**
+         * Set private var for profile speed.
+         */
+        function setSpeed(speed) {
+            ctl.newUser.setPreference('speed', speed.value);
+            setStep(6);
+        }
+
+        /**
+         * Set private var for profile speed.
+         */
+        function setPeace(peace) {
+            ctl.newUser.setPreference('peace', peace.value);
+            setStep(7);
+        }
+
+        /**
+         * Set private var for profile speed.
+         */
+        function setRestFrequency(frequency) {
+            ctl.newUser.setPreference('restFrequency', frequency.value);
+            setStep(8);
         }
 
         /**
@@ -88,13 +112,19 @@
          * then go back to the main profiles page.
          */
         function createNewUser() {
-            ProfileService.createProfile(ctl.username);
-            ProfileService.setCurrentUser(ctl.username);
-            ProfileService.setCurrentUserProperty('wheelchair', usingWheelchairScooter);
-            ProfileService.setCurrentUserProperty('challenge', challengeLevel);
+            ctl.newUser.username = ctl.username;
+            if (ctl.newUser.save()) {
+                ProfileService.setCurrentUser(ctl.username);
+            } else {
+                Notifications.show({
+                    text: 'There was a problem saving this profile. Make sure the username is unique.',
+                    timeout: 3000
+                });
+            }
         }
 
-        /**
+        /*k
+         *
          * Check entered username is valid, and set error message if not.
          */
         function checkUsername() {
@@ -103,7 +133,7 @@
                 return; // 'required' check will set validity
             }
 
-            if (ProfileService.getProfile(ctl.username)) {
+            if (ProfileService.profileExists(ctl.username)) {
                 ctl.errorMsg = 'User already exists';
                 ctl.newusername.$setValidity('newprofile.username', false);
             } else {

@@ -15,7 +15,8 @@
         'ngAria',
         'ui.router',
         'nih.profiles',
-        'nih.views.navbar'
+        'nih.views.navbar',
+        'nih.notifications'
     ])
     .config(StateConfig);
 })();
