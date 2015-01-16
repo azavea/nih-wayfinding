@@ -10,7 +10,6 @@
             ctl.step = 1;
             ctl.setStep = setStep;
             ctl.newUser = ProfileService.createBaseProfile();
-            console.log(ctl.newUser);
 
             ctl.errorMsg = '';
             ctl.displayUsername = '';

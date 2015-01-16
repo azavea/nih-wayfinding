@@ -10,8 +10,8 @@
     /* ngInject */
     function ProfileProvider (localStorageService) {
         var Profile = function(obj) {
-            if (obj) {
-                this.username = obj.username || '';
+            if (obj.username) {
+                this.username = obj.username;
                 this.locations = obj.locations || [];
                 this.preferences = obj.preferences || {};
                 this.tempLocation = obj.tempLocation || null;
@@ -25,6 +25,10 @@
             }
             return this;
         };
+
+        /**
+         * Governs the persistence in localstorage of the object on which this method is called
+         */
         Profile.prototype.save = function() {
             if (this.transient && localStorageService.get(this.username)) {
                 return false;
@@ -34,25 +38,33 @@
             return true;
         };
 
+        /**
+         * Sets a user preference
+         *
+         * @param property {string} key
+         * @param value {any} value
+         */
         Profile.prototype.setPreference = function(property, value) {
             this.preferences[property] = value;
         };
 
+        /**
+         * Sets top-level user property
+         *
+         * @param property {string} key
+         * @param value {any} value
+         */
         Profile.prototype.setProperty = function(property, value) {
             this[property] = value;
         };
 
-
-        Profile.prototype.newLocationID = function() {
-            var maxID = _.max(this.locations, function(location) { return location.id; });
-            return maxID > 0 ? maxID + 1 : 1;
-        };
-        Profile.prototype.clearTemp = function() {
-            this.tempLocation = null;
-        };
+        // Location methods
+        /**
+        * Begin a new location's construction - save, temporarily, in obj.tempLocation
+        */
         Profile.prototype.startLocation = function() {
             this.tempLocation = {
-                id: this.newLocationID,
+                id: this.newLocationID(),
                 text: null,
                 img: null,
                 feature: null,
@@ -60,23 +72,56 @@
                 type: null
             };
         };
+
+        /**
+         * Generate the next location ID
+         */
+        Profile.prototype.newLocationID = function() {
+            var maxID = _.max(this.locations, function(location) { return location.id; }).id;
+            return maxID > 0 ? maxID + 1 : 1;
+        };
+
+        /**
+        * Finish a new location's construction - move tempLocation into locations list and clear it
+        */
         Profile.prototype.finishLocation = function() {
             this.locations = this.locations.concat(this.tempLocation);
-            this.clearTemp();
+            this.tempLocation = null;
         };
+
+        /**
+         * Sets a property on obj.tempLocation user property
+         *
+         * @param property {string} key
+         * @param value {any} value
+         */
+        Profile.prototype.extendTempLocation = function(property, value) {
+            this.tempLocation[property] = value;
+        };
+
+        /**
+        * Find a location
+        *
+        * @param id {int} The location ID
+        * @return {object} The location object found
+        */
         Profile.prototype.locationByID = function(id) {
             var location = _.filter(this.locations, function(loc) {
                 return loc.id === id;
             });
             return location[0];
         };
+
+        /**
+        * Remove a location
+        *
+        * @param id {int} The location ID
+        */
         Profile.prototype.removeLocation = function(id) {
             var newLocations = _.filter(this.locations, function(loc) { return loc.id !== id; });
             this.locations = newLocations;
         };
-        Profile.prototype.extendTempLocation = function(property, value) {
-            this.tempLocation[property] = value;
-        };
+
 
         // Public Interface
         var module = {

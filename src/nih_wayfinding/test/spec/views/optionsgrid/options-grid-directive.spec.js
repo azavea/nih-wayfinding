@@ -12,13 +12,13 @@ describe('nih.views.locations: LocationsController', function () {
   var options;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($compile, $rootScope, UserLocationsStub) {
+  beforeEach(inject(function ($compile, $rootScope) {
     rootScope = $rootScope;
     scope = $rootScope.$new();
-    options = UserLocationsStub;
+    options = [{ text: 'test' }];
     scope.options = options;
     scope.optionClicked = function (option) {};
-    element = $compile('<nih-options-grid options=options on-option-clicked="optionClicked(option)"></nih-options-grid>')(scope);
+    element = $compile('<nih-options-grid options="options" on-option-clicked="optionClicked(option)"></nih-options-grid>')(scope);
   }));
 
   it('should fire an event that returns the object when a button is clicked', function () {
