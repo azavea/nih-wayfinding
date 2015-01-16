@@ -13,7 +13,7 @@
             fetchProfile: fetchProfile,
             profileExists: profileExists,
             getProfileNames: getProfileNames,
-            createBaseProfile: createBaseProfile,
+            createBlankProfile: createBlankProfile,
             deleteProfile: deleteProfile,
             setCurrentUser: setCurrentUser,
             getCurrentUser: getCurrentUser,
@@ -68,14 +68,26 @@
         /**
          * Return an empty user object
          */
-        function createBaseProfile() {
+        function createBlankProfile() {
             return ProfileProvider.deserialize();
         }
 
+        /**
+         * Find profile by name in localstorage
+         *
+         * @param name {string} username
+         * @return {object} The user object, deserialized
+         */
         function fetchProfile(name) {
             return ProfileProvider.deserialize(localStorageService.get(name));
         }
 
+        /**
+         * Helper method to check on existence of a given profile
+         *
+         * @param name {string} username
+         * @return {boolean} Whether or not a given user exists and persists
+         */
         function profileExists(name) {
             return localStorageService.get(name) ? true : false;
         }

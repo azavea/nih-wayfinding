@@ -8,7 +8,7 @@
 
         function initialize() {
             ctl.user = ProfileService.getCurrentUser();
-            ctl.user.startLocation();
+            ctl.user.startTempLocation();
             NavbarConfig.set({ title: 'Location Type' });
             ctl.optionClicked = optionClicked;
             ctl.gridOptions = [
@@ -33,7 +33,7 @@
          * Set the location type for our current location model
          */
         function setLocationType(type) {
-            ctl.user.extendTempLocation('type', type);
+            ctl.user.setTempLocationProperty('type', type);
             ctl.user.save();
 
             $state.go('locationsProfile', {

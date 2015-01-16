@@ -2,107 +2,29 @@
     'use strict';
 
     /* ngInject */
-    function NewProfileController($state, ProfileService, Notifications) {
+    function NewProfileController($state, ProfileService, ProfilePreferenceOptions, Notifications) {
         var ctl = this;
         initialize();
 
         function initialize() {
             ctl.step = 1;
             ctl.setStep = setStep;
-            ctl.newUser = ProfileService.createBaseProfile();
+            ctl.newUser = ProfileService.createBlankProfile();
 
             ctl.errorMsg = '';
             ctl.displayUsername = '';
 
-            // Values pertaining to questionnaire
+            // Functions and values pertaining to questionnaire
+            ctl.preferenceOpts = ProfilePreferenceOptions;
             ctl.checkUsername = checkUsername;
-
-            ctl.wheelchairUseOpts = [{
-                text: 'Yes',
-                value: true
-            }, {
-                text: 'No',
-                value: false
-            }];
             ctl.setUsingWheelchair = setUsingWheelchair;
-
-            ctl.wheelchairTypeOpts = [{
-                text: 'Electric',
-                value: true
-            }, {
-                text: 'Manual',
-                value: false
-            }];
             ctl.wheelchairTypeDialog = false;
             ctl.setWheelchairType = setWheelchairType;
-
-            ctl.challengeOpts = [{
-                text: 'Minimal',
-                value: 0.1
-            }, {
-                text: 'Moderate',
-                value: 0.5
-            }, {
-                text: 'Challenge me',
-                value: 1
-            }];
             ctl.setChallengeLevel = setChallengeLevel;
-
-            ctl.steepTerrainOpts = [{
-                text: 'Not comfortable',
-                value: 0.1
-            }, {
-                text: 'Somewhat comfortable',
-                value: 0.5
-            }, {
-                text: 'Totally comfortable',
-                value: 1
-            }];
             ctl.setSteepTerrainComfort = setSteepTerrainComfort;
-
-            ctl.speedOpts = [{
-                text: 'Slower than average',
-                value: 0.1
-            }, {
-                text: 'About Average',
-                value: 0.5
-            }, {
-                text: 'Faster than average',
-                value: 1
-            }];
             ctl.setSpeed = setSpeed;
-
-            ctl.peaceOpts = [{
-                text: 'Not important',
-                value: 0.1
-            }, {
-                text: 'Somewhat important',
-                value: 0.5
-            }, {
-                text: 'Very Important',
-                value: 1
-            }];
             ctl.setPeace = setPeace;
-
-            ctl.restOpts = [{
-                text: 'Not regularly',
-                value: 0.1
-            }, {
-                text: 'Somewhat regularly',
-                value: 0.5
-            }, {
-                text: 'Very regularly',
-                value: 1
-            }];
             ctl.setRestFrequency = setRestFrequency;
-
-            ctl.newLocOpts = [{
-                text: 'Create locations',
-                value: true
-            }, {
-                text: 'No thanks',
-                value: false
-            }];
             ctl.willCreateLocations = willCreateLocations;
         }
         /**

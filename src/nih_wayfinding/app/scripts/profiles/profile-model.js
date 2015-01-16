@@ -62,7 +62,7 @@
         /**
         * Begin a new location's construction - save, temporarily, in obj.tempLocation
         */
-        Profile.prototype.startLocation = function() {
+        Profile.prototype.startTempLocation = function() {
             this.tempLocation = {
                 id: this.newLocationID(),
                 text: null,
@@ -84,7 +84,7 @@
         /**
         * Finish a new location's construction - move tempLocation into locations list and clear it
         */
-        Profile.prototype.finishLocation = function() {
+        Profile.prototype.finishTempLocation = function() {
             this.locations = this.locations.concat(this.tempLocation);
             this.tempLocation = null;
         };
@@ -95,7 +95,7 @@
          * @param property {string} key
          * @param value {any} value
          */
-        Profile.prototype.extendTempLocation = function(property, value) {
+        Profile.prototype.setTempLocationProperty = function(property, value) {
             this.tempLocation[property] = value;
         };
 

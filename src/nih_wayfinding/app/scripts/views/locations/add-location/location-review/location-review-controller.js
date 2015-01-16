@@ -32,7 +32,7 @@
          * Call location service's addLocation method to add the current working model
          */
         function confirmLocation() {
-            ctl.user.finishLocation();
+            ctl.user.finishTempLocation();
             ctl.user.save();
         }
 

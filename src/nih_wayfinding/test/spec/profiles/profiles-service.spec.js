@@ -12,7 +12,7 @@ describe('nih.profiles: ProfileService', function () {
     beforeEach(inject(function (_ProfileService_) {
         ProfileService = _ProfileService_;
         ProfileService.deleteProfile(testUserName);
-        profile = ProfileService.createBaseProfile();
+        profile = ProfileService.createBlankProfile();
         profile.username = testUserName;
         profile.save();
     }));
@@ -22,7 +22,7 @@ describe('nih.profiles: ProfileService', function () {
     });
 
     it('should not allow two profiles with the same username', function () {
-        var profile2 = ProfileService.createBaseProfile(testUserName);
+        var profile2 = ProfileService.createBlankProfile(testUserName);
         profile2.username = testUserName;
         expect(profile2.save()).toBeFalsy();
     });
@@ -34,11 +34,11 @@ describe('nih.profiles: ProfileService', function () {
 
     it('should get list of all usernames', function () {
 
-        var profile2 = ProfileService.createBaseProfile();
+        var profile2 = ProfileService.createBlankProfile();
         profile2.username = 'bar';
         profile2.save();
 
-        var profile3 = ProfileService.createBaseProfile();
+        var profile3 = ProfileService.createBlankProfile();
         profile3.username = 'baz';
         profile3.save();
 
@@ -80,48 +80,48 @@ describe('nih.profiles: ProfileService', function () {
     });
 
     it('should be capable of spinning up a temporary location', function () {
-        profile.startLocation();
+        profile.startTempLocation();
         expect(profile.tempLocation.text).toEqual(null);
     });
 
-    it('oughtta reliably generate the next id', function () {
-        profile.startLocation();
+    it('should reliably generate the next id', function () {
+        profile.startTempLocation();
         expect(profile.tempLocation.id).toEqual(1);
-        profile.finishLocation();
+        profile.finishTempLocation();
 
-        profile.startLocation();
+        profile.startTempLocation();
         expect(profile.tempLocation.id).toEqual(2);
 
-        profile.finishLocation();
+        profile.finishTempLocation();
         expect(profile.newLocationID()).toEqual(3);
     });
 
     it('should move tempLocation into locations', function () {
-        profile.startLocation();
-        profile.finishLocation();
+        profile.startTempLocation();
+        profile.finishTempLocation();
 
-        profile.startLocation();
+        profile.startTempLocation();
         var temp = profile.tempLocation;
-        profile.finishLocation();
+        profile.finishTempLocation();
         expect(profile.locations[1]).toEqual(temp);
     });
 
     it('should set a property of tempLocation and, later, find that location', function () {
-        profile.startLocation();
-        profile.finishLocation();
+        profile.startTempLocation();
+        profile.finishTempLocation();
 
-        profile.startLocation();
-        profile.extendTempLocation('zipzap', 'flimflam');
+        profile.startTempLocation();
+        profile.setTempLocationProperty('zipzap', 'flimflam');
         expect(profile.tempLocation.zipzap).toEqual('flimflam');
-        profile.finishLocation();
+        profile.finishTempLocation();
         expect(profile.locationByID(2).zipzap).toEqual('flimflam');
     });
 
     it('should set a property of tempLocation and, later, find that location', function () {
-        profile.startLocation();
-        profile.finishLocation();
-        profile.startLocation();
-        profile.finishLocation();
+        profile.startTempLocation();
+        profile.finishTempLocation();
+        profile.startTempLocation();
+        profile.finishTempLocation();
         profile.removeLocation(2);
         expect(profile.locations.length).toEqual(1);
     });

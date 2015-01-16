@@ -61,9 +61,9 @@
         function onGeocoderResponse(data) {
             if (data.length) { // If non-empty result
                 // Add geometric features to location tracker
-                ctl.user.extendTempLocation('feature', data[0]);
+                ctl.user.setTempLocationProperty('feature', data[0]);
             } else { // If empty result
-                ctl.user.extendTempLocation('feature', undefined);
+                ctl.user.setTempLocationProperty('feature', undefined);
                 Notifications.show({
                     text: 'Unable to find the selected address. Please try a different one.',
                     timeout: 3000
@@ -78,7 +78,7 @@
         function imgOptionClicked(option) {
             ctl.showIconSelect = false;
             ctl.showUploadDialog = false;
-            ctl.user.extendTempLocation('img', option.img);
+            ctl.user.setTempLocationProperty('img', option.img);
         }
 
         /**

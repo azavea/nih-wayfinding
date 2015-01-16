@@ -23,7 +23,7 @@
                         <h2>Do you use a wheelchair or scooter?</h2>
                         <div class="btn-group btn-group-justified" role="group"
                              aria-label="Select whether or not you use a wheelchair">
-                            <nih-options-grid options="newprofile.wheelchairUseOpts"
+                            <nih-options-grid options="newprofile.preferenceOpts.wheelchairUseOpts"
                                               on-option-clicked="newprofile.setUsingWheelchair(option)">
                             </nih-options-grid>
                         </div>
@@ -32,7 +32,7 @@
                         <h2>Is your chair electric or manual?</h2>
                         <div class="btn-group btn-group-justified" role="group"
                              aria-label="Select wheelchair type">
-                            <nih-options-grid options="newprofile.wheelchairTypeOpts"
+                            <nih-options-grid options="newprofile.preferenceOpts.wheelchairTypeOpts"
                                               on-option-clicked="newprofile.setWheelchairType(option)">
                             </nih-options-grid>
                         </div>
@@ -42,7 +42,7 @@
                     <h2>What level of challenge do you want in your routes?</h2>
                     <div class="btn-group btn-group-justified" role="group"
                         aria-label="Select challenge level">
-                        <nih-options-grid options="newprofile.challengeOpts"
+                        <nih-options-grid options="newprofile.preferenceOpts.challengeOpts"
                                           on-option-clicked="newprofile.setChallengeLevel(option)">
                         </nih-options-grid>
                     </div>
@@ -53,7 +53,7 @@
                        to know how comfortable you are with ground that might not be level. Are you:</p>
                     <div class="btn-group btn-group-justified" role="group"
                         aria-label="Select comfort on uneven terrain">
-                        <nih-options-grid options="newprofile.steepTerrainOpts"
+                        <nih-options-grid options="newprofile.preferenceOpts.steepTerrainOpts"
                                           on-option-clicked="newprofile.setSteepTerrainComfort(option)">
                         </nih-options-grid>
                     </div>
@@ -64,7 +64,7 @@
                         you are relative to the average person. How quickly do you?</p>
                     <div class="btn-group btn-group-justified" role="group"
                         aria-label="Select movement speed">
-                        <nih-options-grid options="newprofile.speedOpts"
+                        <nih-options-grid options="newprofile.preferenceOpts.speedOpts"
                                           on-option-clicked="newprofile.setSpeed(option)">
                         </nih-options-grid>
                     </div>
@@ -74,7 +74,7 @@
                     <p>How important is it that the walks you go on avoid crowds and noise?</p>
                     <div class="btn-group btn-group-justified" role="group"
                         aria-label="Select importance of quiet">
-                        <nih-options-grid options="newprofile.peaceOpts"
+                        <nih-options-grid options="newprofile.preferenceOpts.peaceOpts"
                                           on-option-clicked="newprofile.setPeace(option)">
                         </nih-options-grid>
                     </div>
@@ -84,7 +84,7 @@
                     <p>About how often do you need to sit down and rest during moderate physical activity?</p>
                     <div class="btn-group btn-group-justified" role="group"
                         aria-label="Select frequency of rest">
-                        <nih-options-grid options="newprofile.restOpts"
+                        <nih-options-grid options="newprofile.preferenceOpts.restOpts"
                                           on-option-clicked="newprofile.setRestFrequency(option)">
                         </nih-options-grid>
                     </div>
@@ -95,7 +95,7 @@
                         as favorites Would you like to register a location now?</p>
                     <div class="btn-group btn-group-justified" role="group"
                         aria-label="Select whether to create a location">
-                        <nih-options-grid options="newprofile.newLocOpts"
+                        <nih-options-grid options="newprofile.preferenceOpts.newLocOpts"
                                           on-option-clicked="newprofile.willCreateLocations(option)">
                         </nih-options-grid>
                     </div>
