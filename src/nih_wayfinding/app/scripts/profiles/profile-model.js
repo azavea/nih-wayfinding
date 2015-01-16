@@ -30,7 +30,6 @@
                 return false;
             }
             this.transient = false;
-            console.log(this.username, this);
             localStorageService.set(this.username, this);
             return true;
         };

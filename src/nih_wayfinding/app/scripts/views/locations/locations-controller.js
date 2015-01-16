@@ -8,14 +8,14 @@
 
         function initialize() {
             ctl.findAddressExpanded = false;
-            ctl.currentUser = ProfileService.getCurrentUser();
-            ctl.gridOptions = ctl.locations;
+            ctl.user = ProfileService.getCurrentUser();
+            ctl.gridOptions = ctl.user.locations;
             ctl.optionClicked = optionClicked;
             ctl.search = search;
             ctl.searchText = '';
             ctl.suggest = Geocoder.suggest;
 
-            var title = ctl.currentUser.username ? ctl.currentUser.username : 'Profile';
+            var title = ctl.user.username ? ctl.user.username : 'Profile';
             NavbarConfig.set({
                 title: title,
                 back: false

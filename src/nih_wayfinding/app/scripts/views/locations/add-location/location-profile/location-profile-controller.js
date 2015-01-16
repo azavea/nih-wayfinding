@@ -12,7 +12,6 @@
         function initialize() {
             NavbarConfig.set({ title: 'Location Profile' });
             ctl.user = ProfileService.getCurrentUser();
-            console.log(ctl.user);
 
             // Hidden image selection dialog
             ctl.showIconSelect = false;
@@ -110,7 +109,6 @@
          * Validate the model's data to ensure it will produce a satisfactory location
          */
         function validateBeforeReview() {
-            console.log(ctl.user, ctl.user.text);
             if (ctl.user.tempLocation.text === undefined) { // If there's no label
                 Notifications.show({
                     text: 'No label specified - please label this location.',

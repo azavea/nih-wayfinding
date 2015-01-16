@@ -3,12 +3,12 @@
 
     /* ngInject */
     function LocationsReviewController($scope, $stateParams, $q,
-                                       Config, Map, MapControl, NavbarConfig, UserLocations, ProfileService) {
+                                       Config, Map, MapControl, NavbarConfig, ProfileService) {
         var ctl = this;
         initialize();
 
         function initialize() {
-            ctl.currentLocations = UserLocations.workingLocation;
+            ctl.user = ProfileService.getCurrentUser();
             NavbarConfig.set({
                 title: 'Review Location',
                 back: 'locationsProfile'
@@ -32,7 +32,8 @@
          * Call location service's addLocation method to add the current working model
          */
         function confirmLocation() {
-            UserLocations.addLocation(UserLocations.workingLocation);
+            ctl.user.finishLocation();
+            ctl.user.save();
         }
 
     }
