@@ -73,6 +73,7 @@ module.exports = function(config) {
       'app/scripts/profiles/module.js',
       'app/scripts/profiles/profile-model.js',
       'app/scripts/profiles/profile-service.js',
+      'app/scripts/profiles/profile-preference-options.js',
       'app/scripts/geocoder/module.js',
       'app/scripts/geocoder/search-service.js',
       'app/scripts/mapping/module.js',
