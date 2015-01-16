@@ -10,23 +10,17 @@ NIH Wayfinding Tools (Prototype)
 
 ## Local Development
 
-A combination of Vagrant 1.5+ and Ansible 1.6+ is used to setup the development environment for this project. It creates the following virtual machines:
-
-- `app`
-- `services`
-
-The `app` virtual machine contains an instance of the Angular/Scala application and `services` contains the PostgreSQL database and other services.
-
+A combination of Vagrant 1.5+ and Ansible 1.8+ is used to setup the development environment for this project.
 Use the following command to bring up a local development environment:
 
 ```bash
 $ vagrant up
 ```
 
-After provisioning is complete, you can login to the application server or services server:
+After provisioning is complete, you can login to the server:
 
 ```bash
-$ vagrant ssh [app|services]
+$ vagrant ssh
 ```
 
 ### Ports
