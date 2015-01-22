@@ -1,6 +1,6 @@
 html {
   font-size: 10px;
-  @media (max-width: $screen-sm-min) {
+  @media (max-width: $screen-xs) {
     font-size: 6px;
   }
 }
