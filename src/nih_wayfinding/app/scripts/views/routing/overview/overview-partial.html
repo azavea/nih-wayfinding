@@ -6,21 +6,17 @@
          geojson="overview.map.geojson">
 </leaflet>
 
-<footer class="container-fluid">
+<footer class="route-overview container-fluid">
     <div class="row">
-        <div class="col-xs-12 col-md-4">
-            <p>45 Mins, 2.5 Miles, 5 Turns</p>
+        <div class="col-xs-12">
+            45 Mins, 2.5 Miles, 5 Turns
         </div>
     </div>
-    <div class="row">
-        <div class="col-xs-4 col-md-4">
-            <button ui-sref="directions" type="button" class="btn btn-primary btn-block">Directions</button>
+    <nav class="row">
+        <div class="btn-group-nav btn-group-justified">
+            <a ui-sref="directions" type="button" class="btn btn-primary btn-block">Directions</a>
+            <a ui-sref="changeroute(overview.stateParams)" type="button" class="btn btn-primary btn-block">Change Route</a>
+            <a ui-sref="navigate" type="button" class="btn btn-primary btn-block active"><b>Navigate</b></a>
         </div>
-        <div class="col-xs-4 col-md-4">
-            <button ui-sref="changeroute(overview.stateParams)" type="button" class="btn btn-primary btn-block">Change Route</button>
-        </div>
-        <div class="col-xs-4 col-md-4">
-            <button ui-sref="navigate" type="button" class="btn btn-primary btn-block"><b>Navigate</b></button>
-        </div>
-    </div>
+    </nav>
 </footer>

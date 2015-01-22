@@ -1,23 +1,22 @@
 <div class="content scroll double-footer container-fluid">
     <div class="row">
-        <div class="col-xs-9 col-md-9">
-            <h4>Locations</h4>
+        <div class="col-xs-6">
+            <h3>Locations</h3>
         </div>
-        <div class="col-xs-3 col-md-3">
-            <button ui-sref="locationsSelectType" class="btn btn-default btn-block pull-right" type="button">
-                <span class="glyphicon glyphicon-plus"></span> Add Location
+        <div class="col-xs-6">
+            <button ui-sref="locationsSelectType" class="btn btn-secondary btn-block pull-right" type="button">
+                <span class="h4">+ Add Location</span>
             </button>
         </div>
     </div>
 
     <!-- Must pass the 'option' argument to the function in on-option-clicked for this to work -->
     <nih-options-grid options="locations.gridOptions" on-option-clicked="locations.optionClicked(option)"></nih-options-grid>
-
 </div>
 <footer class="container-fluid" ng-class="{expanded: locations.findAddressExpanded}">
     <div class="row" ng-class="{expanded: locations.findAddressExpanded}">
         <div class="col-md-6 col-xs-6">
-            <h4>Find Address</h4>
+            <h3>Find Address</h3>
         </div>
         <div class="col-md-6 col-xs-6">
             <input class="form-control pull-right"
@@ -38,7 +37,7 @@
     </div>
     <div class="row">
         <div class="col-md-6 col-xs-6">
-            <h4>Go for a Walk</h4>
+            <h3>Go for a Walk</h3>
         </div>
         <div class="col-md-6 col-xs-6">
             <button ui-sref="goforwalk" class="btn btn-primary btn-block pull-right" type="button">Start</button>

@@ -1,13 +1,13 @@
-<div class="container-fluid content scroll">
-    <div class="row" ng-repeat="item in directions.list">
-        <div class="col-md-1 col-xs-1">
-            <span class="glyphicon" ng-class="directions.getTurnIconName(item.directions.turn)"></span>
-        </div>
-        <div class="col-md-11 col-xs-11" ng-style="{'border-right': '10px solid ' + directions.getLineColor(item.lastModified)}">
-            <h4>{{ ::item.directions.text }}</h4>
-            <span ng-if="item.turnamenity"> at {{ ::item.turnamenity.tags.name }}</span>
-            <span ng-if="item.directions.distanceMeters">{{ ::item.directions.distanceMeters | distance }}</span>
-            <span class="glyphicon" ng-class="directions.getFlagIconName(key)" ng-repeat="(key, value) in item.flags"></span>
-        </div>
-    </div>
-</div>
+<div class="content scroll">
+  <table class="directions-table">
+      <tr ng-repeat="item in directions.list">
+          <td>
+              <span class="glyphicon" ng-class="directions.getTurnIconName(item.directions.turn)"></span>
+          </td>
+          <td class="direction" ng-style="{'border-right': '10px solid ' + directions.getLineColor(item.lastModified)}">
+              <h3 class="direction-instruction">{{ ::item.directions.text }} <span ng-if="item.turnamenity">at {{ ::item.turnamenity.tags.name }}</span> <span class="glyphicon" ng-class="directions.getFlagIconName(key)" ng-repeat="(key, value) in item.flags"></span></h3>
+              <div class="direction-description" ng-if="item.directions.distanceMeters">{{ ::item.directions.distanceMeters | distance }}</div>
+          </td>
+      </tr>
+  </table>
+<div>

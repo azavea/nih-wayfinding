@@ -1,7 +1,6 @@
 .form-btn {
     // this handles hover and active state well
     @include button-variant(white, gray, white);
-
     padding: 10px;
     font-size: 22px;
 }

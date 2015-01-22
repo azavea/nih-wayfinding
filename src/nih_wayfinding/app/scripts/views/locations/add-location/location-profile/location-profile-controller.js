@@ -18,12 +18,12 @@
             ctl.showIconSelect = false;
             ctl.toggleIconSelectDialog = toggleIconSelectDialog;
             ctl.imgOpts = [
-                { img: 'http://lorempixel.com/200/100/' },
-                { img: 'http://lorempixel.com/200/100/' },
-                { img: 'http://lorempixel.com/200/100/' },
-                { img: 'http://lorempixel.com/200/100/' },
-                { img: 'http://lorempixel.com/200/100/' },
-                { img: 'http://lorempixel.com/200/100/' },
+                { img: 'http://localhost:8001/images/icons/icon-house.svg' },
+                { img: 'http://localhost:8001/images/icons/icon-house.svg' },
+                { img: 'http://localhost:8001/images/icons/icon-house.svg' },
+                { img: 'http://localhost:8001/images/icons/icon-house.svg' },
+                { img: 'http://localhost:8001/images/icons/icon-house.svg' },
+                { img: 'http://localhost:8001/images/icons/icon-house.svg' },
             ];
             ctl.imgOptionClicked = imgOptionClicked;
 

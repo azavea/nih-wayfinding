@@ -1,0 +1,51 @@
+.btn-nav-main {
+  background-color: transparent;
+  border-left: 1px solid #fff;
+  bottom: 0;
+  color: #fff !important;
+  font-size: $font-size-h4;
+  text-transform: uppercase;
+  position: absolute !important;
+  right: 0;
+  top: 0;
+  width: 6em;
+  &:hover {
+    // color: #fff;
+    background-color: #666;
+  }
+}
+
+.btn-group-nav-main {
+  height: $header-height;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.btn {
+  font-size: $font-size-h4;
+  box-shadow: none !important;
+}
+
+.btn-group-nav {
+  height: 100%;
+  &>.btn-block {
+    background-color: $gray-light;
+    border: 0;
+    border-right: 1px solid #c0c3c5;
+    &:last-child {
+      border-right: 0;
+    }
+    &:hover {
+      background-color: darken($gray-light, 10%);
+    }
+    &.active {
+      color: $gray-light;
+      background-color: #fff;
+    }
+  }
+}
+
+.btn-img {
+  font-size: $font-size-h3 !important;
+}

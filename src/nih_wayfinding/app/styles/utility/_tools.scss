@@ -1,0 +1,43 @@
+$block-unit: 1.4rem;
+
+@function pow($number, $exp) {
+  $value: $number;
+  @if $exp > 0 {
+    @for $i from 2 through $exp {
+      $value: $value * $number;
+    }
+  }
+  @else if $exp < 0 {
+    @for $i from 0 through -$exp {
+      $value: $value / $number;
+    }
+  }
+  @else {
+    $value: 1;
+  }
+  @return $value;
+}
+
+@function strip-units($number) {
+  @return $number / ($number * 0 + 1);
+}
+
+@function rem($px) {
+  @return (strip-units($px) / 10 * 1rem);
+}
+
+@function px($rem) {
+  @return (strip-units($rem) * 10 * 1px);
+}
+
+@mixin extend() {
+  margin-right: -$grid-gutter-width / 2;
+  margin-left: -$grid-gutter-width / 2;
+  padding-right: $grid-gutter-width / 2;
+  padding-left: $grid-gutter-width / 2;
+}
+
+@mixin blockpadding() {
+  padding-top: $block-unit;
+  padding-bottom: $block-unit;
+}

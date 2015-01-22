@@ -3,7 +3,7 @@
 
     var UserLocationsStub = [{
         text: 'Post Office',
-        img: 'http://lorempixel.com/210/110',
+        img: '/images/icons/icon-postoffice.svg',
         feature: {
             geometry: {
                 x: 10,
@@ -12,7 +12,7 @@
         }
     }, {
         text: 'Home',
-        img: 'http://lorempixel.com/210/110',
+        img: '/images/icons/icon-house.svg',
         feature: {
             geometry: {
                 x: 10,
@@ -21,7 +21,7 @@
         }
     }, {
         text: 'Park',
-        img: 'http://lorempixel.com/210/110',
+        img: '/images/icons/icon-park.svg',
         feature: {
             geometry: {
                 x: 10,
@@ -30,7 +30,7 @@
         }
     }, {
         text: 'Jennifer\'s House',
-        img: 'http://lorempixel.com/210/110',
+        img: '/images/icons/icon-jennifer.jpg',
         feature: {
             geometry: {
                 x: 10,
@@ -39,7 +39,7 @@
         }
     }, {
         text: 'Grocery',
-        img: 'http://lorempixel.com/210/110',
+        img: '/images/icons/icon-shopping.svg',
         feature: {
             geometry: {
                 x: 10,
@@ -48,7 +48,7 @@
         }
     }, {
         text: 'Cafe',
-        img: 'http://lorempixel.com/210/110',
+        img: '/images/icons/icon-cafe.svg',
         feature: {
             geometry: {
                 x: 10,

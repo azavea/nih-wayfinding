@@ -1,29 +1,38 @@
 .options-grid {
-  padding: 2em;
+  padding: 2em 0;
   width: 100%;
   clear: both;
+
+  > .btn-img {
+    min-height: 20rem;
+  }
 
   button {
     float: left;
     border-radius: 0;
     background-color: #eee;
     border: 0;
-    padding: 5em 2em;
+    padding: 1rem 2rem;
     margin-bottom: 2%;
     margin-right: 2%;
-    border-right: 1px solid #fff;
     width: 32%;
-    height: 100px;
+    font-size: $font-size-h2;
+    min-height: 14rem;
+    > img {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 1rem;
+      max-height: 10rem;
+    }
   }
 
   button:nth-child(3n) {
-    border-right: 0;
     margin-right: 0;
   }
 
   button:first-child:last-child {
     width: 100%;
-    border-right: 0;
     margin-right: 0;
   }
 
@@ -33,12 +42,21 @@
   }
 
   button:nth-child(2):last-child {
-    border-right: 0;
     margin-right: 0;
     width: 49%;
   }
 
-  * {
-    box-sizing: border-box;
+  @media (max-width: $screen-sm-min) {
+
+    button {
+      width: 49%;
+      margin-right: 0;
+    }
+
+    button:nth-child(2n+1) {
+      margin-right: 2%;
+    }
+
   }
+
 }
