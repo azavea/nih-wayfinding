@@ -60,7 +60,8 @@ else
 end
 
 ANSIBLE_GROUPS = {
-  "app-servers" => [ "app" ]
+  "app-servers" => [ "app" ],
+  "otp-servers" => [ "otp" ]
 }
 VAGRANT_PROXYCONF_ENDPOINT = ENV["VAGRANT_PROXYCONF_ENDPOINT"]
 VAGRANTFILE_API_VERSION = "2"
@@ -126,6 +127,33 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     app.vm.provision "ansible" do |ansible|
       ansible.playbook = "deployment/ansible/app-servers.yml"
+      ansible.groups = ANSIBLE_GROUPS.merge(ANSIBLE_ENV_GROUPS)
+      ansible.raw_arguments = ["--timeout=60"]
+    end
+  end
+
+  config.vm.define "otp" do |otp|
+    otp.vm.box = "ubuntu/trusty64"
+    otp.vm.hostname = "otp"
+    otp.vm.network "private_network", ip: ENV.fetch("NIH_WAYFINDING_OTP_IP", "33.33.33.11")
+
+    otp.vm.synced_folder ".", "/vagrant", disabled: true
+
+    # Angular via Nginx
+    otp.vm.network "forwarded_port", {
+      guest: 8080,
+      host: ENV.fetch("NIH_WAYFINDING_PORT_8080", 9090)
+    }.merge(VAGRANT_NETWORK_OPTIONS)
+
+    otp.vm.provider "virtualbox" do |v|
+      v.memory = ENV.fetch("NIH_WAYFINDING_OTP_MEM", 4096)
+      v.cpus = ENV.fetch("NIH_WAYFINDING_OTP_CPUS", 2)
+    end
+
+    otp.ssh.forward_x11 = true
+
+    otp.vm.provision "ansible" do |ansible|
+      ansible.playbook = "deployment/ansible/otp-servers.yml"
       ansible.groups = ANSIBLE_GROUPS.merge(ANSIBLE_ENV_GROUPS)
       ansible.raw_arguments = ["--timeout=60"]
     end
