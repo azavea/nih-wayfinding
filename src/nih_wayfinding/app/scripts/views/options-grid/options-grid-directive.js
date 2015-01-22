@@ -22,8 +22,9 @@
 
         var template = [
             '<div class="options-grid">',
-                '<button ng-click="optionClicked(option)" ng-repeat="option in options">',
-                    '<img ng-src="{{option.img}}"/> {{ ::option.text }}',
+                '<button ng-click="optionClicked(option)" ng-repeat="option in options" ng-class="{\'btn-img\': option.img}">',
+                    '<img ng-if="option.img" ng-src="{{option.img}}"/>',
+                    '<div class="btn-img-label">{{ ::option.text }}</div>',
                 '</button>',
             '</div>',
         ].join('');

@@ -2,14 +2,9 @@
     height: 200px;
 }
 
-footer.expanded {
-    transition: height 0.5s ease;
-    height: $footer-height + 300 !important;
-}
-
 footer .expanded {
     transition: height 0.5s ease;
-    height: 300px !important;
+    height: 40rem !important;
 
     .close {
         position: absolute;

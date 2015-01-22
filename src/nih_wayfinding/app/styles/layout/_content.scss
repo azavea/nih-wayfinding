@@ -1,35 +1,70 @@
-body {
-    margin: 0;
-    height: 100%;
+html {
+  font-size: 10px;
+  @media (max-width: $screen-xs) {
+    font-size: 6px;
+  }
+}
 
+body {
+  margin: 0;
+  height: 100%;
+  font-size: strip_units($font-size-base) * 1em;
 }
 
 .content.scroll {
-    margin-top: $header-height;
-    margin-bottom: $footer-height;
+  margin-top: $header-height;
+  margin-bottom: $footer-height;
+  padding: 2rem;
 }
 
 .content.map {
-    overflow: hidden;
-    position: fixed;
-    top: $header-height;
-    bottom: $footer-height;
-    left: 0;
-    right: 0;
+  overflow: hidden;
+  position: fixed;
+  top: $header-height;
+  bottom: $footer-height;
+  left: 0;
+  right: 0;
 }
 
 .content.double-footer.scroll {
-    margin-bottom: $footer-height * 2;
+  margin-bottom: $footer-height * 2;
 }
 
 .content.double-footer.map {
-    bottom: $footer-height * 2;
+  bottom: $footer-height * 2;
 }
 
 .content.double-footer ~ footer {
-    height: $footer-height * 2;
+  height: $footer-height * 2;
+}
+
+.directions-table {
+  width: 100%;
+}
+
+.direction-instruction {
+  font-size: $font-size-h3;
+}
+
+.direction-description {
+  color: $gray-light;
+  font-size: $font-size-h4;
+}
+
+.route-overview {
+  background-color: #fff;
+}
+
+.block {
+  margin-bottom: $line-height-computed;
 }
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
 }
+
+img {
+  max-width: 100%;
+}
+
+nav > .btn-group-nav-main {}

@@ -17,12 +17,12 @@
             ctl.showIconSelect = false;
             ctl.toggleIconSelectDialog = toggleIconSelectDialog;
             ctl.imgOpts = [
-                { img: 'http://lorempixel.com/200/100/' },
-                { img: 'http://lorempixel.com/200/100/' },
-                { img: 'http://lorempixel.com/200/100/' },
-                { img: 'http://lorempixel.com/200/100/' },
-                { img: 'http://lorempixel.com/200/100/' },
-                { img: 'http://lorempixel.com/200/100/' },
+                { img: '/images/icons/icon-house.svg' },
+                { img: '/images/icons/icon-house.svg' },
+                { img: '/images/icons/icon-house.svg' },
+                { img: '/images/icons/icon-house.svg' },
+                { img: '/images/icons/icon-house.svg' },
+                { img: '/images/icons/icon-house.svg' },
             ];
             ctl.imgOptionClicked = imgOptionClicked;
 

@@ -5,23 +5,19 @@
 </leaflet>
 
 <footer class="container-fluid">
-    <div class="row"></div>
-    <div class="row">
-        <div class="col-xs-6 col-md-6">
-            <button ui-sref="locationsProfile({ username: locationsReview.user.username, locationID: locationsReview.user.tempLocation.id })"
+    <nav class="row">
+        <div class="btn-group-nav btn-group-justified">
+            <a ui-sref="locationsProfile({ username: locationsReview.user.username, locationID: locationsReview.user.tempLocation.id })"
                     type="button"
-                    class="btn btn-primary
-                    btn-block">
+                    class="btn btn-primary btn-block">
               Edit
-            </button>
-        </div>
-        <div class="col-xs-6 col-md-6">
-            <button ui-sref="locationsAnother"
+            </a>
+            <a ui-sref="locationsAnother"
                     ng-click="locationsReview.confirmLocation()"
                     type="button"
                     class="btn btn-primary btn-block">
               Confirm Location
-            </button>
+            </a>
         </div>
-    </div>
+    </nav>
 </footer>
