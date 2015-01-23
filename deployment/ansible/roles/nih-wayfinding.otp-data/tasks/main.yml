@@ -1,0 +1,15 @@
+---
+# Set owner to ansible ssh user because synchronize always runs as ansible_ssh_user on host
+- name: Create Directory for OTP data
+  file: path={{ otp_data_dir }} state=directory owner={{ansible_ssh_user}} mode=0775
+
+- name: Copy OSM Data
+  synchronize: src={{ item }} dest="{{ otp_data_dir }}/{{ item }}"
+  with_items: otp_osm_source_files
+
+- name: Run Graph Builder
+  command: /usr/bin/java -Xmx{{ otp_process_mem }} -jar {{ otp_jarfile }} --build {{ otp_data_dir }}
+  args:
+    chdir: "{{ otp_bin_dir }}"
+  notify: Restart OpenTripPlanner
+  sudo: False
