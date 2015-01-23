@@ -7,12 +7,12 @@
     var config = {
         bounds: {
             southWest: {
-                lat: 41.643919,
-                lng: -87.940101,
+                lat: 41.7056,
+                lng: -87.5943,
             },
             northEast: {
-                lat: 42.023022,
-                lng: -87.523984
+                lat: 41.762,
+                lng: -87.5201
             }
         },
         baseLayers: {
@@ -31,10 +31,9 @@
                 }
             }
         },
-        center: {
-            lat: 41.8749,
-            lng: -87.6189,
-            zoom: 15
+        center: {},
+        routing: {
+            hostname: 'http://localhost:9090'
         }
     };
 

@@ -21,9 +21,10 @@
         initialize();
 
         function getDirections(data) {
-            Directions.get(data.origin, data.destination, directionsOptions).then(setGeojson, function () {
+            Directions.get(data.origin, data.destination, directionsOptions).then(setGeojson, function (error) {
+                var msg = error.msg ? error.msg : 'Unable to load route. Please try again later.';
                 Notifications.show({
-                    error: 'Unable to load route. Please try again later.',
+                    text: msg,
                     timeout: 3000
                 });
             });
@@ -107,7 +108,18 @@
         }
 
         function setGeojson(geojson) {
+            var bbox = turf.extent(geojson);
             angular.extend(ctl.map, {
+                bounds: {
+                    southWest: {
+                        lat: bbox[1],
+                        lng: bbox[0]
+                    },
+                    northEast: {
+                        lat: bbox[3],
+                        lng: bbox[2]
+                    }
+                },
                 geojson: {
                     data: geojson,
                     style: routeStyle,

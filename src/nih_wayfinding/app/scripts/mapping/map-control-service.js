@@ -6,6 +6,7 @@
 
         var module = {
             cleanLonLatParam: cleanLonLatParam,
+            pointToLngLat: pointToLngLat,
             showPopup: showPopup,
             trackUser: trackUser,
             markLocation: markLocation
@@ -31,6 +32,10 @@
             } else {
                 return [lon, lat];
             }
+        }
+
+        function pointToLngLat(pointFeature) {
+            return pointFeature.geometry.coordinates;
         }
 
         /**
