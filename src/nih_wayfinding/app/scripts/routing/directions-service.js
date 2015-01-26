@@ -174,10 +174,9 @@
             function propertiesFromStep(step) {
                 var distance = step.properties.distance;
                 var turn = step.properties.relativeDirection;
+                var direction = step.properties.absoluteDirection;
                 var street = step.properties.streetName;
-                // TODO: Handle cases for conditions that are not actually turns, e.g. DEPART
-                //       or stayOn
-                var text = 'Turn ' + turn.replace('_', ' ').toLowerCase() + ' onto ' + street;
+                var text = turnText(turn, street, direction);
                 var flags = angular.extend({}, step.properties);
                 var keys = ['distance', 'relativeDirection', 'absoluteDirection',
                             'streetName', 'lon', 'lat'];
@@ -208,6 +207,26 @@
                 delete properties.lat;
                 delete properties.lon;
                 return turf.point([lon, lat], properties);
+            }
+
+            function turnText(turn, street, direction) {
+                var turnTextString = '';
+                var turnLower = turn.toLowerCase();
+                var turnSplit = turnLower.replace('_', ' ');
+                if (turn === 'DEPART') {
+                    turnTextString = 'Head ' + direction.toLowerCase() + ' on ' + street;
+                } else if (turn === 'CONTINUE') {
+                    turnTextString = 'Continue on to ' + street;
+                } else if (turn === 'ELEVATOR') {
+                    turnTextString = 'Take the elevator to ' + street;
+                } else if (turn.indexOf('UTURN') !== -1) {
+                    turnTextString = 'Take a U-turn on to ' + street;
+                } else if (turn.indexOf('LEFT') !== -1 || turn.indexOf('RIGHT') !== -1) {
+                    turnTextString = 'Turn ' + turnSplit + ' on to ' + street;
+                } else if (turn.indexOf('CIRCLE') !== -1) {
+                    turnTextString = 'Enter the traffic circle, then exit on to ' + street;
+                }
+                return turnTextString;
             }
         }
     }
