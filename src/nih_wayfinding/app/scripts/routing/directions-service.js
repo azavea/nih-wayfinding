@@ -62,17 +62,21 @@
             return dfd.promise;
         }
 
-        function getFlagIconName(flagType) {
+        function getFlagIconName(flagType, value) {
             // TODO: Write tests once actual icons exist
+            if (!value) {
+                return '';
+            }
+
             switch (flagType) {
-                case 'bench':
+                case 'benches':
                     return 'glyphicon-flash';
-                case 'hazard':
+                case 'hazards':
                     return 'glyphicon-warning-sign';
-                case 'bathroom':
+                case 'bathrooms':
                     return 'glyphicon-trash';
                 default:
-                    return 'glyphicon-info-sign';
+                    return '';
             }
         }
 
@@ -81,17 +85,24 @@
             switch (turnType) {
                 case 'DEPART':
                     return 'glyphicon-flag';
-                case 'STRAIGHT':
+                case 'CONTINUE':
                     return 'glyphicon-arrow-up';
-                // Temporarily fall through to non-slight case for left/right
+                // Temporarily fall through to similar cases for left/right
                 case 'LEFT':
                 case 'SLIGHTLY_LEFT':
+                case 'HARD_LEFT':
+                case 'UTURN_LEFT':
                     return 'glyphicon-arrow-left';
                 case 'RIGHT':
                 case 'SLIGHTLY_RIGHT':
+                case 'HARD_RIGHT':
+                case 'UTURN_RIGHT':
                     return 'glyphicon-arrow-right';
-                case 'end':
-                    return 'glyphicon-flag';
+                case 'CIRCLE_CLOCKWISE':
+                case 'CIRCLE_COUNTERCLOCKWISE':
+                    return 'glyphicon-repeat';
+                case 'ELEVATOR':
+                    return 'glyphicon-cloud-upload';
                 default:
                     return 'glyphicon-remove-circle';
             }
