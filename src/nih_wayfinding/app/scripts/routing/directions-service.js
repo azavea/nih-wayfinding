@@ -24,11 +24,14 @@
          * // TODO: Document options object
          */
         function get(origin, destination, options) {
-            if (!(_.isArray(origin) && origin.length === 2)) {
-                return;
+            var dfd = $q.defer();
+            if (!(_.isArray(origin) && origin.length >= 2)) {
+                dfd.reject({ msg: 'Invalid origin parameter' });
+                return dfd.promise;
             }
-            if (!(_.isArray(destination) && destination.length === 2)) {
-                return;
+            if (!(_.isArray(destination) && destination.length >= 2)) {
+                dfd.reject({ msg: 'Invalid destination parameter' });
+                return dfd.promise;
             }
             var now = new Date();
             // This is the minimum param list (+ toPlace,fromPlace) to make a OTP plan API call
@@ -45,7 +48,6 @@
             params.fromPlace = [origin[1], origin[0]].join(',');
             params.toPlace = [destination[1], destination[0]].join(',');
 
-            var dfd = $q.defer();
             $http.get(directionsUrl, {
                 params: params
             }).then(function (response) {

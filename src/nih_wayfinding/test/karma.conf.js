@@ -63,6 +63,8 @@ module.exports = function(config) {
       'bower_components/leaflet/dist/leaflet.js',
       'bower_components/leaflet/dist/leaflet-src.js',
       'bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.js',
+      'bower_components/Leaflet.encoded/Polyline.encoded.js',
+      'bower_components/turf/turf.min.js',
 
       // include app.js file first
       'app/scripts/config.js',

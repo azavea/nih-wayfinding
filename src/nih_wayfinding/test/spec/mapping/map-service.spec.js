@@ -14,10 +14,7 @@ describe('nih.mapping: Map', function () {
         expect(Map.bounds).toBeDefined();
         expect(Map.bounds.northEast).toBeDefined();
         expect(Map.bounds.southWest).toBeDefined();
-        expect(Map.center).toBeDefined();
-        expect(Map.center.lat).toBeDefined();
-        expect(Map.center.lng).toBeDefined();
-        expect(Map.center.zoom).toBeDefined();
+        expect(Map.center).toBeDefined();   // if bounds sw & ne is defined, center lat/lng/zoom is unnecessary
         expect(Map.layers).toBeDefined();
     });
 

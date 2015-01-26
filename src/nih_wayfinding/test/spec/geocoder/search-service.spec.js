@@ -9,7 +9,7 @@ describe('nih.geocoder: Geocoder', function () {
 
     var httpBackend;
     var Geocoder;
-    var searchUrl = 'http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?bbox=-87.940101,41.643919,-87.523984,42.023022&category=Address,Postal,POI&f=pjson&maxLocations=10&outFields=StAddr,City,Postal&text=one';
+    var searchUrl = 'http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?bbox=-87.5943,41.7056,-87.5201,41.762&category=Address,Postal,POI&f=pjson&maxLocations=10&outFields=StAddr,City,Postal&text=one';
     var searchResponse = {
         locations: [{
             feature: {
@@ -33,7 +33,7 @@ describe('nih.geocoder: Geocoder', function () {
             }
         }]
     };
-    var suggestUrl = 'http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/suggest?category=Address,Postal,POI&f=pjson&searchExtent=-87.940101,41.643919,-87.523984,42.023022&text=one';
+    var suggestUrl = 'http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/suggest?category=Address,Postal,POI&f=pjson&searchExtent=-87.5943,41.7056,-87.5201,41.762&text=one';
     var suggestResponse = {
         suggestions: [{
             text: 'one'
