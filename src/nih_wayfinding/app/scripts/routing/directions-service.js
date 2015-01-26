@@ -62,17 +62,21 @@
             return dfd.promise;
         }
 
-        function getFlagIconName(flagType) {
+        function getFlagIconName(flagType, value) {
             // TODO: Write tests once actual icons exist
+            if (!value) {
+                return '';
+            }
+
             switch (flagType) {
-                case 'bench':
+                case 'benches':
                     return 'glyphicon-flash';
-                case 'hazard':
+                case 'hazards':
                     return 'glyphicon-warning-sign';
-                case 'bathroom':
+                case 'bathrooms':
                     return 'glyphicon-trash';
                 default:
-                    return 'glyphicon-info-sign';
+                    return '';
             }
         }
 
@@ -81,17 +85,24 @@
             switch (turnType) {
                 case 'DEPART':
                     return 'glyphicon-flag';
-                case 'STRAIGHT':
+                case 'CONTINUE':
                     return 'glyphicon-arrow-up';
-                // Temporarily fall through to non-slight case for left/right
+                // Temporarily fall through to similar cases for left/right
                 case 'LEFT':
                 case 'SLIGHTLY_LEFT':
+                case 'HARD_LEFT':
+                case 'UTURN_LEFT':
                     return 'glyphicon-arrow-left';
                 case 'RIGHT':
                 case 'SLIGHTLY_RIGHT':
+                case 'HARD_RIGHT':
+                case 'UTURN_RIGHT':
                     return 'glyphicon-arrow-right';
-                case 'end':
-                    return 'glyphicon-flag';
+                case 'CIRCLE_CLOCKWISE':
+                case 'CIRCLE_COUNTERCLOCKWISE':
+                    return 'glyphicon-repeat';
+                case 'ELEVATOR':
+                    return 'glyphicon-cloud-upload';
                 default:
                     return 'glyphicon-remove-circle';
             }
@@ -163,10 +174,9 @@
             function propertiesFromStep(step) {
                 var distance = step.properties.distance;
                 var turn = step.properties.relativeDirection;
+                var direction = step.properties.absoluteDirection;
                 var street = step.properties.streetName;
-                // TODO: Handle cases for conditions that are not actually turns, e.g. DEPART
-                //       or stayOn
-                var text = 'Turn ' + turn.replace('_', ' ').toLowerCase() + ' onto ' + street;
+                var text = turnText(turn, street, direction);
                 var flags = angular.extend({}, step.properties);
                 var keys = ['distance', 'relativeDirection', 'absoluteDirection',
                             'streetName', 'lon', 'lat'];
@@ -197,6 +207,26 @@
                 delete properties.lat;
                 delete properties.lon;
                 return turf.point([lon, lat], properties);
+            }
+
+            function turnText(turn, street, direction) {
+                var turnTextString = '';
+                var turnLower = turn.toLowerCase();
+                var turnSplit = turnLower.replace('_', ' ');
+                if (turn === 'DEPART') {
+                    turnTextString = 'Head ' + direction.toLowerCase() + ' on ' + street;
+                } else if (turn === 'CONTINUE') {
+                    turnTextString = 'Continue on to ' + street;
+                } else if (turn === 'ELEVATOR') {
+                    turnTextString = 'Take the elevator to ' + street;
+                } else if (turn.indexOf('UTURN') !== -1) {
+                    turnTextString = 'Take a U-turn on to ' + street;
+                } else if (turn.indexOf('LEFT') !== -1 || turn.indexOf('RIGHT') !== -1) {
+                    turnTextString = 'Turn ' + turnSplit + ' on to ' + street;
+                } else if (turn.indexOf('CIRCLE') !== -1) {
+                    turnTextString = 'Enter the traffic circle, then exit on to ' + street;
+                }
+                return turnTextString;
             }
         }
     }
