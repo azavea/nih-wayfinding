@@ -16,7 +16,7 @@
         var mockRun;
         var module = {
             walkTheLine: walkTheLine,
-            setInterval: setInterval,
+            setInterval: setLocalInterval,
             stopIntervalTask: stopIntervalTask
         };
 
@@ -28,18 +28,8 @@
          *  @param interval {number} The walk/read interval in milliseconds
          *  @return undefined
          */
-        function setInterval(interval) {
+        function setLocalInterval(interval) {
             navInterval = interval;
-        }
-
-        /**
-         *  Return the steps that remain for walking the line
-         *
-         * @return {array} The steps that have been generated
-         *
-         */
-        function getSteps() {
-            return stepsLeft;
         }
 
         /**
@@ -97,7 +87,6 @@
             var points = [];
             // Iterate through unti past second bound, concatenating to array 'points'
             for (var i = 0; !isPastSecondBound(calcPoint(i)); i++) {
-                var calculatedPoint = calcPoint(i);
                 points.push(calcPoint(i));
             }
             points.push(secondBound);
@@ -113,8 +102,8 @@
          * @return {array} An array of steps on the provided path
          */
         function genSteps(lines) {
-            var stepsLeft1 = lines.map(function(line) { return pointsOnLine(line, 15000); });
-            var stepsLeft2 = _.flatten(stepsLeft1, true);
+            //var stepsLeft1 = lines.map(function(line) { return pointsOnLine(line, 15000); });
+            //var stepsLeft2 = _.flatten(stepsLeft1, true);
             stepsLeft = _.chain(lines)
               .map(function(line) {
                   return pointsOnLine(line, 15000);
