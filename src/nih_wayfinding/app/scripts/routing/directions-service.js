@@ -173,6 +173,7 @@
              */
             function propertiesFromStep(step) {
                 var distance = step.properties.distance;
+                var lastModified = (step.properties.lastAudited || 0) / 1000;
                 var turn = step.properties.relativeDirection;
                 var direction = step.properties.absoluteDirection;
                 var street = step.properties.streetName;
@@ -190,7 +191,7 @@
                        text: text
                     },
                     flags: flags,
-                    lastUpdated: 0
+                    lastModified: lastModified
                 };
                 return properties;
             }
