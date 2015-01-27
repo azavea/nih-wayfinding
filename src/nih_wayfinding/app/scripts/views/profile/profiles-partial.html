@@ -21,7 +21,7 @@
             <a ui-sref="newprofile" class="btn btn-primary btn-block" type="button">New Profile</a>
             <a ng-click="profiles.deleteMode = !profiles.deleteMode"
                     class="btn btn-primary btn-block"
-                    ng-class="{'btn-danger': profiles.deleteMode}"
+                    ng-class="{'active-delete': profiles.deleteMode}"
                     type="button">Delete Profile</a>
         </div>
     </nav>
