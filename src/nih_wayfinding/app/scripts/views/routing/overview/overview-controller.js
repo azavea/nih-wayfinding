@@ -11,17 +11,22 @@
     /* ngInject */
     function OverviewController($scope, $stateParams, $q, $geolocation, leafletData,
                                 Config, Directions, Map, MapControl, MapStyle, NavbarConfig,
-                                Notifications) {
+                                Notifications, ProfileService) {
         var ctl = this;
         var defaultNonZeroWalkTime = 30;
         var geolocationAlertDelay = 400;
         var directionsOptions = {
-            walkTimeMins: 0
+            walkTimeMins: 0,
+            wheelchair: false
         };
         initialize();
 
         function getDirections(data) {
-            Directions.get(data.origin, data.destination, directionsOptions).then(setGeojson, function (error) {
+            var currentUser = ProfileService.getCurrentUser();
+            var options = angular.extend({}, directionsOptions, {
+                wheelchair: !!(currentUser.preferences.wheelchairRequired)
+            });
+            Directions.get(data.origin, data.destination, options).then(setGeojson, function (error) {
                 var msg = error.msg ? error.msg : 'Unable to load route. Please try again later.';
                 Notifications.show({
                     text: msg,
@@ -109,6 +114,11 @@
 
         function setGeojson(geojson) {
             var bbox = turf.extent(geojson);
+            if (!Directions.isAudited(geojson)) {
+                Notifications.show({
+                    text: 'This route contains unverified segments. Please exercise caution.'
+                });
+            }
             angular.extend(ctl.map, {
                 bounds: {
                     southWest: {

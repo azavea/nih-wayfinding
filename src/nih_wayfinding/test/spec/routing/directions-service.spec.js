@@ -275,6 +275,47 @@ describe('nih.routing: Directions', function () {
             expect(error.msg).toEqual('Invalid origin parameter');
         });
         rootScope.$apply();
+    });
 
+    it('should ensure isAudited returns true if all features are valid', function () {
+        var geojson = {
+            type: 'FeatureCollection',
+            features: [{
+                geometry: {
+                    type: 'LineString'
+                },
+                properties: {
+                    lastModified: 123
+                }
+            }, {
+                geometry: {
+                    type: 'LineString'
+                },
+                properties: {
+                    lastModified: 456
+                }
+            }]
+        };
+        expect(Directions.isAudited(geojson)).toEqual(true);
+    });
+
+    it('should ensure isAudited returns false if any last modified properties are false', function () {
+        var geojson = {
+            type: 'FeatureCollection',
+            features: [{
+                geometry: {
+                    type: 'LineString'
+                },
+                properties: {
+                    lastModified: 123
+                }
+            }, {
+                geometry: {
+                    type: 'LineString'
+                },
+                properties: {}
+            }]
+        };
+        expect(Directions.isAudited(geojson)).toEqual(false);
     });
 });
