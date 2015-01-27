@@ -11,6 +11,7 @@
             get: get,
             getFlagIconName: getFlagIconName,
             getTurnIconName: getTurnIconName,
+            isAudited: isAudited
         };
 
         return module;
@@ -106,6 +107,25 @@
                 default:
                     return 'glyphicon-remove-circle';
             }
+        }
+
+        /**
+         * Checks the geojson response to verify that each feature was audited
+         * @param  {geojson}  geojson Geojson object returned from Directions.get
+         * @return {Boolean}  true if each feature has a valid lastModified property, otherwise false
+         */
+        function isAudited(geojson) {
+            var lineStrings = _.filter(geojson.features, function (feature) {
+                return feature.geometry.type === 'LineString';
+            });
+            var numLinestrings = lineStrings.length;
+            var auditedLineStrings = 0;
+            angular.forEach(lineStrings, function (lineString) {
+                if (lineString.properties.lastModified) {
+                    auditedLineStrings++;
+                }
+            });
+            return auditedLineStrings === numLinestrings;
         }
 
         function defaultDate() {

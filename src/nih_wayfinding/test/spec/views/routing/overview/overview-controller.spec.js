@@ -43,6 +43,9 @@ describe('nih.views.routing: OverviewController', function () {
                 var dfd = $q.defer();
                 dfd.resolve({});
                 return dfd.promise;
+            },
+            isAudited: function () {
+                return false;
             }
         };
     }
