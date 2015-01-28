@@ -16,6 +16,14 @@
             }
         },
         baseLayers: {
+            googleStreets: {
+                name: 'Google Streets',
+                type: 'google',
+                layerType: 'ROADMAP'
+            },
+            // TODO: This needs to be removed once we start displaying Google Places data, but
+            // for development it's good to have as a comparison since the Leaflet plugin enabling
+            // Google layers may not always work perfectly.
             stamentonerlite: {
                 name: 'Stamen Toner Lite',
                 type: 'xyz',
