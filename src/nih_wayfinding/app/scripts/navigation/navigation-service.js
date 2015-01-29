@@ -112,6 +112,7 @@
          * Params and return match turf.along()
          */
         function along(line, dist, units) {
+            /* jshint curly:false */
             var coords;
             if(line.type === 'Feature') coords = line.geometry.coordinates;
             else if(line.type === 'LineString') coords = line.geometry.coordinates;
@@ -134,6 +135,7 @@
                 }
             }
             return turf.point(coords[coords.length - 1]);
+            /* jshint curly:true */
         }
     }
 
