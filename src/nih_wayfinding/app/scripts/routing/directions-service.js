@@ -53,7 +53,27 @@
                 params: params
             }).then(function (response) {
                 if (response.data.error) {
-                    dfd.reject(response.data.error);
+                    //  OTP returns an array indicating which fields are outside the graph bounds.
+                    var missingData = response.data.error.missing;
+                    if (missingData) {
+                        if (missingData.length === 2) {
+                            dfd.reject({
+                                msg: 'Both the requested origin and destination are outside the planner bounds.'
+                            });
+                        } else if (missingData[0] === 'from') {
+                            dfd.reject({
+                                msg: 'The requested origin point is outside the planner bounds.'
+                            });
+                        }  else if (missingData[0] === 'to') {
+                            dfd.reject({
+                                msg: 'The requested destination point is outside the planner bounds.'
+                            });
+                        } else {
+                            dfd.reject(response.data.error);
+                        }
+                    } else {
+                        dfd.reject(response.data.error);
+                    }
                 } else {
                     var geojson = transformOtpToGeoJson(response.data);
                     TurnAmenities.attach(geojson);
