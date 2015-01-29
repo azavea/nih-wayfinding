@@ -9,6 +9,12 @@
 <footer class="container-fluid">
     <nav class="row">
         <div class="btn-group-nav btn-group-justified">
+            <a ng-click="navigate.prevStep()" type="button" class="btn btn-primary btn-block">Previous Step</a>
+            <a ng-click="navigate.nextStep()" type="button" class="btn btn-primary btn-block">Next Step</a>
+        </div>
+    </nav>
+    <nav class="row">
+        <div class="btn-group-nav btn-group-justified">
             <a ui-sref="reroute" type="button" class="btn btn-primary btn-block">Reroute</a>
             <a ui-sref="report" type="button" class="btn btn-primary btn-block">Report</a>
         </div>
