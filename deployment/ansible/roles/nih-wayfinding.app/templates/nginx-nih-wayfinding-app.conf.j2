@@ -1,5 +1,14 @@
 server {
   listen *:80;
   server_name _;
-  root {{ app_home }}/dist;
+
+  location /otp {
+    proxy_pass http://33.33.33.11:8080;
+  }
+
+  location / {
+    root {{ app_home }}/dist;
+  }
 }
+
+
