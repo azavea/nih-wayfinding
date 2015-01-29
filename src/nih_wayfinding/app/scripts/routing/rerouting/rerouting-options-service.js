@@ -21,21 +21,12 @@
             return ReroutingOptions;
         }
 
-        function reroute(preferences) {
+        function reroute(preference) {
             // TODO: Update this when location mocking is in place
             var currentLocation = [41.72866461875987,-87.56206512451172];
             var searchRadius = Config.nearbySearchRadius;
-            var searchOptions = {types: googleAmenityTypes[preferences.text]};
-            AmenitiesSearch.searchNearby(currentLocation, searchRadius, searchOptions)
-                .then(function(results) {
-                // TODO: Choose a result and then reroute to it.
-                console.log(results);
-            }, function(failure) {
-                Notifications.show({
-                    text: 'Failed to find nearby amenities',
-                    timeout: 3000
-                });
-            });
+            var searchOptions = {types: googleAmenityTypes[preference]};
+            return AmenitiesSearch.searchNearby(currentLocation, searchRadius, searchOptions);
         }
     }
 

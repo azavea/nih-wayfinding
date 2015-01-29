@@ -15,8 +15,8 @@
 
     /* ngInject */
     function NavigateController(
-        $filter, $scope,
-        Navigation, Directions, Map, NavbarConfig, MapControl, ProfileService
+        $filter, $scope, $stateParams,
+        Navigation, Directions, Map, MapStyle, NavbarConfig, MapControl, Rerouting, Notifications, ProfileService
     ) {
         var ctl = this;
         var mphToMs = 0.44704;
@@ -35,6 +35,38 @@
             // Subscribe to the location update event
             $scope.$on('nih.navigation.positionOffCourse', onPositionOffCourse);
             $scope.$on('nih.navigation.positionUpdated', onPositionUpdated);
+            $scope.$on('$stateChangeStart', Navigation.stopIntervalTask);
+            handleReroute($stateParams.reroute);
+        }
+
+        function handleReroute(rerouteType) {
+            if (rerouteType) {
+                Rerouting.reroute(rerouteType).then(function(amenities) {
+                    _(amenities)
+                      .take(5)
+                      .forEach(function(amenity) {
+                          var name = amenity.name;
+                          var address = amenity.vicinity;
+                          var geo = amenity.geometry.location;
+                          MapControl.markLocation([geo.B, geo.k]);
+                      });
+                }, function(failure) {
+                    Notifications.show({
+                        text: 'Failed to find nearby amenities',
+                        timeout: 3000
+                    });
+                });
+            }
+        }
+
+        function setGeojson(geojson) {
+            angular.extend(ctl.map, {
+                geojson: {
+                    data: geojson,
+                    style: MapStyle.routeStyle,
+                    resetStyleOnMouseout: true
+                }
+            });
 
             var geojson = ctl.map.geojson.data;
             Navigation.setRoute(geojson);

@@ -34,6 +34,7 @@
             var request = {
                 location: googPoint,
                 radius: radius,
+                rankBy: google.maps.places.RankBy.Distance
             };
             angular.extend(request, options);
             // Wrap google's callback-style API in a promise.

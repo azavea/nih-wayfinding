@@ -17,8 +17,7 @@
       }
 
       function rerouteWith(option) {
-          Rerouting.reroute(option);
-          $state.go('navigate');
+          $state.go('navigate', {reroute: option.text});
       }
     }
 
