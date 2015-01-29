@@ -23,11 +23,11 @@
 
         function getBoundsStyle() {
             return {
-                        color: 'grey',
-                        weight: 4,
-                        opacity: 0.8,
-                        fill: false
-                    };
+                color: 'grey',
+                weight: 4,
+                opacity: 0.8,
+                fill: false
+            };
         }
 
         /**
