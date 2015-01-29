@@ -4,7 +4,7 @@
     /* ngInject */
     function ProfilePreferenceOptions() {
         return {
-            wheelchairUseOpts: [{
+            assistanceOpts: [{
                 text: 'Yes',
                 value: true
             }, {
@@ -12,67 +12,62 @@
                 value: false
             }],
 
-            wheelchairTypeOpts: [{
-                text: 'Electric',
-                value: true
+            assistanceTypeOpts: [{
+                text: 'Manual wheelchair',
+                value: 'manual'
             }, {
-                text: 'Manual',
-                value: false
-            }],
-
-            challengeOpts: [{
-                text: 'Minimal',
-                value: 0.1
+                text: 'Motorized wheelchair',
+                value: 'motorized'
             }, {
-                text: 'Moderate',
-                value: 0.5
+                text: 'Walker',
+                value: 'walker'
             }, {
-                text: 'Challenge me',
-                value: 1
+                text: 'Cane',
+                value: 'cane'
             }],
 
             steepTerrainOpts: [{
-                text: 'Not comfortable',
+                text: 'Not very',
                 value: 0.1
             }, {
-                text: 'Somewhat comfortable',
+                text: 'Somewhat',
                 value: 0.5
             }, {
-                text: 'Totally comfortable',
+                text: 'Very',
                 value: 1
             }],
 
             speedOpts: [{
-                text: 'Slower than average',
-                value: 0.1
+                text: 'About average (2.5 mph)',
+                value: 2.5
             }, {
-                text: 'About Average',
-                value: 0.5
+                text: 'Slower than average (1.5 mph)',
+                value: 1.5
             }, {
-                text: 'Faster than average',
+                text: 'Much slower than average (1 mph)',
                 value: 1
             }],
 
-            peaceOpts: [{
+            busyOpts: [{
+                text: 'Yes',
+                value: 1
+            }, {
+                text: 'No',
+                value: -1
+            }, {
                 text: 'Not important',
-                value: 0.1
+                value: 0
+            }],
+
+            restOpts: [{
+                text: 'Very important',
+                value: 1
             }, {
                 text: 'Somewhat important',
                 value: 0.5
             }, {
-                text: 'Very Important',
-                value: 1
-            }],
-
-            restOpts: [{
-                text: 'Not regularly',
+                text: 'Not important',
                 value: 0.1
-            }, {
-                text: 'Somewhat regularly',
-                value: 0.5
-            }, {
-                text: 'Very regularly',
-                value: 1
             }],
 
             newLocOpts: [{
