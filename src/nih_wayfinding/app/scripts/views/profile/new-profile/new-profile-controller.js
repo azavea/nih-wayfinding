@@ -17,13 +17,12 @@
             // Functions and values pertaining to questionnaire
             ctl.preferenceOpts = ProfilePreferenceOptions;
             ctl.checkUsername = checkUsername;
-            ctl.setUsingWheelchair = setUsingWheelchair;
-            ctl.wheelchairTypeDialog = false;
-            ctl.setWheelchairType = setWheelchairType;
-            ctl.setChallengeLevel = setChallengeLevel;
+            ctl.setUsingAssistance = setUsingAssistance;
+            ctl.assistanceTypeDialog = false;
+            ctl.setAssistanceType = setAssistanceType;
             ctl.setSteepTerrainComfort = setSteepTerrainComfort;
             ctl.setSpeed = setSpeed;
-            ctl.setPeace = setPeace;
+            ctl.setBusyness = setBusyness;
             ctl.setRestFrequency = setRestFrequency;
             ctl.willCreateLocations = willCreateLocations;
         }
@@ -38,29 +37,21 @@
         /**
          * Set private var for whether using a wheelchair or scooter.
         */
-        function setUsingWheelchair(amUsing) {
-            ctl.newUser.setPreference('wheelchairRequired', amUsing.value);
+        function setUsingAssistance(amUsing) {
+            ctl.newUser.setPreference('assistanceRequired', amUsing.value);
             if (amUsing.value) {
-                ctl.wheelchairTypeDialog = true;
+                ctl.assistanceTypeDialog = true;
             } else {
-                ctl.setWheelchairType({ value: null });
+                ctl.setAssistanceType({ value: null });
             }
         }
 
         /**
          * Set private var for whether using a wheelchair or scooter.
         */
-        function setWheelchairType(chairType) {
-            ctl.newUser.setPreference('wheelchairPowered', chairType.value);
+        function setAssistanceType(assistanceType) {
+            ctl.newUser.setPreference('assistanceType', assistanceType.value);
             setStep(3);
-        }
-
-        /**
-         * Set private var for profile challenge level.
-         */
-        function setChallengeLevel(challenge) {
-            ctl.newUser.setPreference('challenge', challenge.value);
-            setStep(4);
         }
 
         /**
@@ -68,7 +59,7 @@
          */
         function setSteepTerrainComfort(comfort) {
             ctl.newUser.setPreference('steepTerrainComfort', comfort.value);
-            setStep(5);
+            setStep(4);
         }
 
         /**
@@ -76,15 +67,15 @@
          */
         function setSpeed(speed) {
             ctl.newUser.setPreference('speed', speed.value);
-            setStep(6);
+            setStep(5);
         }
 
         /**
          * Set private var for profile speed.
          */
-        function setPeace(peace) {
-            ctl.newUser.setPreference('peace', peace.value);
-            setStep(7);
+        function setBusyness(busy) {
+            ctl.newUser.setPreference('busy', busy.value);
+            setStep(6);
         }
 
         /**
@@ -92,7 +83,7 @@
          */
         function setRestFrequency(frequency) {
             ctl.newUser.setPreference('restFrequency', frequency.value);
-            setStep(8);
+            setStep(7);
         }
 
         /**
