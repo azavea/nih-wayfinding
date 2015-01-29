@@ -167,7 +167,16 @@ module.exports = function (grunt) {
         ignorePath:  /\.\.\//,
         exclude: [
           'bower_components/bootstrap-sass-official/assets/javascripts',
-          'bower_components/ngGeolocation/ngGeolocation.min.js'
+          'bower_components/ngGeolocation/ngGeolocation.min.js',
+          'bower_components/leaflet-plugins/control',
+          'bower_components/leaflet-plugins/layer/vector',
+          'bower_components/leaflet-plugins/layer/tile/Bing.js',
+          'bower_components/leaflet-plugins/layer/tile/Yandex.js',
+          'bower_components/leaflet-plugins/layer/Icon.Canvas.js',
+          'bower_components/leaflet-plugins/layer/Layer.Deferred.js',
+          'bower_components/leaflet-plugins/layer/Marker.Rotate.js',
+          'bower_components/leaflet-plugins/layer/Marker.Text.js',
+          'bower_components/leaflet-plugins/layer/OpenStreetBugs.js',
         ]
       },
       sass: {
