@@ -4,95 +4,90 @@
 
     /* ngInject */
     function Navigation (
-        $q, $interval, $rootScope,
+        $q, $interval, $rootScope, $timeout,
         $geolocation,
-        NavigationStub
+        Config
     ) {
 
-        var stepsLeft = [];
-        var navIntervalMillis = 1000; // 1 second default interval
-        var mockRun;
-        var pollRun;
+        var events = {
+            positionUpdated: 'nih.navigation.positionUpdated'
+        };
+        var position = {
+            latitude: 0,
+            longitude: 0
+        };
+        var currentIndex = 0;
+        var currentRoute = [];  // An array of [lon, lat]
         var module = {
-            walkTheLine: walkTheLine,
-            pollLocation: pollLocation,
-            setIntervalMillis: setIntervalMillis,
-            stopIntervalTask: stopIntervalTask
+            getCurrentPosition: getCurrentPosition,
+            setRoute: setRoute,
+            stepNext: stepNext,
+            stepPrevious: stepPrevious,
+            stepFirst: stepFirst,
+            stepLast: stepLast
         };
 
         return module;
 
         /**
-         *  Change the interval for walking/checking geolocation
+         * getCurrentPosition wrapper for geolocation operations
+         * This function signature should match $geolocation.getCurrentPosition
          *
-         *  @param interval {number} The walk/read interval in milliseconds
-         *  @return undefined
-         */
-        function setIntervalMillis(interval) {
-            navIntervalMillis = interval;
-        }
-
-        /**
-         * Stop the interval task (either checking GPS or iterating the walk of mocked data)
-         */
-        function stopIntervalTask() {
-            if (angular.isDefined(mockRun)) {
-                $interval.cancel(mockRun);
-                mockRun = undefined;
-            }
-            if (angular.isDefined(pollRun)) {
-                $interval.cancel(pollRun);
-                pollRun = undefined;
-            }
-        }
-
-        /**
-         * Take the next step on the path as created by genSteps
+         * Currently stubbed with mock location configured in config.js, returns private position
+         * object if set, otherwise the Config.stubs.geolocation
          *
-         * @param interval {number} Milliseconds of interval between steps
-         * @return {undefined}
+         * @return {promise} Resolve with Geolocation object or reject with messages
          */
-        function walkTheLine() {
-            var locations = NavigationStub;
-            stepsLeft = _.map(locations.features, function(feature) {
-                return feature.geometry.coordinates;
-            });
-            var runMock = function() {
-                mockRun = $interval(
-                    function() {
-                        if (stepsLeft.length > 0) {
-                            $rootScope.$broadcast('nih.navigation.locationUpdated', stepsLeft.shift());
-                        } else {
-                            stopIntervalTask();
-                        }
-                    },
-                    navIntervalMillis);
+        function getCurrentPosition() {
+            // Could replace this with a call to $geolocation and pass through the promises
+            var latitude = position.latitude || Config.stubs.geolocation.latitude;
+            var longitude = position.longitude || Config.stubs.geolocation.longitude;
+            var geolocation = {
+                coords: {
+                    latitude: latitude,
+                    longitude: longitude
+                }
             };
-            runMock();
+            var dfd = $q.defer();
+            $timeout(function () {
+                dfd.resolve(geolocation);
+            }, 100);
+            return dfd.promise;
         }
 
-        /**
-         * Poll for location using ngGeolocation module
-         *
-         * @return {undefined} Array representation of point: [[lng, lat], [lng, lat]]
-         */
-        function pollLocation() {
-            var runPoll = function() {
-                pollRun = $interval(
-                    function() { // TODO: use $geolocation.watchPosition instead of getCurrentPosition
-                        $rootScope.$broadcast('nih.navigation.locationUpdated',
-                                              $geolocation.getCurrentPosition({
-                                                  enableHighAccuracy: true,
-                                                  timeout: 6000,
-                                                  maximumAge: 60000
-                                              })
-                        );
-                    },
-                    navIntervalMillis);
-            };
-            runPoll();
+        function setRoute(newRoute) {
+            currentRoute = newRoute;
         }
 
+        function stepNext() {
+            setPosition(currentIndex + 1);
+        }
+
+        function stepPrevious() {
+            setPosition(currentIndex - 1);
+        }
+
+        function stepFirst() {
+            setPosition(0);
+        }
+
+        function stepLast() {
+            setPosition(currentRoute.length - 1);
+        }
+
+        function setPosition(index) {
+            index = parseInt(index, 10);
+            if (routeExists() && index >= 0 && index < currentRoute.length) {
+                position.latitude = currentRoute[index][1];
+                position.longitude = currentRoute[index][0];
+                currentIndex = index;
+                $rootScope.$broadcast(events.positionUpdated, position);
+            }
+        }
+
+        function routeExists() {
+            return _.isArray(currentRoute) && currentRoute.length;
+        }
     }
 
     angular.module('nih.navigation')

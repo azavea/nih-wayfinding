@@ -84,6 +84,8 @@ module.exports = function(config) {
       'app/scripts/mapping/map-service.js',
       'app/scripts/mapping/map-control-service.js',
       'app/scripts/mapping/map-style-service.js',
+      'app/scripts/navigation/module.js',
+      'app/scripts/navigation/navigation-service.js',
       'app/scripts/notifications/module.js',
       'app/scripts/notifications/notifications-service.js',
       'app/scripts/routing/module.js',

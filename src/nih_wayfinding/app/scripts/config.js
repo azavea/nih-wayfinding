@@ -43,7 +43,13 @@
         routing: {
             hostname: 'http://localhost:9090'
         },
-        nearbySearchRadius: 500
+        nearbySearchRadius: 500,
+        stubs: {
+            geolocation: {
+                latitude: 41.744431,
+                longitude: -87.566115
+            }
+        }
     };
 
     angular.module('nih.config', [])

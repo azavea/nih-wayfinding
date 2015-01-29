@@ -28,33 +28,23 @@
             });
             ctl.map = Map;
 
-            Navigation.setIntervalMillis(800);
-            var directionQ = Directions.get();
-            directionQ.then(setGeojson);
-            directionQ.then(Navigation.walkTheLine);
-
             // Subscribe to the location update event
-            $scope.$on('nih.navigation.locationUpdated', function(event, data) {
-                MapControl.trackUser(data);
+            $scope.$on('nih.navigation.positionUpdated', function(event, point) {
+                MapControl.trackUser([point.longitude, point.latitude]);
                 angular.extend(ctl.map.center, {
-                    lat: data[1],
-                    lng: data[0],
+                    lat: point.latitude,
+                    lng: point.longitude,
                     zoom: 19
                 });
             });
-            $scope.$on('$stateChangeStart', Navigation.stopIntervalTask);
-        }
 
-
-        function setGeojson(geojson) {
-            angular.extend(ctl.map, {
-                geojson: {
-                    data: geojson,
-                    style: MapStyle.routeStyle,
-                    resetStyleOnMouseout: true
-                }
-            });
-
+            var geojson = ctl.map.geojson.data;
+            var coordinates = _(geojson.features).map(function (feature) {
+                return feature.geometry.coordinates;
+            }).flatten(true).value();
+            // TODO: Interpolate coordinates to step at approx walking speed
+            Navigation.setRoute(coordinates);
+            Navigation.stepFirst();
         }
     }
 

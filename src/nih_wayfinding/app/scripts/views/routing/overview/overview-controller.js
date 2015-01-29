@@ -9,12 +9,11 @@
 */
 
     /* ngInject */
-    function OverviewController($scope, $stateParams, $q, $geolocation, leafletData,
+    function OverviewController($scope, $stateParams, $q, leafletData,
                                 Config, Directions, Map, MapControl, MapStyle, NavbarConfig,
-                                Notifications, ProfileService) {
+                                Navigation, Notifications, ProfileService) {
         var ctl = this;
         var defaultNonZeroWalkTime = 30;
-        var geolocationAlertDelay = 400;
         var directionsOptions = {
             walkTimeMins: 0,
             wheelchair: false
@@ -44,11 +43,7 @@
             angular.extend(ctl.map.center, Config.center);
             angular.extend(ctl.map.bounds, Config.bounds);
             ctl.stateParams = $stateParams;
-            readStateParams().then(getDirections, function () {
-                Notifications.show({
-                    text: 'Please allow geolocation in your browser to retrieve walking routes.'
-                });
-            });
+            readStateParams().then(getDirections);
 
             $scope.$on('leafletDirectiveMap.geojsonClick', showPopup);
         }
@@ -70,13 +65,7 @@
                     destination: destination
                 });
             } else {
-                Notifications.show({
-                    text: 'Click \'Allow\' in your browser\'s location prompt to request your route.',
-                    imageClass: 'glyphicon-info-sign',
-                    delay: geolocationAlertDelay
-                });
-                $geolocation.getCurrentPosition({}).then(function (position) {
-                    Notifications.hide();
+                Navigation.getCurrentPosition({}).then(function (position) {
                     var currentPosition = [position.coords.longitude, position.coords.latitude];
                     if (!destination) {
                         destination = currentPosition;
@@ -91,8 +80,6 @@
                         origin: origin,
                         destination: destination
                     });
-                }, function (error) {
-                    dfd.reject(error);
                 });
             }
             return dfd.promise;

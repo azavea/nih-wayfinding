@@ -65,7 +65,7 @@ describe('nih.views.routing: OverviewController', function () {
             // TODO: Way to DRY this $controller call?
             OverviewController = $controller('OverviewController', {
                 $scope: scope,
-                $geolocation: geolocation,
+                Navigation: geolocation,
                 Config: Config,
                 Directions: Directions
             });
@@ -91,7 +91,7 @@ describe('nih.views.routing: OverviewController', function () {
         beforeEach(inject(function ($controller) {
             OverviewController = $controller('OverviewController', {
                 $scope: scope,
-                $geolocation: geolocation,
+                Navigation: geolocation,
                 Directions: Directions,
                 $stateParams: {
                     destination: stateParamsString
@@ -110,7 +110,7 @@ describe('nih.views.routing: OverviewController', function () {
         beforeEach(inject(function ($controller) {
             OverviewController = $controller('OverviewController', {
                 $scope: scope,
-                $geolocation: geolocation,
+                Navigation: geolocation,
                 Directions: Directions,
                 $stateParams: {
                     origin: stateParamsString
@@ -129,7 +129,7 @@ describe('nih.views.routing: OverviewController', function () {
         beforeEach(inject(function ($controller) {
             OverviewController = $controller('OverviewController', {
                 $scope: scope,
-                $geolocation: geolocation,
+                Navigation: geolocation,
                 Directions: Directions,
                 $stateParams: {
                     origin: stateParamsString,

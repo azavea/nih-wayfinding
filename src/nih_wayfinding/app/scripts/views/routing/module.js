@@ -38,6 +38,7 @@
         'ngGeolocation',
         'nih.profiles',
         'nih.mapping',
+        'nih.navigation',
         'nih.routing',
         'nih.views.modals',
         'nih.views.navbar',
