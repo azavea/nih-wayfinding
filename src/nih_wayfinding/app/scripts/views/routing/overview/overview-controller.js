@@ -13,17 +13,39 @@
                                 Config, Directions, Map, MapControl, MapStyle, NavbarConfig,
                                 Navigation, Notifications, ProfileService) {
         var ctl = this;
+        var currentUser = null;
         var defaultNonZeroWalkTime = 30;
+        var mphToMs = 0.44704;
         var directionsOptions = {
             walkTimeMins: 0,
             wheelchair: false
         };
         initialize();
 
+        function initialize() {
+            NavbarConfig.set({
+                title: 'Preview Route',
+                back: 'locations'
+            });
+            ctl.map = Map;
+            ctl.summary = {
+                timeMinutes: 0,
+                distanceMeters: 0,
+                turns: 0
+            };
+            currentUser = ProfileService.getCurrentUser();
+            angular.extend(ctl.map.center, Config.center);
+            angular.extend(ctl.map.bounds, Config.bounds);
+            ctl.stateParams = $stateParams;
+            readStateParams().then(getDirections);
+
+            $scope.$on('leafletDirectiveMap.geojsonClick', showPopup);
+        }
+
         function getDirections(data) {
-            var currentUser = ProfileService.getCurrentUser();
             var options = angular.extend({}, directionsOptions, {
-                wheelchair: !!(currentUser.preferences.wheelchairRequired)
+                wheelchair: !!(currentUser.preferences.wheelchairRequired),
+                walkSpeed: currentUser.preferences.speed * mphToMs
             });
             Directions.get(data.origin, data.destination, options).then(setGeojson, function (error) {
                 var msg = error.msg ? error.msg : 'Unable to load route. Please try again later.';
@@ -32,20 +54,6 @@
                     timeout: 3000
                 });
             });
-        }
-
-        function initialize() {
-            NavbarConfig.set({
-                title: 'Preview Route',
-                back: 'locations'
-            });
-            ctl.map = Map;
-            angular.extend(ctl.map.center, Config.center);
-            angular.extend(ctl.map.bounds, Config.bounds);
-            ctl.stateParams = $stateParams;
-            readStateParams().then(getDirections);
-
-            $scope.$on('leafletDirectiveMap.geojsonClick', showPopup);
         }
 
         /**
@@ -123,6 +131,7 @@
                     resetStyleOnMouseout: true
                 }
             });
+            ctl.summary = angular.extend(ctl.summary, Directions.getRouteSummary());
         }
 
         function showPopup(event, feature) {

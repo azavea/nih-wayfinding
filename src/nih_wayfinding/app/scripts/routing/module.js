@@ -3,7 +3,7 @@
 
     angular.module('nih.routing', [
         'nih.config',
-        'nih.mapping',
-        'nih.amenities'
+        'nih.amenities',
+        'nih.mapping'
     ]);
 })();

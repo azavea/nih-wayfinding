@@ -6,12 +6,19 @@
     function Directions ($http, $q, $timeout, Config, MapControl, TurnAmenities) {
 
         var directionsUrl = Config.routing.hostname + '/otp/routers/default/plan';
+        var currentRouteSummary = {
+            distanceMeters: 0,
+            timeMinutes: 0,
+            turns: 0
+        };
 
         var module = {
             get: get,
             getFlagIconName: getFlagIconName,
             getTurnIconName: getTurnIconName,
-            isAudited: isAudited
+            getRouteSummary: getRouteSummary,
+            isAudited: isAudited,
+            isTurn: isTurn
         };
 
         return module;
@@ -130,6 +137,27 @@
         }
 
         /**
+         * Get a summary for the last requested route via Directions.get,
+         *     including time, distance and # of turns
+         *
+         * @param  {object} geojson     Geojson returned from Directions.get
+         * @param  {float} walkSpeed    Walk speed in m/s, used to calculate time, optional, default 1
+         * @return {[type]}             [description]
+         */
+        function getRouteSummary() {
+            return currentRouteSummary;
+        }
+
+        function isTurn(turnType) {
+            var turnTypes = [
+                'LEFT', 'SLIGHTLY_LEFT', 'HARD_LEFT', 'UTURN_LEFT',
+                'RIGHT', 'SLIGHTLY_RIGHT', 'HARD_RIGHT', 'UTURN_RIGHT',
+                'CIRCLE_CLOCKWISE', 'CIRCLE_COUNTERCLOCKWISE'
+            ];
+            return turnTypes.indexOf(turnType) !== -1;
+        }
+
+        /**
          * Checks the geojson response to verify that each feature was audited
          * @param  {geojson}  geojson Geojson object returned from Directions.get
          * @return {Boolean}  true if each feature has a valid lastModified property, otherwise false
@@ -168,6 +196,9 @@
             var itineraries = otpResponse.plan.itineraries;
             var itinerary = itineraries[0];
             var lineStrings = [];
+            currentRouteSummary.distanceMeters = itinerary.walkDistance;
+            currentRouteSummary.timeMinutes = itinerary.duration / 60;
+            var turns = 0;
 
             // Foreach leg in legs
             angular.forEach(itinerary.legs, function (leg) {
@@ -196,6 +227,9 @@
                         i === numFeatures - 1) {
                         var lastStepPoint = steps[currentStep - 1];
                         var lastStepProperties = propertiesFromStep(lastStepPoint);
+                        if (isTurn(lastStepProperties.directions.turn)) {
+                            turns++;
+                        }
                         stepLinePoints.push(lngLatPoint);
                         lineStrings.push(turf.linestring(stepLinePoints, lastStepProperties));
                         stepLinePoints = [];
@@ -204,6 +238,7 @@
                     stepLinePoints.push(lngLatPoint);
                 }
             });
+            currentRouteSummary.turns = turns;
             return turf.featurecollection(lineStrings);
 
             /**

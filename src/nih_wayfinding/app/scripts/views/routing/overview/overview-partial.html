@@ -8,8 +8,8 @@
 
 <footer class="route-overview container-fluid">
     <div class="row">
-        <div class="col-xs-12">
-            45 Mins, 2.5 Miles, 5 Turns
+        <div class="col-xs-12" ng-show="overview.summary.timeMinutes">
+            {{ overview.summary.timeMinutes | number:0 }} Mins, {{ overview.summary.distanceMeters | distance }} Miles, {{ overview.summary.turns }} Turns
         </div>
     </div>
     <nav class="row">
