@@ -1,11 +1,13 @@
 (function () {
     'use strict';
 
-    function MapControl (leafletData) {
+    function MapControl ($http, $q, Config, leafletData) {
         var popup = null;
+        var boundsUrl = Config.routing.hostname + '/otp/routers/default';
 
         var module = {
             cleanLonLatParam: cleanLonLatParam,
+            getGraphBounds: getGraphBounds,
             pointToLngLat: pointToLngLat,
             showPopup: showPopup,
             trackUser: trackUser,
@@ -32,6 +34,27 @@
             } else {
                 return [lon, lat];
             }
+        }
+
+        /**
+         * Get the graph bounds from the OTP server
+         *
+         * @returns {geojson} Graph bounds polygon
+         */
+        function getGraphBounds() {
+            var dfd = $q.defer();
+            $http.get(boundsUrl, {
+                cache: true
+            }).then(function (response) {
+                var boundsPolygon = response.data.polygon;
+                if (boundsPolygon) {
+                    dfd.resolve(boundsPolygon);
+                } else {
+                    dfd.reject(response.data.error);
+                }
+            });
+
+            return dfd.promise;
         }
 
         function pointToLngLat(pointFeature) {
