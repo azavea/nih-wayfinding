@@ -36,29 +36,4 @@ describe('nih.notifications: Notifications', function () {
         expect(rootScope.$broadcast).toHaveBeenCalledWith('nih.notifications.hide');
     });
 
-    it('should trigger nih.notifications.show after a delay', function (){
-        var alertDelay = 300;
-        var delayedAlert = angular.extend({}, testAlert, {delay: alertDelay});
-        spyOn(rootScope, '$broadcast');
-        Notifications.show(delayedAlert);
-        timeout.flush(alertDelay / 2);
-        rootScope.$digest();
-        expect(rootScope.$broadcast).not.toHaveBeenCalledWith('nih.notifications.show', jasmine.any(Object));
-        timeout.flush(alertDelay);
-        rootScope.$digest();
-        expect(rootScope.$broadcast).toHaveBeenCalledWith('nih.notifications.show', jasmine.any(Object));
-    });
-
-    it('should not call nih.notifications.show if hide is called before delay expires', function () {
-        var alertDelay = 300;
-        var delayedAlert = angular.extend({}, testAlert, {delay: alertDelay});
-        spyOn(rootScope, '$broadcast');
-        Notifications.show(delayedAlert);
-        timeout.flush(alertDelay / 2);
-        rootScope.$digest();
-        Notifications.hide();
-        timeout.flush(alertDelay);
-        rootScope.$digest();
-        expect(rootScope.$broadcast).toHaveBeenCalledWith('nih.notifications.hide');
-    });
 });

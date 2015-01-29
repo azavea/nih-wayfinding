@@ -34,7 +34,6 @@
         function show(options) {
             var defaults = {
                 timeout: 0,
-                delay: 0,
                 closeButton: true,
                 text: '',
                 imageClass: 'glyphicon-warning-sign'
@@ -42,7 +41,7 @@
             var opts = angular.extend({}, defaults, options);
             timeoutId = $timeout(function () {
                 $rootScope.$broadcast('nih.notifications.show', opts);
-            }, opts.delay, false);
+            });
         }
     }
 
