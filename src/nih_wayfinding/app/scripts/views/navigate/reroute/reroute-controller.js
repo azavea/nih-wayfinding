@@ -13,10 +13,11 @@
         }
 
       function optionClicked(option) {
-          rerouteWith();
+          rerouteWith(option);
       }
 
-      function rerouteWith() {
+      function rerouteWith(option) {
+          Rerouting.reroute(option);
           $state.go('navigate');
       }
     }

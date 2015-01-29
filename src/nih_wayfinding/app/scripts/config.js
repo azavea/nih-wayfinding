@@ -42,7 +42,8 @@
         center: {},
         routing: {
             hostname: 'http://localhost:9090'
-        }
+        },
+        nearbySearchRadius: 500
     };
 
     angular.module('nih.config', [])
