@@ -9,4 +9,3 @@ azavea.pip,0.1.0
 azavea.postgis,0.1.2
 azavea.postgresql,0.2.1
 azavea.postgresql-support,0.2.0
-azavea.scala,0.1.0

@@ -5,5 +5,4 @@ dependencies:
   - { role: "azavea.pip" }
   - { role: "azavea.postgresql-support" }
   - { role: "azavea.python", python_development: True }
-  - { role: "azavea.scala" }
   - { role: "nih-wayfinding.nodejs" }
