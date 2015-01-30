@@ -18,9 +18,12 @@
         };
         var stepLengthFeet = Config.stepLengthFeet || 100;
         var stepLengthMiles = stepLengthFeet / 5280;
-        var lineDistance = 0;
-        var steppedDistance = 0;
-        var currentRoute = null;  // A linestring
+        var currentRoute = {
+            geom: null, // linestring
+            distance: 0,
+            stepped: 0
+        };
+
         var module = {
             getCurrentPosition: getCurrentPosition,
             setRoute: setRoute,
@@ -59,19 +62,19 @@
         }
 
         function setRoute(newRoute) {
-            currentRoute = turf.linestring(newRoute);
-            lineDistance = turf.lineDistance(currentRoute, 'miles');
-            steppedDistance = 0;
+            currentRoute.geom = turf.linestring(newRoute);
+            currentRoute.distance = turf.lineDistance(currentRoute.geom, 'miles');
+            currentRoute.stepped = 0;
         }
 
         function stepNext() {
-            steppedDistance += stepLengthMiles;
-            setPosition(steppedDistance);
+            currentRoute.stepped += stepLengthMiles;
+            setPosition(currentRoute.stepped);
         }
 
         function stepPrevious() {
-            steppedDistance -= stepLengthMiles;
-            setPosition(steppedDistance);
+            currentRoute.stepped -= stepLengthMiles;
+            setPosition(currentRoute.stepped);
         }
 
         function stepFirst() {
@@ -79,20 +82,20 @@
         }
 
         function stepLast() {
-            setPosition(lineDistance);
+            setPosition(currentRoute.distance);
         }
 
         function setPosition(distance) {
-            if (distance > lineDistance) {
-                distance = lineDistance;
-                steppedDistance = lineDistance;
+            if (distance > currentRoute.distance) {
+                distance = currentRoute.distance;
+                currentRoute.stepped = currentRoute.distance;
             }
             if (distance < 0) {
                 distance = 0;
-                steppedDistance = 0;
+                currentRoute.stepped = 0;
             }
             if (routeExists()) {
-                var point = along(currentRoute, distance, 'miles');
+                var point = along(currentRoute.geom, distance, 'miles');
                 position.latitude = point.geometry.coordinates[1];
                 position.longitude = point.geometry.coordinates[0];
                 $rootScope.$broadcast(events.positionUpdated, position);
@@ -100,7 +103,7 @@
         }
 
         function routeExists() {
-            return !!(currentRoute);
+            return !!(currentRoute.geom);
         }
 
         /**
