@@ -60,14 +60,11 @@
             }],
 
             restOpts: [{
-                text: 'Very important',
+                text: 'Important',
                 value: 1
             }, {
-                text: 'Somewhat important',
-                value: 0.5
-            }, {
                 text: 'Not important',
-                value: 0.1
+                value: 0
             }],
 
             newLocOpts: [{
