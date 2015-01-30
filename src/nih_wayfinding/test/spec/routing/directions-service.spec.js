@@ -10,6 +10,7 @@ describe('nih.routing: Directions', function () {
     var rootScope;
     var TurnAmenities;
     var Directions;
+    var ProfileService;
 
     var requestUrl = /\/otp\/routers\/default\/plan\?.*/;
 
@@ -277,11 +278,12 @@ describe('nih.routing: Directions', function () {
         $provide.value('TurnAmenities', TurnAmenities);
     }));
 
-    beforeEach(inject(function ($httpBackend, $rootScope, _Directions_, _TurnAmenities_) {
+    beforeEach(inject(function ($httpBackend, $rootScope, _Directions_, _TurnAmenities_, _ProfileService_) {
         httpBackend = $httpBackend;
         rootScope = $rootScope;
         Directions = _Directions_;
         TurnAmenities = _TurnAmenities_;
+        ProfileService = _ProfileService_;
     }));
 
     it('should ensure get returns an NIH response geojson object, properly transformed from OTP', function () {
@@ -301,6 +303,25 @@ describe('nih.routing: Directions', function () {
             expect(featureZero.properties.flags.benches).toEqual(otpFeatureZero.benches);
             expect(featureZero.properties.flags.stayOn).toEqual(otpFeatureZero.stayOn);
         });
+        httpBackend.flush();
+        httpBackend.verifyNoOutstandingRequest();
+    });
+
+    it('should set OTP query parameters based on user preferences', function () {
+        var user = ProfileService.createBlankProfile();
+        user.username = 'test';
+        user.save();
+        ProfileService.setCurrentUser(user.username);
+        user.setPreference('restFrequency', 1);
+        user.setPreference('assistanceRequired', true);
+        user.setPreference('assistanceType', 'manual');
+        user.save();
+        httpBackend.whenGET(function(url) {
+            expect(url).toMatch(/wheelchair=true/);
+            expect(url).toMatch(/restingPlaces=true/);
+            return true;
+        }).respond(getResponse);
+        Directions.get([10,10], [10,10]);
         httpBackend.flush();
         httpBackend.verifyNoOutstandingRequest();
     });
