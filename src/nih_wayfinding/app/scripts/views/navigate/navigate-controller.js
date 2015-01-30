@@ -27,24 +27,28 @@
                 back: 'routing'
             });
             ctl.map = Map;
+            ctl.nextStep = Navigation.stepNext;
+            ctl.prevStep = Navigation.stepPrevious;
 
             // Subscribe to the location update event
-            $scope.$on('nih.navigation.positionUpdated', function(event, point) {
-                MapControl.trackUser([point.longitude, point.latitude]);
-                angular.extend(ctl.map.center, {
-                    lat: point.latitude,
-                    lng: point.longitude,
-                    zoom: 19
-                });
-            });
+            $scope.$on('nih.navigation.positionUpdated', onPositionUpdated);
 
             var geojson = ctl.map.geojson.data;
-            var coordinates = _(geojson.features).map(function (feature) {
-                return feature.geometry.coordinates;
-            }).flatten(true).value();
-            // TODO: Interpolate coordinates to step at approx walking speed
+            var coordinates = _(geojson.features)
+                .map(function (feature) { return feature.geometry.coordinates; })
+                .flatten(true)
+                .value();
             Navigation.setRoute(coordinates);
             Navigation.stepFirst();
+        }
+
+        function onPositionUpdated(event, point) {
+            MapControl.trackUser([point.longitude, point.latitude]);
+            angular.extend(ctl.map.center, {
+                lat: point.latitude,
+                lng: point.longitude,
+                zoom: 19
+            });
         }
     }
 
