@@ -13,14 +13,19 @@
             positionUpdated: 'nih.navigation.positionUpdated'
         };
         var position = {
-            latitude: 0,
-            longitude: 0
+            point: null,
+            properties: null,
+            destination: null
         };
         var stepLengthFeet = Config.stepLengthFeet || 100;
         var stepLengthMiles = stepLengthFeet / 5280;
-        var lineDistance = 0;
-        var steppedDistance = 0;
-        var currentRoute = null;  // A linestring
+        var currentRoute = {
+            stepBoxes: [],
+            geom: null, // linestring
+            distance: 0,
+            stepped: 0
+        };
+
         var module = {
             getCurrentPosition: getCurrentPosition,
             setRoute: setRoute,
@@ -58,20 +63,32 @@
             return dfd.promise;
         }
 
-        function setRoute(newRoute) {
-            currentRoute = turf.linestring(newRoute);
-            lineDistance = turf.lineDistance(currentRoute, 'miles');
-            steppedDistance = 0;
+        /**
+         * Set navigation route to a geojson object returned by Directions.get
+         * @param {FeatureCollection} newRoute Feature collection of linestrings with directions properties
+         */
+        function setRoute(geojsonRoute) {
+            var coordinates = _(geojsonRoute.features)
+                .map(function (feature) { return feature.geometry.coordinates; })
+                .flatten(true)
+                .value();
+
+            currentRoute.stepBoxes = generateStepBoxes(geojsonRoute);
+            // Flatten the original FeatureCollection linestring to a single linestring
+            //  so we can properly step along it
+            currentRoute.geom = turf.linestring(coordinates);
+            currentRoute.distance = turf.lineDistance(currentRoute.geom, 'miles');
+            currentRoute.stepped = 0;
         }
 
         function stepNext() {
-            steppedDistance += stepLengthMiles;
-            setPosition(steppedDistance);
+            currentRoute.stepped += stepLengthMiles;
+            setPosition(currentRoute.stepped);
         }
 
         function stepPrevious() {
-            steppedDistance -= stepLengthMiles;
-            setPosition(steppedDistance);
+            currentRoute.stepped -= stepLengthMiles;
+            setPosition(currentRoute.stepped);
         }
 
         function stepFirst() {
@@ -79,28 +96,81 @@
         }
 
         function stepLast() {
-            setPosition(lineDistance);
+            setPosition(currentRoute.distance);
         }
 
         function setPosition(distance) {
-            if (distance > lineDistance) {
-                distance = lineDistance;
-                steppedDistance = lineDistance;
+            if (distance > currentRoute.distance) {
+                distance = currentRoute.distance;
+                currentRoute.stepped = currentRoute.distance;
             }
             if (distance < 0) {
                 distance = 0;
-                steppedDistance = 0;
+                currentRoute.stepped = 0;
             }
             if (routeExists()) {
-                var point = along(currentRoute, distance, 'miles');
-                position.latitude = point.geometry.coordinates[1];
-                position.longitude = point.geometry.coordinates[0];
+                var point = along(currentRoute.geom, distance, 'miles');
+                var stepBox = findStepBoxForPoint(point);
+                // Pass all relevant position info
+                //  point, properties, next destination point
+                position.point = point;
+                position.properties = stepBox.properties;
+                position.destination = stepBox.destinationPoint;
                 $rootScope.$broadcast(events.positionUpdated, position);
             }
         }
 
         function routeExists() {
-            return !!(currentRoute);
+            return !!(currentRoute.geom);
+        }
+
+        /**
+         * Foreach step in the route geojson, return a stepBox object
+         *
+         *  StepBox: {
+         *      polygon: a slightly buffered polygon feature that surrounds the points on the route step
+         *      destinationPoint: the last Point on the route step
+         *      properties: the properties object of the next step in the route (has directions info)
+         *  }
+         *
+         * @param  {[type]} geojson [description]
+         * @return {object}         Array of stepBox objects, see above
+         */
+        function generateStepBoxes(geojson) {
+            var lastDirection = {
+                directions: {
+                    text: 'Arrive at destination'
+                }
+            };
+            var stepBoxes = [];
+            var numFeatures = geojson.features.length;
+            angular.forEach(geojson.features, function (feature, index) {
+                var length = feature.geometry.coordinates.length;
+                var lastPoint = turf.point(feature.geometry.coordinates[length - 1]);
+                // Get the next feature's properties, because the next directions for the current
+                //  step are on the next feature
+                var nextFeature = index < numFeatures - 1 ? geojson.features[index + 1] : null;
+                // If we're at the last feature, return the last directions text instead
+                var properties = nextFeature ? nextFeature.properties : lastDirection;
+                var stepBox = {
+                    polygon: turf.buffer(turf.envelope(feature), stepLengthMiles * 0.25, 'miles').features[0],
+                    destinationPoint: lastPoint,
+                    properties: properties
+                };
+                stepBoxes.push(stepBox);
+            });
+            return stepBoxes;
+        }
+
+        /**
+         * Returns the stepBox that contains the passed Point feature
+         * @param  {object Point} point point to search the stepboxes for a match
+         * @return {object}       the stepbox or undefined
+         */
+        function findStepBoxForPoint(point) {
+            return _.find(currentRoute.stepBoxes, function (stepBox) {
+                return turf.inside(point, stepBox.polygon);
+            });
         }
 
         /**

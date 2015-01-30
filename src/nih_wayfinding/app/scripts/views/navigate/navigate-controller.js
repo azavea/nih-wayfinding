@@ -15,10 +15,12 @@
 
     /* ngInject */
     function NavigateController(
-        $scope,
-        Navigation, Directions, Map, MapStyle, NavbarConfig, MapControl
+        $filter, $scope,
+        Navigation, Directions, Map, NavbarConfig, MapControl, ProfileService
     ) {
         var ctl = this;
+        var mphToMs = 0.44704;
+        var kmToM = 1000;
         initialize();
 
         function initialize() {
@@ -29,25 +31,39 @@
             ctl.map = Map;
             ctl.nextStep = Navigation.stepNext;
             ctl.prevStep = Navigation.stepPrevious;
+            ctl.step = {
+                turnIcon: null,
+                text: null
+            };
 
             // Subscribe to the location update event
             $scope.$on('nih.navigation.positionUpdated', onPositionUpdated);
 
             var geojson = ctl.map.geojson.data;
-            var coordinates = _(geojson.features)
-                .map(function (feature) { return feature.geometry.coordinates; })
-                .flatten(true)
-                .value();
-            Navigation.setRoute(coordinates);
+            Navigation.setRoute(geojson);
             Navigation.stepFirst();
         }
 
-        function onPositionUpdated(event, point) {
-            MapControl.trackUser([point.longitude, point.latitude]);
+        function onPositionUpdated(event, position) {
+            var point = position.point;
+            MapControl.trackUser(point.geometry.coordinates);
             angular.extend(ctl.map.center, {
-                lat: point.latitude,
-                lng: point.longitude,
+                lat: point.geometry.coordinates[1],
+                lng: point.geometry.coordinates[0],
                 zoom: 19
+            });
+
+            // Find distance to next turn, and display directions text/time/distance in navbar
+            var distanceToTurn = turf.distance(point, position.destination, 'kilometers') * kmToM;
+            var text = position.properties.directions.text;
+            var turnIcon = Directions.getTurnIconName(position.properties.directions.turn);
+            var speedMs = (ProfileService.getCurrentUser().preferences.speed || 1) * mphToMs;
+            var timeMins = (distanceToTurn / speedMs / 60).toFixed(0);
+            var distanceText = 'In approximately ' +  timeMins + ' minutes (' + $filter('distance')(distanceToTurn) + ')';
+            NavbarConfig.set({
+                title: text,
+                subtitle: distanceText,
+                leftImage: turnIcon
             });
         }
     }
