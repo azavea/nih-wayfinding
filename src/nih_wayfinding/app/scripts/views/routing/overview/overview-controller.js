@@ -42,10 +42,28 @@
             ctl.map = Map;
             angular.extend(ctl.map.center, Config.center);
             angular.extend(ctl.map.bounds, Config.bounds);
+            drawGraphBounds();
             ctl.stateParams = $stateParams;
             readStateParams().then(getDirections);
 
             $scope.$on('leafletDirectiveMap.geojsonClick', showPopup);
+        }
+
+        /**
+         * Fetch the graph bounds and draw its outline
+         */
+        function drawGraphBounds() {
+            MapControl.getGraphBounds().then(function(geojson) {
+                angular.extend(ctl.map, {
+                    geojson: {
+                        data: geojson,
+                        style: MapStyle.getBoundsStyle(),
+                    }
+                });
+            }, function (error) {
+                console.error('Could not get graph bounds from OTP');
+                console.error(error);
+            });
         }
 
         /**
