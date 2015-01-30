@@ -7,7 +7,8 @@
 
         var module = {
             getLegendRamp: getLegendRamp,
-            getLineColor: getLineColor
+            getLineColor: getLineColor,
+            getBoundsStyle: getBoundsStyle
         };
 
         return module;
@@ -18,6 +19,15 @@
                 '#E0AD0A',
                 '#000000'
             ];
+        }
+
+        function getBoundsStyle() {
+            return {
+                color: 'grey',
+                weight: 4,
+                opacity: 0.8,
+                fill: false
+            };
         }
 
         /**
