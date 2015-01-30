@@ -14,203 +14,257 @@ describe('nih.routing: Directions', function () {
     var requestUrl = /\/otp\/routers\/default\/plan\?.*/;
 
     var getResponse = {
-        'requestParameters': {
-            'time': '17:17',
-            'showIntermediateStops': 'false',
-            'arriveBy': 'false',
-            'wheelchair': 'false',
-            'maxWalkDistance': '804.672',
-            'fromPlace': '41.73743967711266,-87.55356788635254',
-            'toPlace': '41.72866461875987,-87.56206512451172',
-            'date': '01-22-2015',
-            'mode': 'WALK'
+      'requestParameters': {
+        'showIntermediateStops': 'false',
+        'time': '11:59',
+        'arriveBy': 'false',
+        'wheelchair': 'true',
+        'fromPlace': '41.73743967711266,-87.55356788635254',
+        'toPlace': '41.72866461875987,-87.56206512451172',
+        'date': '01-05-2015',
+        'mode': 'WALK',
+        'walkTimeMins': '0'
+      },
+      'plan': {
+        'date': 1420459140000,
+        'from': {
+          'name': 'East 87th Street',
+          'lon': -87.5535658763189,
+          'lat': 41.73735561859548,
+          'orig': ''
         },
-        'plan': {
-            'date': 1421947020000,
-            'from': {
-                'name': 'East 87th Street',
-                'lon': -87.5535658763189,
-                'lat': 41.73735561859548,
-                'orig': ''
+        'to': {
+          'name': 'South Kingston Avenue',
+          'lon': -87.56212183678379,
+          'lat': 41.728663364422594,
+          'orig': ''
+        },
+        'itineraries': [
+          {
+            'duration': 1249,
+            'startTime': 1420459140000,
+            'endTime': 1420460389000,
+            'walkTime': 1249,
+            'transitTime': 0,
+            'waitingTime': 0,
+            'walkDistance': 1616.5698045057345,
+            'benches': 0,
+            'toilets': 0,
+            'restingPlaces': false,
+            'unevenSurfaces': false,
+            'aesthetic': false,
+            'walkLimitExceeded': false,
+            'elevationLost': 0,
+            'elevationGained': 0,
+            'transfers': 0,
+            'fare': {
+              'fare': {}
             },
-            'to': {
-                'name': 'South Kingston Avenue',
-                'lon': -87.56212183678379,
-                'lat': 41.728663364422594,
-                'orig': ''
-            },
-            'itineraries': [
-                {
-                    'duration': 1249,
-                    'startTime': 1421947020000,
-                    'endTime': 1421948269000,
-                    'walkTime': 0,
-                    'transitTime': 0,
-                    'waitingTime': 0,
-                    'walkDistance': 1616.5698045057345,
+            'legs': [
+              {
+                'startTime': 1420459140000,
+                'endTime': 1420460389000,
+                'departureDelay': 0,
+                'arrivalDelay': 0,
+                'realTime': false,
+                'distance': 1616.398,
+                'pathway': false,
+                'mode': 'WALK',
+                'route': '',
+                'agencyTimeZoneOffset': 0,
+                'interlineWithPreviousLeg': false,
+                'benches': 0,
+                'toilets': 0,
+                'restingPlaces': false,
+                'unevenSurfaces': false,
+                'aesthetic': false,
+                'from': {
+                  'name': 'East 87th Street',
+                  'lon': -87.5535658763189,
+                  'lat': 41.73735561859548,
+                  'departure': 1420459140000,
+                  'orig': ''
+                },
+                'to': {
+                  'name': 'South Kingston Avenue',
+                  'lon': -87.56212183678379,
+                  'lat': 41.728663364422594,
+                  'arrival': 1420460389000,
+                  'orig': ''
+                },
+                'legGeometry': {
+                  'points': 'myv}FxhkuO?|@@bA@fC?d@@dB@fC?D?tB?R@fB?Z@vA?r@@dA?`A@x@?pAlJIvAAxDEvAAFJfA`Bn@_A\\d@vArBDDV^tAnBFR?^BtBzGInAA~FI',
+                  'length': 36
+                },
+                'rentedBike': false,
+                'duration': 1249,
+                'transitLeg': false,
+                'steps': [
+                  {
+                    'distance': 512.299,
+                    'relativeDirection': 'DEPART',
+                    'streetName': 'East 87th Street',
+                    'absoluteDirection': 'WEST',
+                    'stayOn': false,
+                    'area': false,
+                    'bogusName': false,
+                    'lon': -87.5535658763189,
+                    'lat': 41.73735561859548,
                     'benches': 0,
                     'toilets': 0,
-                    'walkLimitExceeded': true,
-                    'elevationLost': 0,
-                    'elevationGained': 0,
-                    'transfers': 0,
-                    'fare': {
-                        'fare': {}
+                    'rest': '',
+                    'unevenSurfaces': false,
+                    'aesthetics': false,
+                    'stepGeometry': {
+                      'points': 'myv}FxhkuO?|@@bA@fC?d@@dB@fC?D?tB?R@fB?Z@vA?r@@dA?`A@x@?pA',
+                      'length': 18
                     },
-                    'legs': [
-                        {
-                            'startTime': 1421947020000,
-                            'endTime': 1421948269000,
-                            'departureDelay': 0,
-                            'arrivalDelay': 0,
-                            'realTime': false,
-                            'distance': 1616.398,
-                            'pathway': false,
-                            'mode': 'WALK',
-                            'route': '',
-                            'agencyTimeZoneOffset': 0,
-                            'interlineWithPreviousLeg': false,
-                            'benches': 0,
-                            'toilets': 0,
-                            'from': {
-                                'name': 'East 87th Street',
-                                'lon': -87.5535658763189,
-                                'lat': 41.73735561859548,
-                                'departure': 1421947020000,
-                                'orig': ''
-                            },
-                            'to': {
-                                'name': 'South Kingston Avenue',
-                                'lon': -87.56212183678379,
-                                'lat': 41.728663364422594,
-                                'arrival': 1421948269000,
-                                'orig': ''
-                            },
-                            'legGeometry': {
-                                'points': 'myv}FxhkuO?|@@bA@fC?d@@dB@fC?D?tB?R@fB?Z@vA?r@@dA?`A@x@?pAlJIvAAxDEvAAFJfA`Bn@_A\\d@vArBDDV^tAnBFR?^BtBzGInAA~FI',
-                                'length': 36
-                            },
-                            'rentedBike': false,
-                            'duration': 1249,
-                            'transitLeg': false,
-                            'steps': [
-                                {
-                                    'distance': 512.299,
-                                    'relativeDirection': 'DEPART',
-                                    'streetName': 'East 87th Street',
-                                    'absoluteDirection': 'WEST',
-                                    'stayOn': false,
-                                    'area': false,
-                                    'bogusName': false,
-                                    'lon': -87.5535658763189,
-                                    'lat': 41.73735561859548,
-                                    'benches': 0,
-                                    'toilets': 0,
-                                    'elevation': []
-                                },
-                                {
-                                    'distance': 404.267,
-                                    'relativeDirection': 'LEFT',
-                                    'streetName': 'South Saginaw Avenue',
-                                    'absoluteDirection': 'SOUTH',
-                                    'stayOn': false,
-                                    'area': false,
-                                    'bogusName': false,
-                                    'lon': -87.5597392,
-                                    'lat': 41.7372736,
-                                    'benches': 0,
-                                    'toilets': 0,
-                                    'elevation': []
-                                },
-                                {
-                                    'distance': 63.64,
-                                    'relativeDirection': 'RIGHT',
-                                    'streetName': 'South Saginaw Avenue',
-                                    'absoluteDirection': 'SOUTHWEST',
-                                    'stayOn': true,
-                                    'area': false,
-                                    'bogusName': false,
-                                    'lon': -87.5596398,
-                                    'lat': 41.7336387,
-                                    'benches': 0,
-                                    'toilets': 0,
-                                    'elevation': []
-                                },
-                                {
-                                    'distance': 37.747,
-                                    'relativeDirection': 'LEFT',
-                                    'streetName': 'South South Chicago Avenue',
-                                    'absoluteDirection': 'SOUTHEAST',
-                                    'stayOn': false,
-                                    'area': false,
-                                    'bogusName': false,
-                                    'lon': -87.5601861,
-                                    'lat': 41.733237,
-                                    'benches': 0,
-                                    'toilets': 0,
-                                    'elevation': []
-                                },
-                                {
-                                    'distance': 181.322,
-                                    'relativeDirection': 'RIGHT',
-                                    'streetName': 'South Colfax Avenue',
-                                    'absoluteDirection': 'SOUTHWEST',
-                                    'stayOn': false,
-                                    'area': false,
-                                    'bogusName': false,
-                                    'lon': -87.5598664,
-                                    'lat': 41.7329955,
-                                    'benches': 0,
-                                    'toilets': 0,
-                                    'elevation': []
-                                },
-                                {
-                                    'distance': 71.826,
-                                    'relativeDirection': 'SLIGHTLY_RIGHT',
-                                    'streetName': 'East 90th Street',
-                                    'absoluteDirection': 'WEST',
-                                    'stayOn': false,
-                                    'area': false,
-                                    'bogusName': false,
-                                    'lon': -87.5613845,
-                                    'lat': 41.7318226,
-                                    'benches': 0,
-                                    'toilets': 0,
-                                    'elevation': []
-                                },
-                                {
-                                    'distance': 345.297,
-                                    'relativeDirection': 'LEFT',
-                                    'streetName': 'South Kingston Avenue',
-                                    'absoluteDirection': 'SOUTH',
-                                    'stayOn': false,
-                                    'area': false,
-                                    'bogusName': false,
-                                    'lon': -87.5622378,
-                                    'lat': 41.7317675,
-                                    'benches': 0,
-                                    'toilets': 0,
-                                    'elevation': []
-                                }
-                            ]
-                        }
-                    ],
-                    'tooSloped': false
-                }
-            ]
-        },
-        'debugOutput': {
-            'precalculationTime': 0,
-            'pathCalculationTime': 5,
-            'pathTimes': [
-                5
+                    'elevation': []
+                  },
+                  {
+                    'distance': 404.267,
+                    'relativeDirection': 'LEFT',
+                    'streetName': 'South Saginaw Avenue',
+                    'absoluteDirection': 'SOUTH',
+                    'stayOn': false,
+                    'area': false,
+                    'bogusName': false,
+                    'lon': -87.5597392,
+                    'lat': 41.7372736,
+                    'benches': 0,
+                    'toilets': 0,
+                    'rest': '',
+                    'unevenSurfaces': false,
+                    'aesthetics': false,
+                    'stepGeometry': {
+                      'points': '}xv}FjoluOlJIvAAxDEvAA',
+                      'length': 5
+                    },
+                    'elevation': []
+                  },
+                  {
+                    'distance': 63.64,
+                    'relativeDirection': 'RIGHT',
+                    'streetName': 'South Saginaw Avenue',
+                    'absoluteDirection': 'SOUTHWEST',
+                    'stayOn': true,
+                    'area': false,
+                    'bogusName': false,
+                    'lon': -87.5596398,
+                    'lat': 41.7336387,
+                    'benches': 0,
+                    'toilets': 0,
+                    'rest': '',
+                    'unevenSurfaces': false,
+                    'aesthetics': false,
+                    'stepGeometry': {
+                      'points': 'ebv}FvnluOFJfA`B',
+                      'length': 3
+                    },
+                    'elevation': []
+                  },
+                  {
+                    'distance': 37.747,
+                    'relativeDirection': 'LEFT',
+                    'streetName': 'South South Chicago Avenue',
+                    'absoluteDirection': 'SOUTHEAST',
+                    'stayOn': false,
+                    'area': false,
+                    'bogusName': false,
+                    'lon': -87.5601861,
+                    'lat': 41.733237,
+                    'benches': 0,
+                    'toilets': 0,
+                    'rest': '',
+                    'unevenSurfaces': false,
+                    'aesthetics': false,
+                    'stepGeometry': {
+                      'points': 'u_v}FdrluOn@_A',
+                      'length': 2
+                    },
+                    'elevation': []
+                  },
+                  {
+                    'distance': 181.322,
+                    'relativeDirection': 'RIGHT',
+                    'streetName': 'South Colfax Avenue',
+                    'absoluteDirection': 'SOUTHWEST',
+                    'stayOn': false,
+                    'area': false,
+                    'bogusName': false,
+                    'lon': -87.5598664,
+                    'lat': 41.7329955,
+                    'benches': 0,
+                    'toilets': 0,
+                    'rest': '',
+                    'unevenSurfaces': false,
+                    'aesthetics': false,
+                    'stepGeometry': {
+                      'points': 'izu}FduluOV^tAnB',
+                      'length': 3
+                    },
+                    'elevation': []
+                  },
+                  {
+                    'distance': 71.826,
+                    'relativeDirection': 'SLIGHTLY_RIGHT',
+                    'streetName': 'East 90th Street',
+                    'absoluteDirection': 'WEST',
+                    'stayOn': false,
+                    'area': false,
+                    'bogusName': false,
+                    'lon': -87.5613845,
+                    'lat': 41.7318226,
+                    'benches': 0,
+                    'toilets': 0,
+                    'rest': '',
+                    'unevenSurfaces': false,
+                    'aesthetics': false,
+                    'stepGeometry': {
+                      'points': '{vu}FtyluOFR?^BtB',
+                      'length': 4
+                    },
+                    'elevation': []
+                  },
+                  {
+                    'distance': 345.297,
+                    'relativeDirection': 'LEFT',
+                    'streetName': 'South Kingston Avenue',
+                    'absoluteDirection': 'SOUTH',
+                    'stayOn': false,
+                    'area': false,
+                    'bogusName': false,
+                    'lon': -87.5622378,
+                    'lat': 41.7317675,
+                    'benches': 0,
+                    'toilets': 0,
+                    'rest': '',
+                    'unevenSurfaces': false,
+                    'aesthetics': false,
+                    'stepGeometry': {
+                      'points': 'ovu}F~~luOzGInAA~FI',
+                      'length': 4
+                    },
+                    'elevation': []
+                  }
+                ]
+              }
             ],
-            'renderingTime': 1,
-            'totalTime': 6,
-            'timedOut': false
-        }
+            'tooSloped': false
+          }
+        ]
+      },
+      'debugOutput': {
+        'precalculationTime': 0,
+        'pathCalculationTime': 10,
+        'pathTimes': [
+          10
+        ],
+        'renderingTime': 3,
+        'totalTime': 13,
+        'timedOut': false
+      }
     };
-
     beforeEach(module('nih.routing', function ($provide) {
         // Mock out TurnAmenities, we don't care about the request it makes, only that
         //  it makes an attach request
