@@ -246,20 +246,6 @@
                 return properties;
             }
 
-            /**
-             * Transform OTP step object to GeoJson Point, with properties
-             * @param  {object} step
-             * @return {Point}
-             */
-            function stepToPoint(step) {
-                var lat = step.lat;
-                var lon = step.lon;
-                var properties = angular.extend({}, step);
-                delete properties.lat;
-                delete properties.lon;
-                return turf.point([lon, lat], properties);
-            }
-
             function turnText(turn, street, direction) {
                 var turnTextString = '';
                 var turnLower = turn.toLowerCase();
