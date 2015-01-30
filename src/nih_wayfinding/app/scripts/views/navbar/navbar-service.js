@@ -7,6 +7,7 @@
         var config = {
             title: '',
             subtitle: '',
+            leftImage: '',
             rightButton: {
                 imgclass: 'caret',
                 text: 'Menu'
@@ -26,6 +27,8 @@
 
         function set(options) {
             var defaults = {
+                subtitle: '',
+                leftImage: '',
                 back: true      // display back button to prev view if true, display menu if false
             };
             angular.extend(config, defaults, options);

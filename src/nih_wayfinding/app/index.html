@@ -24,7 +24,11 @@
     <header ng-controller="NavbarController as navbar" class="navbar">
       <div class="container-fluid">
         <div class="navbar-header">
-          <h2 class="navbar-actionheader" ng-cloak ui-sref="profiles">{{ navbar.config.title }}</h2>
+          <h2 class="navbar-actionheader" ng-cloak ui-sref="profiles">
+            <span ng-if="navbar.config.leftImage" class="glyphicon" ng-class="navbar.config.leftImage"></span>
+            {{ navbar.config.title }}
+          </h2>
+          <p ng-if="navbar.config.subtitle" ng-cloak>{{ navbar.config.subtitle }}</p>
         </div>
 
         <div class="navbar-header pull-right">
