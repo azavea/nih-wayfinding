@@ -1,14 +1,20 @@
 server {
+  root {{ app_home }}/dist;
+  index index.html;
+
   listen *:80;
   server_name _;
 
-  location /otp {
-    proxy_pass http://33.33.33.11:8080;
-  }
-
   location / {
-    root {{ app_home }}/dist;
+    try_files $uri $uri/ index.html;
   }
+
+  location /otp {
+    proxy_pass http://{{ otp_ip }}:{{ otp_port }};
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-Host $host;
+    proxy_set_header X-Forwarded-Server $host;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  }
+
 }
-
-
