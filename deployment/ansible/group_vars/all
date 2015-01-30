@@ -20,7 +20,7 @@ postgresql_support_repository_channel: "9.3"
 postgresql_version: "9.3"
 
 otp_repo: "https://github.com/azavea/OpenTripPlanner.git"
-otp_version: "develop"
+otp_version: "nih"
 otp_jarfile: "./target/otp-0.13.0.jar"
 
 unzip_version: "6.*"
