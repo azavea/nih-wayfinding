@@ -4,6 +4,7 @@
     angular.module('nih.routing', [
         'nih.config',
         'nih.amenities',
-        'nih.mapping'
+        'nih.mapping',
+        'nih.profiles'
     ]);
 })();

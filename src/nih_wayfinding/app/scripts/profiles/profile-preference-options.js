@@ -39,13 +39,13 @@
 
             speedOpts: [{
                 text: 'About average (2.5 mph)',
-                value: 2.5
+                value: 1.1176
             }, {
                 text: 'Slower than average (1.5 mph)',
-                value: 1.5
+                value: 0.67056
             }, {
                 text: 'Much slower than average (1 mph)',
-                value: 1
+                value: 0.44704
             }],
 
             busyOpts: [{

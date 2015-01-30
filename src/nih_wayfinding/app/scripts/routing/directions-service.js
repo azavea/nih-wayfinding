@@ -3,7 +3,7 @@
     'use strict';
 
     /* ngInject */
-    function Directions ($http, $q, $timeout, Config, MapControl, TurnAmenities) {
+    function Directions ($http, $q, $timeout, Config, MapControl, ProfileService, TurnAmenities) {
 
         var directionsUrl = Config.routing.hostname + '/otp/routers/default/plan';
         var currentRouteSummary = {
@@ -17,6 +17,7 @@
             getFlagIconName: getFlagIconName,
             getTurnIconName: getTurnIconName,
             getRouteSummary: getRouteSummary,
+            getRequestParams: getRequestParams,
             isAudited: isAudited,
             isTurn: isTurn
         };
@@ -41,17 +42,8 @@
                 dfd.reject({ msg: 'Invalid destination parameter' });
                 return dfd.promise;
             }
-            var now = new Date();
-            // This is the minimum param list (+ toPlace,fromPlace) to make a OTP plan API call
-            var defaults = {
-                mode: 'WALK',
-                time: now.getHours() + ':' + now.getMinutes(),
-                date: defaultDate(),
-                arriveBy: false,
-                wheelchair: false,
-                showIntermediateStops: false
-            };
-            var params = angular.extend({}, defaults, options);
+            var otpRequestParams = getRequestParams();
+            var params = angular.extend({}, otpRequestParams, options);
             // Swap, OTP request uses [lat,lon]
             params.fromPlace = [origin[1], origin[0]].join(',');
             params.toPlace = [destination[1], destination[0]].join(',');
@@ -88,6 +80,55 @@
                 }
             });
             return dfd.promise;
+        }
+
+        /** Build set of OpenTripPlanner request parameters based on current user preferences.
+         *  Currently uses walking speed, wheelchair usage/type, steep terrain undesireability,
+         *  and resting place desireability.
+         *
+         *  @returns {Object} set of query parameters for OpenTripPlanner directions endpoint
+        */
+        function getRequestParams() {
+            var now = new Date();
+            // This is the minimum param list (+ toPlace,fromPlace) to make a OTP plan API call
+            var params = {
+                mode: 'WALK',
+                time: now.getHours() + ':' + now.getMinutes(),
+                date: defaultDate(),
+                arriveBy: false,
+                wheelchair: false,
+                showIntermediateStops: false
+            };
+
+            var preferences = ProfileService.getCurrentUser().preferences;
+
+            params.walkSpeed = preferences.speed;
+
+            // TODO: OTP currently only can ban sloped edges; no option to weight more heavily
+            if (preferences.steepTerrainComfort < 0.5) {
+                params.allowUnevenSurfaces = false;
+            }
+
+            if (preferences.assistanceRequired) {
+                // set "walk" speed for powered vs manual wheelchairs
+                if (preferences.asistanceType === 'motorized') {
+                    // let's say powered goes ~3.5 mph
+                    params.walkSpeed = 1.56464;
+                } else if (preferences.assistanceType === 'manual') {
+                    // manual wheelchair speed ~0.6 m/s
+                    // http://www.hindawi.com/journals/rerp/2012/753165/tab1/
+                    params.wheelchair = true;
+                    params.walkSpeed = 0.6;
+                } else {
+                    // TODO: what are we supposed to do with the other types?
+                }
+            }
+
+            if (preferences.restFrequency > 0) {
+                params.restingPlaces = true;
+            }
+
+            return params;
         }
 
         function getFlagIconName(flagType, value) {
