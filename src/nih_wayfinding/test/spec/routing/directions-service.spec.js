@@ -316,10 +316,14 @@ describe('nih.routing: Directions', function () {
         user.setPreference('assistanceRequired', true);
         user.setPreference('assistanceType', 'manual');
         user.save();
-        var params = Directions.getRequestParams();
-        expect(params.wheelchair).toEqual(true);
-        expect(params.walkSpeed).toBeLessThan(1);
-        expect(params.restingPlaces, true);
+        httpBackend.whenGET(function(url) {
+            expect(url).toMatch(/wheelchair=true/);
+            expect(url).toMatch(/restingPlaces=true/);
+            return true;
+        }).respond(getResponse);
+        Directions.get([10,10], [10,10]);
+        httpBackend.flush();
+        httpBackend.verifyNoOutstandingRequest();
     });
 
     it('should ensure Directions.get rejects the promise if bad lat/lon objects passed', function () {

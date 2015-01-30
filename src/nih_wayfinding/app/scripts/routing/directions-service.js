@@ -17,7 +17,6 @@
             getFlagIconName: getFlagIconName,
             getTurnIconName: getTurnIconName,
             getRouteSummary: getRouteSummary,
-            getRequestParams: getRequestParams,
             isAudited: isAudited,
             isTurn: isTurn
         };
