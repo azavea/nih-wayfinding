@@ -244,7 +244,7 @@
                 _.each(leg.steps, function (step) {
                     var stepPoints = L.PolylineUtil.decode(step.stepGeometry.points);
                     var invertedPoints = _.map(stepPoints, function(pt) {
-                        return [pt[1], [pt[0]]];
+                        return [pt[1], pt[0]];
                     });
                     lineStrings.push(turf.linestring(invertedPoints, propertiesFromStep(step)));
                 });
