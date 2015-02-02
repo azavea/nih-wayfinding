@@ -11,7 +11,13 @@ NIH Wayfinding Tools (Prototype)
 ## Local Development
 
 A combination of Vagrant 1.5+ and Ansible 1.8+ is used to setup the development environment for this project.
-Use the following command to bring up a local development environment:
+
+Before setting up the environment (and assuming you'd like OTP to build the graph its operations will range over), be sure that the following files are in deployment/ansible/roles/nih-wayfinding.otp-data/files/:
+- OSM data extracts
+- 'intersections' shapefile documents
+- 'segments' shapefile documents
+
+Once all files are where they need to be, use the following command to bring up a local development environment:
 
 ```bash
 $ vagrant up
