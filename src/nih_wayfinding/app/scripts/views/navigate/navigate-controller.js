@@ -33,27 +33,31 @@
                 back: 'routing'
             });
             ctl.map = Map;
+            ctl.nextStep = Navigation.stepNext;
+            ctl.offCourse = Navigation.offCourse;
+
             ctl.origin = Config.stubs.geolocation;
             handleReroute($stateParams.reroute);
             MapControl.trackUser([ctl.origin.longitude, ctl.origin.latitude]);
-            ctl.nextStep = Navigation.stepNext;
-            ctl.offCourse = Navigation.offCourse;
 
             // Subscribe to the location update event
             $scope.$on('nih.navigation.positionOffCourse', onPositionOffCourse);
             $scope.$on('nih.navigation.positionUpdated', onPositionUpdated);
-            $scope.$on('$stateChangeStart', Navigation.stopIntervalTask);
+
+            var geojson = ctl.map.geojson.data;
+            Navigation.setRoute(geojson);
+            Navigation.stepFirst();
         }
 
         function setDefaultFooter() {
             ctl.footer = {
                 left:  {
                     text: 'Reroute',
-                    func: function() { $state.go('reroute'); }
+                    onClick: function() { $state.go('reroute'); }
                 },
                 right: {
                     text: 'Report',
-                    func: function() { $state.go('report'); }
+                    onClick: function() { $state.go('report'); }
                 }
             };
         }
@@ -65,11 +69,11 @@
             ctl.footer = {
                 left:  {
                     text: 'Cancel',
-                    func: clearReroute
+                    onClick: clearReroute
                 },
                 right: {
                     text: 'Route',
-                    func: planReroute
+                    onClick: planReroute
                 }
             };
         }
@@ -86,6 +90,8 @@
                 MapRoute.mapRoute([ctl.origin.longitude, ctl.origin.latitude],
                                   [ctl.destination.lng, ctl.destination.lat]).then(function(mappedRoute) {
                     angular.extend(ctl.map, mappedRoute);
+                    Navigation.setRoute(ctl.map.geojson.data);
+                    Navigation.stepFirst();
                 });
 
             }

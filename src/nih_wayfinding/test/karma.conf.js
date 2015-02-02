@@ -82,6 +82,7 @@ module.exports = function(config) {
       'app/scripts/geocoder/search-service.js',
       'app/scripts/mapping/module.js',
       'app/scripts/mapping/map-service.js',
+      'app/scripts/mapping/map-route-service.js',
       'app/scripts/mapping/map-control-service.js',
       'app/scripts/mapping/map-style-service.js',
       'app/scripts/navigation/module.js',
