@@ -185,6 +185,6 @@
     }
 
     angular.module('nih.views.routing')
-    .controller('OverviewController', OverviewController);
+     .controller('OverviewController', OverviewController);
 
 })();

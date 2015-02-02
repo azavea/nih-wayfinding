@@ -3,7 +3,7 @@
 
     function MapControl ($http, $q, Config, leafletData) {
         var popup = null;
-        var boundsUrl = Config.routing.hostname + '/otp/routers/default';
+        var boundsUrl = '/otp/routers/default';
         var userMarker = null;
 
         var module = {
@@ -13,7 +13,8 @@
             showPopup: showPopup,
             trackUser: trackUser,
             markLocation: markLocation,
-            purgeMarkers: purgeMarkers
+            purgeMarkers: purgeMarkers,
+            plotGeoJSON: plotGeoJSON
         };
 
         return module;
@@ -88,6 +89,12 @@
             });
         }
 
+        /**
+         * Delete each location from the map from the array of icons given
+         *
+         * @param locations {array} An array of locations
+         * @return {undefined} Deletes markers
+         */
         function purgeMarkers(locations) {
             leafletData.getMap().then(function(map) {
                 _(locations).forEach(function(loc) {
@@ -100,17 +107,19 @@
          * For a given point, attach a location marker on that point
          *
          * @param point {array} [Lng, Lat] array of coordinates
-         * @param onClick {function} The function to be called when this marker is clicked upon.
-         *                             This function should take the event object as its sole argument.
+         * @param opts {object} An options object which may contain:
+         *                        1. The function to be called when this marker is clicked upon.
+         *                           This function should take the event object as its sole argument.
+         *                        2. The icon to display for this marker
          * @return {object} (promise) The marker displayed on map (returned so that it might be stored)
          *
          */
-        function markLocation(point, onClick) {
+        function markLocation(point, opts) {
             var deferred = $q.defer();
             leafletData.getMap().then(function(map) {
                 var lnglat = [point[1], point[0]];
-                var locationMarker = new L.Marker(lnglat);
-                if (onClick) { locationMarker.on('click', onClick); }
+                var locationMarker = new L.Marker(lnglat, opts);
+                if (opts.clickHandler) { locationMarker.on('click', opts.clickHandler); }
                 map.addLayer(locationMarker);
                 deferred.resolve(locationMarker);
             });
@@ -121,17 +130,26 @@
          * For a given point attach a user marker on that point
          *
          * @param point {array} [Lng, Lat] array of coordinates
-         * @return undefined Shows (or moves) a marker
+         * @return {undefined} Shows (or moves) a marker
          */
         function trackUser(point) {
             leafletData.getMap().then(function(map) {
                 var lnglat = [point[1], point[0]];
                 if (userMarker) {
-                  userMarker.setLatLng(lnglat);
-                } else {
-                  userMarker = new L.CircleMarker(lnglat);
-                  map.addLayer(userMarker);
+                    map.removeLayer(userMarker);
                 }
+                userMarker = new L.CircleMarker(lnglat);
+                map.addLayer(userMarker);
+            });
+        }
+
+        /**
+         *
+         */
+        function plotGeoJSON(geojson) {
+            var features = L.geoJson(geojson);
+            leafletData.getMap().then(function(map) {
+                map.addLayer(features);
             });
         }
     }

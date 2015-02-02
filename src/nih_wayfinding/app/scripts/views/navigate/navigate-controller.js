@@ -6,6 +6,8 @@
  *
  * TODO:
  *   - Init map at current location navigating to destination param via Directions.get()
+ *     - This task should also save the geojson being used so that it might be called back up
+ *        after playing with other dialogs.
  *   - Add direction text, e.g. Turn left in x ft at 1000 Market St
  *   - When we approach each step, speak audible alert and then switch the current direction text
  *   - Offer to reroute user if they leave the current path
@@ -15,7 +17,7 @@
 
     /* ngInject */
     function NavigateController(
-        $filter, $scope, $stateParams,
+        $filter, $scope, $stateParams, $state,
         Navigation, Directions, Map, MapStyle, NavbarConfig, MapControl, Rerouting, Notifications, ProfileService, Config
     ) {
         var ctl = this;
@@ -25,12 +27,14 @@
 
         function initialize() {
             setDefaultFooter();
-            handleReroute($stateParams.reroute);
             NavbarConfig.set({
                 title: 'Navigate Route',
                 back: 'routing'
             });
             ctl.map = Map;
+            ctl.origin = Config.stubs.geolocation;
+            handleReroute($stateParams.reroute);
+            MapControl.trackUser([ctl.origin.longitude, ctl.origin.latitude]);
             ctl.nextStep = Navigation.stepNext;
             ctl.offCourse = Navigation.offCourse;
 
@@ -73,10 +77,18 @@
          *
          */
         function planReroute() {
-            var origin = Config.stubs.geolocation;
-            var dest = ctl.rerouteDest;
-            Directions.get([origin.latitude, origin.longitude], [dest.lat, dest.lng]).then(function(a,b) {console.log(a,b);});
-            setDefaultFooter();
+            function success(response) {
+                clearReroute();
+                MapControl.plotGeoJSON(response);
+                console.log('succ', response);
+            }
+            function failure(response) {
+                clearReroute();
+                console.log('fail', response);
+            }
+            Directions.get([ctl.origin.longitude, ctl.origin.latitude],
+                           [ctl.destination.lng, ctl.destination.lat]
+                          ).then(success, failure);
             console.log('plotting...');
         }
 
@@ -91,6 +103,23 @@
         /**
          *
          */
+        function registerMarker(event) {
+            _(ctl.markedLocations)
+                .forEach(function(markedLocation) {
+                    markedLocation.setIcon(new L.Icon.Default());
+                });
+            // Change the look of icon
+            var newIcon = L.AwesomeMarkers.icon({icon: 'coffee', markerColor: 'green'});
+            event.target.setIcon(newIcon);
+
+            // Register this icon as selected on $scope
+            var latlng = event.latlng;
+            ctl.destination = latlng;
+        }
+
+        /**
+         *
+         */
         function handleReroute(rerouteType) {
             ctl.markedLocations = [];
             if (rerouteType) {
@@ -100,19 +129,16 @@
                         text: 'Select a the destination you\'d like to be routed to',
                         timeout: 3000
                     });
-                    function registerMarker(rerouteDest) {
-                        var latlng = rerouteDest.latlng;
-                        ctl.rerouteDest = latlng;
-                    }
                     _(amenities)
                       .take(5)
                       .forEach(function(amenity) {
                           var name = amenity.name;
                           var address = amenity.vicinity;
                           var geo = amenity.geometry.location;
-                          MapControl.markLocation([geo.B, geo.k], registerMarker).then(function(marker) {
-                              ctl.markedLocations = ctl.markedLocations.concat(marker);
-                          });
+                          MapControl.markLocation([geo.B, geo.k], {clickHandler: registerMarker})
+                            .then(function(marker) {
+                                ctl.markedLocations = ctl.markedLocations.concat(marker);
+                            });
                       });
                 }, function(failure) {
                     setDefaultFooter();
@@ -122,6 +148,7 @@
                     });
                 });
             }
+            MapControl.trackUser([ctl.origin.longitude, ctl.origin.latitude]);
         }
 
         function setGeojson(geojson) {
