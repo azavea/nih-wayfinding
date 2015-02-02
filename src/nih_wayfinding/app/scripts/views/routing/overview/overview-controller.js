@@ -13,6 +13,7 @@
                                 Config, Directions, Map, MapControl, MapStyle, NavbarConfig,
                                 Navigation, Notifications, ProfileService) {
         var ctl = this;
+        var boundsLayer = null;
         var currentUser = null;
         var defaultNonZeroWalkTime = 30;
         var mphToMs = 0.44704;
@@ -36,7 +37,7 @@
             currentUser = ProfileService.getCurrentUser();
             angular.extend(ctl.map.center, Config.center);
             angular.extend(ctl.map.bounds, Config.bounds);
-            drawGraphBounds();
+            setGraphBounds();
             ctl.stateParams = $stateParams;
             readStateParams().then(getDirections);
 
@@ -54,23 +55,6 @@
                     text: msg,
                     timeout: 3000
                 });
-            });
-        }
-
-        /**
-         * Fetch the graph bounds and draw its outline
-         */
-        function drawGraphBounds() {
-            MapControl.getGraphBounds().then(function(geojson) {
-                angular.extend(ctl.map, {
-                    geojson: {
-                        data: geojson,
-                        style: MapStyle.getBoundsStyle(),
-                    }
-                });
-            }, function (error) {
-                console.error('Could not get graph bounds from OTP');
-                console.error(error);
             });
         }
 
@@ -123,6 +107,32 @@
                 opacity: 1,
                 clickable: false
             };
+        }
+
+        /**
+         * Draws the graph bounds outline on the map.
+         *
+         * Accesses the Leaflet map directly, bypassing the Leaflet directive,
+         * so the bounds layer may be shown at the same time as another GeoJSON layer.
+         * (Leaflet directive only supports a single GeoJSON layer at a time.)
+         */
+        function setGraphBounds() {
+            MapControl.getGraphBounds().then(function(geojson) {
+                leafletData.getMap().then(function(map) {
+                    if ((boundsLayer !== null) && map.hasLayer(boundsLayer)) {
+                        map.removeLayer(boundsLayer);
+                    }
+                    boundsLayer = new L.GeoJSON(geojson, {
+                        style: MapStyle.getBoundsStyle(),
+                        resetStyleOnMouseout: true
+                    });
+                    boundsLayer.addTo(map);
+                    boundsLayer.bringToBack();
+                });
+            }, function (error) {
+                console.error('Could not get graph bounds from OTP');
+                console.error(error);
+            });
         }
 
         function setGeojson(geojson) {
