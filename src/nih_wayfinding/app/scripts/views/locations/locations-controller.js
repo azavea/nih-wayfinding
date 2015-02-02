@@ -13,7 +13,8 @@
             ctl.optionClicked = optionClicked;
             ctl.search = search;
             ctl.searchText = '';
-            ctl.suggest = Geocoder.suggest;
+            // ctl.suggest = Geocoder.suggest;
+            ctl.suggest = suggest;
 
             var title = ctl.user.username ? ctl.user.username : 'Profile';
             NavbarConfig.set({
@@ -35,6 +36,14 @@
                     timeout: 3000
                 });
             }
+        }
+
+        function suggest(suggestText) {
+            return Geocoder.suggest(suggestText).then(function (data) {
+                return _.map(ctl.user.searchLocations(suggestText), function (loc) {
+                    return loc.text;
+                }).concat(data);
+            });
         }
 
         function search(searchText) {

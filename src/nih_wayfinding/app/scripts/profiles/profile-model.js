@@ -113,6 +113,20 @@
         };
 
         /**
+        * Search for locations
+        *
+        * @param text {string} The search text
+        * @return {array} An array of locations that match
+        */
+        Profile.prototype.searchLocations = function(text) {
+            var lowerText = text.toLowerCase();
+            var locations = _.filter(this.locations, function(loc) {
+                return loc.text.toLowerCase().search(lowerText) > -1;
+            });
+            return locations;
+        };
+
+        /**
         * Remove a location
         *
         * @param id {int} The location ID
