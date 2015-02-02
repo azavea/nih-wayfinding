@@ -81,6 +81,6 @@ describe('nih.views.navbar: NavbarController', function () {
     NavbarConfig.set({back: toStateName});
     NavbarController.back();
     rootScope.$digest();
-    expect(state.transitionTo).toHaveBeenCalledWith(toStateName, undefined, jasmine.any(Object));
+    expect(state.transitionTo).toHaveBeenCalledWith(toStateName, jasmine.any(Object), jasmine.any(Object));
   });
 });

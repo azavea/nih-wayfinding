@@ -4,7 +4,7 @@
     //       we have profiles to link to
 
     /* ngInject */
-    function NavbarController($scope, $timeout, $state, NavbarConfig) {
+    function NavbarController($location, $scope, $state, $timeout, NavbarConfig) {
         var ctl = this;
         var defaultAlertHeight = 50;
         var defaultBackState = 'locations';
@@ -22,8 +22,11 @@
 
             $scope.$on('nih.notifications.hide', hideAlert);
             $scope.$on('nih.notifications.show', showAlert);
-            $scope.$on('$stateChangeSuccess', function (event, toState) {
-                history.push(toState);
+            $scope.$on('$stateChangeSuccess', function (event, toState, toStateParams) {
+                history.push({
+                    name: toState.name,
+                    params: toStateParams
+                });
             });
         }
 
@@ -35,17 +38,20 @@
          */
         function back() {
             var stateName;
+            var stateParams = {};
             if (ctl.config.back === true && history.length > 1) {
                 // Get the last two states from the history array
                 //  [0] is last state, [1] is current state
                 // and return the state name
-                stateName = history.splice(-2)[0].name;
+                var state = history.splice(-2)[0];
+                stateName = state.name;
+                stateParams = state.params;
             } else if (_.isString(ctl.config.back)) {
                 stateName = ctl.config.back;
             } else {
                 stateName = defaultBackState;
             }
-            $state.go(stateName);
+            $state.go(stateName, stateParams);
         }
 
         function showAlert(event, alert) {
