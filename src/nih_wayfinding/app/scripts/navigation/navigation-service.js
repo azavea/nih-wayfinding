@@ -10,7 +10,8 @@
     ) {
 
         var events = {
-            positionUpdated: 'nih.navigation.positionUpdated'
+            positionUpdated: 'nih.navigation.positionUpdated',
+            positionOffCourse: 'nih.navigation.positionOffCourse'
         };
         var position = {
             point: null,
@@ -28,6 +29,7 @@
 
         var module = {
             getCurrentPosition: getCurrentPosition,
+            offCourse: offCourse,
             setRoute: setRoute,
             stepNext: stepNext,
             stepPrevious: stepPrevious,
@@ -48,8 +50,13 @@
          */
         function getCurrentPosition() {
             // Could replace this with a call to $geolocation and pass through the promises
-            var latitude = position.latitude || Config.stubs.geolocation.latitude;
-            var longitude = position.longitude || Config.stubs.geolocation.longitude;
+            var point = position.point;
+            var latitude = Config.stubs.geolocation.latitude;
+            var longitude = Config.stubs.geolocation.longitude;
+            if (point) {
+                latitude = point.geometry.coordinates[1];
+                longitude = point.geometry.coordinates[0];
+            }
             var geolocation = {
                 coords: {
                     latitude: latitude,
@@ -61,6 +68,31 @@
                 dfd.resolve(geolocation);
             }, 100);
             return dfd.promise;
+        }
+
+        /**
+         * Trigger an 'off-route' location value, by using the current route + location and routing
+         *     choosing a point 90 degrees off the route by a few hundred feet
+         *
+         * Does nothing if a route does not exist
+         *
+         * Triggers events.positionOffCourse event
+         */
+        function offCourse() {
+            getCurrentPosition().then(function (position) {
+                if (!routeExists()) {
+                    return;
+                }
+                var startPoint = turf.point([position.coords.longitude, position.coords.latitude]);
+                var nextRoutePoint = turf.along(currentRoute.geom, currentRoute.stepped + stepLengthMiles, 'miles');
+                var currentBearing = turf.bearing(startPoint, nextRoutePoint);
+                var bearing = currentBearing + 90;
+                if (bearing > 180) {
+                    bearing -= 360;
+                }
+                var reroutePoint = turf.destination(startPoint, stepLengthMiles * 2, bearing, 'miles');
+                $rootScope.$broadcast(events.positionOffCourse, reroutePoint);
+            });
         }
 
         /**

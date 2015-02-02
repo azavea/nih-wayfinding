@@ -30,13 +30,10 @@
             });
             ctl.map = Map;
             ctl.nextStep = Navigation.stepNext;
-            ctl.prevStep = Navigation.stepPrevious;
-            ctl.step = {
-                turnIcon: null,
-                text: null
-            };
+            ctl.offCourse = Navigation.offCourse;
 
             // Subscribe to the location update event
+            $scope.$on('nih.navigation.positionOffCourse', onPositionOffCourse);
             $scope.$on('nih.navigation.positionUpdated', onPositionUpdated);
 
             var geojson = ctl.map.geojson.data;
@@ -44,14 +41,27 @@
             Navigation.stepFirst();
         }
 
-        function onPositionUpdated(event, position) {
-            var point = position.point;
+        function updateUserPosition(point) {
             MapControl.trackUser(point.geometry.coordinates);
             angular.extend(ctl.map.center, {
                 lat: point.geometry.coordinates[1],
                 lng: point.geometry.coordinates[0],
                 zoom: 19
             });
+        }
+
+        function onPositionOffCourse(event, position) {
+            updateUserPosition(position);
+
+            NavbarConfig.set({
+                title: 'You are off course. Tap "Reroute" to get new directions.',
+                leftImage: 'glyphicon-warning-sign'
+            });
+        }
+
+        function onPositionUpdated(event, position) {
+            var point = position.point;
+            updateUserPosition(point);
 
             // Find distance to next turn, and display directions text/time/distance in navbar
             var distanceToTurn = turf.distance(point, position.destination, 'kilometers') * kmToM;
