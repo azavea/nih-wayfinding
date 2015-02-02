@@ -13,7 +13,6 @@
             ctl.optionClicked = optionClicked;
             ctl.search = search;
             ctl.searchText = '';
-            // ctl.suggest = Geocoder.suggest;
             ctl.suggest = suggest;
 
             var title = ctl.user.username ? ctl.user.username : 'Profile';
@@ -39,6 +38,7 @@
         }
 
         function suggest(suggestText) {
+            // Add user's matched locations to top of autosuggest
             return Geocoder.suggest(suggestText).then(function (data) {
                 return _.map(ctl.user.searchLocations(suggestText), function (loc) {
                     return loc.text;
@@ -47,7 +47,14 @@
         }
 
         function search(searchText) {
-            Geocoder.search(searchText).then(onGeocoderResponse);
+            // If user's search text matches a users matched locations,
+            // use that, otherwise geocode it
+            var loc = ctl.user.locationByText(searchText);
+            if (loc) {
+                loadRoute(loc.feature);
+            } else {
+                Geocoder.search(searchText).then(onGeocoderResponse);
+            }
         }
 
         function loadRoute(feature) {

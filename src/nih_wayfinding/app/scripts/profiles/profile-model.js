@@ -113,6 +113,19 @@
         };
 
         /**
+        * Find a location by text
+        *
+        * @param text {string} The location ID
+        * @return {object} The location object found
+        */
+        Profile.prototype.locationByText = function(text) {
+            var location = _.filter(this.locations, function(loc) {
+                return loc.text === text;
+            });
+            return location[0];
+        };
+
+        /**
         * Search for locations
         *
         * @param text {string} The search text
