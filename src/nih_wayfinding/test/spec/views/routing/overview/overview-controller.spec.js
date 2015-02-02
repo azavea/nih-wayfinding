@@ -11,7 +11,7 @@ describe('nih.views.routing: OverviewController', function () {
     var geolocation;
 
     var Config;
-    var Directions;
+    var MapRoute;
     var OverviewController;
     var MapControl;
 
@@ -38,12 +38,13 @@ describe('nih.views.routing: OverviewController', function () {
             }
         };
     }
-    function mockDirections($q) {
+    function mockMapRouteService($q) {
         return {
-            get: function (origin, destination, options) {
+            mapRoute: function (origin, destination, options) {
                 var dfd = $q.defer();
                 dfd.resolve({
-                    features: []
+                    bounds: {},
+                    geojson: {}
                 });
                 return dfd.promise;
             },
@@ -69,11 +70,11 @@ describe('nih.views.routing: OverviewController', function () {
         scope = $rootScope.$new();
         geolocation = mockGeolocation($q);
         Config = _Config_;
-        Directions = mockDirections($q);
+        MapRoute = mockMapRouteService($q);
         MapControl = _MapControl_;
         MapControl.getGraphBounds = mockBounds($q);
         spyOn(geolocation, 'getCurrentPosition').and.callThrough();
-        spyOn(Directions, 'get').and.callThrough();
+        spyOn(MapRoute, 'mapRoute').and.callThrough();
         spyOn(MapControl, 'getGraphBounds').and.callThrough();
     }));
 
@@ -84,7 +85,7 @@ describe('nih.views.routing: OverviewController', function () {
                 $scope: scope,
                 Navigation: geolocation,
                 Config: Config,
-                Directions: Directions,
+                MapRoute: MapRoute,
                 MapControl: MapControl
             });
         }));
@@ -98,10 +99,10 @@ describe('nih.views.routing: OverviewController', function () {
             expect(OverviewController.map.bounds).toEqual(Config.bounds);
         });
 
-        it('should ensure getDirections is called with origin -> geolocation, destination -> geolocation', function () {
+        it('should ensure getMapRoute is called with origin -> geolocation, destination -> geolocation', function () {
             rootScope.$digest();
             expect(geolocation.getCurrentPosition).toHaveBeenCalled();
-            expect(Directions.get).toHaveBeenCalledWith(geolocationArray, geolocationArray, jasmine.any(Object));
+            expect(MapRoute.mapRoute).toHaveBeenCalledWith(geolocationArray, geolocationArray, jasmine.any(Object));
         });
 
         it('should fetch the graph bounds', function () {
@@ -114,7 +115,7 @@ describe('nih.views.routing: OverviewController', function () {
             OverviewController = $controller('OverviewController', {
                 $scope: scope,
                 Navigation: geolocation,
-                Directions: Directions,
+                MapRoute: MapRoute,
                 MapControl: MapControl,
                 $stateParams: {
                     destination: stateParamsString
@@ -122,10 +123,10 @@ describe('nih.views.routing: OverviewController', function () {
             });
         }));
 
-        it('should ensure getDirections is called with origin -> geolocation, destination -> stateParams', function () {
+        it('should ensure getMapRoute is called with origin -> geolocation, destination -> stateParams', function () {
             rootScope.$digest();
             expect(geolocation.getCurrentPosition).toHaveBeenCalled();
-            expect(Directions.get).toHaveBeenCalledWith(geolocationArray, stateParamsArray, jasmine.any(Object));
+            expect(MapRoute.mapRoute).toHaveBeenCalledWith(geolocationArray, stateParamsArray, jasmine.any(Object));
         });
     });
 
@@ -134,7 +135,7 @@ describe('nih.views.routing: OverviewController', function () {
             OverviewController = $controller('OverviewController', {
                 $scope: scope,
                 Navigation: geolocation,
-                Directions: Directions,
+                MapRoute: MapRoute,
                 MapControl: MapControl,
                 $stateParams: {
                     origin: stateParamsString
@@ -142,10 +143,10 @@ describe('nih.views.routing: OverviewController', function () {
             });
         }));
 
-        it('should ensure getDirections is called with origin -> stateParams, destination -> geolocation', function () {
+        it('should ensure getMapRoute is called with origin -> stateParams, destination -> geolocation', function () {
             rootScope.$digest();
             expect(geolocation.getCurrentPosition).toHaveBeenCalled();
-            expect(Directions.get).toHaveBeenCalledWith(stateParamsArray, geolocationArray, jasmine.any(Object));
+            expect(MapRoute.mapRoute).toHaveBeenCalledWith(stateParamsArray, geolocationArray, jasmine.any(Object));
         });
     });
 
@@ -154,7 +155,7 @@ describe('nih.views.routing: OverviewController', function () {
             OverviewController = $controller('OverviewController', {
                 $scope: scope,
                 Navigation: geolocation,
-                Directions: Directions,
+                MapRoute: MapRoute,
                 MapControl: MapControl,
                 $stateParams: {
                     origin: stateParamsString,
@@ -163,10 +164,10 @@ describe('nih.views.routing: OverviewController', function () {
             });
         }));
 
-        it('should ensure getDirections is called with origin -> stateParams, destination -> stateParams', function () {
+        it('should ensure getMapRoute is called with origin -> stateParams, destination -> stateParams', function () {
             rootScope.$digest();
             expect(geolocation.getCurrentPosition).not.toHaveBeenCalled();
-            expect(Directions.get).toHaveBeenCalledWith(stateParamsArray, stateParamsArray, jasmine.any(Object));
+            expect(MapRoute.mapRoute).toHaveBeenCalledWith(stateParamsArray, stateParamsArray, jasmine.any(Object));
         });
     });
 });

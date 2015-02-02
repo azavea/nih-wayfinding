@@ -11,11 +11,9 @@
                     'school', 'transit_station'],
         };
 
-        var preReroute = null;
         var module = {
             getReroutingOptions: getReroutingOptions,
-            reroute: reroute,
-            preReroute: preReroute
+            reroute: reroute
         };
         return module;
 

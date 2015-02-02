@@ -1,4 +1,4 @@
-(function (_) {
+(function () {
     'use strict';
 
     function MapControl ($http, $q, Config, leafletData) {
@@ -157,4 +157,4 @@
     angular.module('nih.mapping')
       .factory('MapControl', MapControl);
 
-})(_);
+})();
