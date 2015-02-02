@@ -94,6 +94,8 @@ module.exports = function(config) {
       'app/scripts/routing/distance-filter.js',
       'app/scripts/routing/routing-response-stub.js',
       'app/scripts/routing/turnamenities-service.js',
+      'app/scripts/routing/rerouting/rerouting-options-service.js',
+      'app/scripts/routing/rerouting/rerouting-options-stub.js',
       'app/scripts/views/modals/module.js',
       'app/scripts/views/modals/confirm-controller.js',
       'app/scripts/views/modals/input-modal-controller.js',
@@ -114,6 +116,10 @@ module.exports = function(config) {
       'app/scripts/views/routing/directions/directions-controller.js',
       'app/scripts/views/routing/changeroute/changeroute-controller.js',
       'app/scripts/views/routing/goforwalk/goforwalk-controller.js',
+      'app/scripts/views/navigate/module.js',
+      'app/scripts/views/navigate/navigate-controller.js',
+      'app/scripts/views/navigate/report/report-controller.js',
+      'app/scripts/views/navigate/reroute/reroute-controller.js',
 
       'test/mock/**/*.js',
       'test/spec/**/*.js'

@@ -18,8 +18,9 @@
     /* ngInject */
     function NavigateController(
         $filter, $scope, $stateParams, $state,
-        Navigation, Directions, Map, MapControl, MapStyle, MapRoute, NavbarConfig,
-        Rerouting, Notifications, ProfileService, Config
+        leafletData,
+        Navigation, Directions, Map, MapControl, MapRoute, NavbarConfig,
+        Rerouting, Notifications, ProfileService
     ) {
         var ctl = this;
         var mphToMs = 0.44704;
@@ -36,9 +37,9 @@
             ctl.nextStep = Navigation.stepNext;
             ctl.offCourse = Navigation.offCourse;
 
-            ctl.origin = Config.stubs.geolocation;
-            handleReroute($stateParams.reroute);
-            MapControl.trackUser([ctl.origin.longitude, ctl.origin.latitude]);
+            if ($stateParams.reroute) {
+                handleReroute($stateParams.reroute);
+            }
 
             // Subscribe to the location update event
             $scope.$on('nih.navigation.positionOffCourse', onPositionOffCourse);
@@ -49,6 +50,11 @@
             Navigation.stepFirst();
         }
 
+        /**
+         * The footer dialog on this page requires alternative state so that rerouting can be
+         *  incorporated directly onto the map page rather than in another dialog. This function
+         *  provides the default state
+         */
         function setDefaultFooter() {
             ctl.footer = {
                 left:  {
@@ -63,7 +69,9 @@
         }
 
         /**
-         *
+         * The footer dialog on this page requires alternative state so that rerouting can be
+         *  incorporated directly onto the map page rather than in another dialog. This function
+         *  provides the rerouting state
          */
         function setRerouteFooter() {
             ctl.footer = {
@@ -79,15 +87,21 @@
         }
 
         /**
-         *
+         * Generate a route and display it on the map for a given user position and targetted destination
          */
         function planReroute() {
+            var currentPosition;
+            Navigation.getCurrentPosition().then(function(position) {
+                currentPosition = [position.coords.longitude, position.coords.latitude];
+                MapControl.trackUser(currentPosition);
+                Directions.get(currentPosition,
+                               [ctl.destination.lng, ctl.destination.lat]).then(success, failure);
+            });
             function success(response) {
                 clearReroute();
                 MapControl.plotGeoJSON(response);
-                console.log('succ', response);
 
-                MapRoute.mapRoute([ctl.origin.longitude, ctl.origin.latitude],
+                MapRoute.mapRoute(currentPosition,
                                   [ctl.destination.lng, ctl.destination.lat]).then(function(mappedRoute) {
                     angular.extend(ctl.map, mappedRoute);
                     Navigation.setRoute(ctl.map.geojson.data);
@@ -95,18 +109,13 @@
                 });
 
             }
-            function failure(response) {
+            function failure() {
                 clearReroute();
-                console.log('fail', response);
             }
-            Directions.get([ctl.origin.longitude, ctl.origin.latitude],
-                           [ctl.destination.lng, ctl.destination.lat]
-                          ).then(success, failure);
-            console.log('plotting...');
         }
 
         /**
-         *
+         * Delete all markers from reroute dialog
          */
         function clearReroute() {
             MapControl.purgeMarkers(ctl.markedLocations);
@@ -114,7 +123,7 @@
         }
 
         /**
-         *
+         * Click handler for reroute dialog markers
          */
         function registerMarker(event) {
             _(ctl.markedLocations)
@@ -131,53 +140,49 @@
         }
 
         /**
+         * Called whenever this controller is instantiated - if a `reroute` query parameter is specified,
+         *  find nearby amenities which match that query parameter and display them on the map. If any
+         *  are displayed on the map, change the bottom dialog to 'Cancel' and 'Route' buttons, which
+         *  control whether and when the route is changed to some nearby amenity.
          *
+         * @param rerouteType {string} The query parameter string fed to `?reroute=`
          */
         function handleReroute(rerouteType) {
             ctl.markedLocations = [];
-            if (rerouteType) {
-                setRerouteFooter();
-                Rerouting.reroute(rerouteType).then(function(amenities) {
-                    Notifications.show({
-                        text: 'Select a the destination you\'d like to be routed to',
-                        timeout: 3000
-                    });
-                    _(amenities)
-                      .take(5)
-                      .forEach(function(amenity) {
-                          var name = amenity.name;
-                          var address = amenity.vicinity;
-                          var geo = amenity.geometry.location;
-                          MapControl.markLocation([geo.B, geo.k], {clickHandler: registerMarker})
-                            .then(function(marker) {
-                                ctl.markedLocations = ctl.markedLocations.concat(marker);
-                            });
-                      });
-                }, function(failure) {
-                    setDefaultFooter();
-                    Notifications.show({
-                        text: 'Failed to find nearby amenities',
-                        timeout: 3000
-                    });
+            setRerouteFooter();
+            Rerouting.reroute(rerouteType).then(success, failure);
+            function success(amenities) {
+                leafletData.getMap().then(function(map) {
+                  map.setZoom(13);
+                });
+                Notifications.show({
+                    text: 'Select a the destination you\'d like to be routed to',
+                    timeout: 3000
+                });
+                _(amenities)
+                  .take(5)
+                  .forEach(function(amenity) {
+                      var geo = amenity.geometry.location;
+                      MapControl.markLocation([geo.B, geo.k], {clickHandler: registerMarker})
+                        .then(function(marker) {
+                            ctl.markedLocations = ctl.markedLocations.concat(marker);
+                        });
+                  });
+            }
+            function failure() {
+                setDefaultFooter();
+                Notifications.show({
+                    text: 'Failed to find nearby amenities',
+                    timeout: 3000
                 });
             }
-            MapControl.trackUser([ctl.origin.longitude, ctl.origin.latitude]);
         }
 
-        function setGeojson(geojson) {
-            angular.extend(ctl.map, {
-                geojson: {
-                    data: geojson,
-                    style: MapStyle.routeStyle,
-                    resetStyleOnMouseout: true
-                }
-            });
-
-            var geojson = ctl.map.geojson.data;
-            Navigation.setRoute(geojson);
-            Navigation.stepFirst();
-        }
-
+        /**
+         * Utility method for event handlers to move a user along the given route
+         *
+         * @param point {object} A point object which represents the new user position
+         */
         function updateUserPosition(point) {
             MapControl.trackUser(point.geometry.coordinates);
             angular.extend(ctl.map.center, {
@@ -187,6 +192,12 @@
             });
         }
 
+        /**
+         * Event handler to be called when the user walks off course
+         *
+         * @param event {object} The event being fired
+         * @param position {object} The point which the user now occupies
+         */
         function onPositionOffCourse(event, position) {
             updateUserPosition(position);
 
@@ -196,6 +207,12 @@
             });
         }
 
+        /**
+         * Event handler to be called when the user's position is updated
+         *
+         * @param event {object} The event being fired
+         * @param position {object} The point which the user now occupies
+         */
         function onPositionUpdated(event, position) {
             var point = position.point;
             updateUserPosition(point);

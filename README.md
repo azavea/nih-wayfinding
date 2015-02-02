@@ -29,6 +29,16 @@ After provisioning is complete, you can login to the server:
 $ vagrant ssh
 ```
 
+Upon logging in, issue the following commands:
+
+```bash
+cd /opt/app
+grunt serve
+```
+
+From there, you should be able to access everything off of port 8000 on
+your host machine.
+
 ### Ports
 
 The Vagrant configuration maps the following host ports to services
