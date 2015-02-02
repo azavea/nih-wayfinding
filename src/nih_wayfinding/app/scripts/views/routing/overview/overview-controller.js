@@ -126,6 +126,12 @@
         }
 
         function setGeojson(geojson) {
+            if (!(geojson && geojson.features.length)) {
+                Notifications.show({
+                    text: 'No valid route found. Please go back and try again.'
+                });
+                return;
+            }
             var bbox = turf.extent(geojson);
             if (!Directions.isAudited(geojson)) {
                 Notifications.show({
