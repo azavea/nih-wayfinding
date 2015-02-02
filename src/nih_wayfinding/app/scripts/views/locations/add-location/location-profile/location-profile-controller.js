@@ -12,6 +12,9 @@
         function initialize() {
             NavbarConfig.set({ title: 'Location Profile' });
             ctl.user = ProfileService.getCurrentUser();
+            if (!ctl.user.tempLocation) {
+                $state.go('locationsSelectType');
+            }
 
             // Hidden image selection dialog
             ctl.showIconSelect = false;
@@ -109,14 +112,14 @@
          * Validate the model's data to ensure it will produce a satisfactory location
          */
         function validateBeforeReview() {
-            if (ctl.user.tempLocation.text === undefined) { // If there's no label
+            if (!ctl.user.tempLocation.text) { // If there's no label
                 Notifications.show({
                     text: 'No label specified - please label this location.',
                     timeout: 3000
                 });
-            } else if (ctl.user.tempLocation.feature === undefined) { // If address fails to validate
+            } else if (!ctl.user.tempLocation.feature) { // If address fails to validate
                 Notifications.show({
-                    text: 'No coordinates found for this address - please choose an address.',
+                    text: 'No coordinates found for this address - please choose a different address.',
                     timeout: 3000
                 });
             } else { // If we have both a label and an address

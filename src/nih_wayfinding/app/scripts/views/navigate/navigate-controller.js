@@ -16,7 +16,7 @@
     /* ngInject */
     function NavigateController(
         $filter, $scope, $stateParams,
-        Navigation, Directions, Map, MapStyle, NavbarConfig, MapControl, Rerouting, Notifications, ProfileService
+        Navigation, Directions, Map, MapStyle, NavbarConfig, MapControl, Rerouting, Notifications, ProfileService, Config
     ) {
         var ctl = this;
         var mphToMs = 0.44704;
@@ -24,6 +24,8 @@
         initialize();
 
         function initialize() {
+            setDefaultFooter();
+            handleReroute($stateParams.reroute);
             NavbarConfig.set({
                 title: 'Navigate Route',
                 back: 'routing'
@@ -36,21 +38,84 @@
             $scope.$on('nih.navigation.positionOffCourse', onPositionOffCourse);
             $scope.$on('nih.navigation.positionUpdated', onPositionUpdated);
             $scope.$on('$stateChangeStart', Navigation.stopIntervalTask);
-            handleReroute($stateParams.reroute);
         }
 
+        function setDefaultFooter() {
+            ctl.footer = {
+                left:  {
+                    text: 'Reroute',
+                    func: function() { $state.go('reroute'); }
+                },
+                right: {
+                    text: 'Report',
+                    func: function() { $state.go('report'); }
+                }
+            };
+        }
+
+        /**
+         *
+         */
+        function setRerouteFooter() {
+            ctl.footer = {
+                left:  {
+                    text: 'Cancel',
+                    func: clearReroute
+                },
+                right: {
+                    text: 'Route',
+                    func: planReroute
+                }
+            };
+        }
+
+        /**
+         *
+         */
+        function planReroute() {
+            var origin = Config.stubs.geolocation;
+            var dest = ctl.rerouteDest;
+            Directions.get([origin.latitude, origin.longitude], [dest.lat, dest.lng]).then(function(a,b) {console.log(a,b);});
+            setDefaultFooter();
+            console.log('plotting...');
+        }
+
+        /**
+         *
+         */
+        function clearReroute() {
+            MapControl.purgeMarkers(ctl.markedLocations);
+            setDefaultFooter();
+        }
+
+        /**
+         *
+         */
         function handleReroute(rerouteType) {
+            ctl.markedLocations = [];
             if (rerouteType) {
+                setRerouteFooter();
                 Rerouting.reroute(rerouteType).then(function(amenities) {
+                    Notifications.show({
+                        text: 'Select a the destination you\'d like to be routed to',
+                        timeout: 3000
+                    });
+                    function registerMarker(rerouteDest) {
+                        var latlng = rerouteDest.latlng;
+                        ctl.rerouteDest = latlng;
+                    }
                     _(amenities)
                       .take(5)
                       .forEach(function(amenity) {
                           var name = amenity.name;
                           var address = amenity.vicinity;
                           var geo = amenity.geometry.location;
-                          MapControl.markLocation([geo.B, geo.k]);
+                          MapControl.markLocation([geo.B, geo.k], registerMarker).then(function(marker) {
+                              ctl.markedLocations = ctl.markedLocations.concat(marker);
+                          });
                       });
                 }, function(failure) {
+                    setDefaultFooter();
                     Notifications.show({
                         text: 'Failed to find nearby amenities',
                         timeout: 3000

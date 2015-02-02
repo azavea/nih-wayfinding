@@ -1,9 +1,10 @@
-(function () {
+(function (_) {
     'use strict';
 
     function MapControl ($http, $q, Config, leafletData) {
         var popup = null;
         var boundsUrl = Config.routing.hostname + '/otp/routers/default';
+        var userMarker = null;
 
         var module = {
             cleanLonLatParam: cleanLonLatParam,
@@ -11,7 +12,8 @@
             pointToLngLat: pointToLngLat,
             showPopup: showPopup,
             trackUser: trackUser,
-            markLocation: markLocation
+            markLocation: markLocation,
+            purgeMarkers: purgeMarkers
         };
 
         return module;
@@ -86,22 +88,35 @@
             });
         }
 
+        function purgeMarkers(locations) {
+            leafletData.getMap().then(function(map) {
+                _(locations).forEach(function(loc) {
+                    map.removeLayer(loc);
+                });
+            });
+        }
+
         /**
          * For a given point, attach a location marker on that point
          *
          * @param point {array} [Lng, Lat] array of coordinates
-         * @return undefined Shows marker
+         * @param onClick {function} The function to be called when this marker is clicked upon.
+         *                             This function should take the event object as its sole argument.
+         * @return {object} (promise) The marker displayed on map (returned so that it might be stored)
          *
          */
-        function markLocation(point) {
+        function markLocation(point, onClick) {
+            var deferred = $q.defer();
             leafletData.getMap().then(function(map) {
                 var lnglat = [point[1], point[0]];
                 var locationMarker = new L.Marker(lnglat);
+                if (onClick) { locationMarker.on('click', onClick); }
                 map.addLayer(locationMarker);
+                deferred.resolve(locationMarker);
             });
+            return deferred.promise;
         }
 
-        var userMarker = null;
         /**
          * For a given point attach a user marker on that point
          *
@@ -122,6 +137,6 @@
     }
 
     angular.module('nih.mapping')
-    .factory('MapControl', MapControl);
+      .factory('MapControl', MapControl);
 
-})();
+})(_);

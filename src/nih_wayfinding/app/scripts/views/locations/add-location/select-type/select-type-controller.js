@@ -37,7 +37,7 @@
             ctl.user.save();
 
             $state.go('locationsProfile', {
-                username: ctl.user,
+                username: ctl.user.username,
                 locationID: ctl.user.tempLocation.id
             });
         }
