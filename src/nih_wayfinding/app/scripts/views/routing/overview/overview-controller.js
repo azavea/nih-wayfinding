@@ -148,6 +148,11 @@
                     text: 'This route contains unverified segments. Please exercise caution.'
                 });
             }
+
+            var lastPoint = _(geojson.features)
+                .map(function (feature) { return feature.geometry.coordinates; })
+                .flatten(true)
+                .last();
             angular.extend(ctl.map, {
                 bounds: {
                     southWest: {
@@ -163,6 +168,12 @@
                     data: geojson,
                     style: routeStyle,
                     resetStyleOnMouseout: true
+                },
+                markers: {
+                    end: {
+                        lat: lastPoint[1],
+                        lng: lastPoint[0]
+                    }
                 }
             });
             ctl.summary = angular.extend(ctl.summary, Directions.getRouteSummary());
