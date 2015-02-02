@@ -18,7 +18,8 @@
     /* ngInject */
     function NavigateController(
         $filter, $scope, $stateParams, $state,
-        Navigation, Directions, Map, MapStyle, NavbarConfig, MapControl, Rerouting, Notifications, ProfileService, Config
+        Navigation, Directions, Map, MapControl, MapStyle, MapRoute, NavbarConfig,
+        Rerouting, Notifications, ProfileService, Config
     ) {
         var ctl = this;
         var mphToMs = 0.44704;
@@ -81,6 +82,12 @@
                 clearReroute();
                 MapControl.plotGeoJSON(response);
                 console.log('succ', response);
+
+                MapRoute.mapRoute([ctl.origin.longitude, ctl.origin.latitude],
+                                  [ctl.destination.lng, ctl.destination.lat]).then(function(mappedRoute) {
+                    angular.extend(ctl.map, mappedRoute);
+                });
+
             }
             function failure(response) {
                 clearReroute();
