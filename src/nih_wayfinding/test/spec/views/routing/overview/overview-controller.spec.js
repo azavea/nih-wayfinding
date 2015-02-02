@@ -42,7 +42,9 @@ describe('nih.views.routing: OverviewController', function () {
         return {
             get: function (origin, destination, options) {
                 var dfd = $q.defer();
-                dfd.resolve({});
+                dfd.resolve({
+                    features: []
+                });
                 return dfd.promise;
             },
             isAudited: function () {
