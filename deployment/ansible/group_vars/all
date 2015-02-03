@@ -4,7 +4,9 @@ developing_or_testing: "'development' in group_names or 'test' in group_names"
 not_developing: "'development' not in group_names"
 not_testing: "'test' not in group_names"
 
-java_version: "7u75-*"
+oracle_java_version: "8"
+oracle_java_package_version: "8u31*"
+oracle_java_accept_license_agreement: True
 
 python_version: "2.7.*"
 pip_version: "1.*"
