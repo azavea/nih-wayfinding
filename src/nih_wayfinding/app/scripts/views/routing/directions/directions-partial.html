@@ -1,12 +1,18 @@
 <div class="content scroll">
   <table class="directions-table">
       <tr ng-repeat="item in directions.list">
-          <td>
+          <td class="direction-sign">
               <span class="glyphicon" ng-class="directions.getTurnIconName(item.directions.turn)"></span>
           </td>
           <td class="direction" ng-style="{'border-right': '10px solid ' + directions.getLineColor(item.lastModified)}">
               <h3 class="direction-instruction">{{ ::item.directions.text }} <span ng-if="item.turnamenity">at {{ ::item.turnamenity.tags.name }}</span> <span class="glyphicon" ng-class="directions.getFlagIconName(key, value)" ng-repeat="(key, value) in item.flags"></span></h3>
               <div class="direction-description" ng-if="item.directions.distanceMeters">{{ ::item.directions.distanceMeters | distance }}</div>
+              <div class="direction-description" ng-if="item.directions.warnings"
+                ng-repeat="warning in item.directions.warnings">
+                <span><span class="glyphicon glyphicon-warning-sign text-danger" /> {{ ::warning }}</span>
+              <div class="direction-description" ng-if="item.directions.features"
+                ng-repeat="feature in item.directions.features">
+                <span><span class="glyphicon glyphicon-thumbs-up" /> {{ ::feature }}</span>
           </td>
       </tr>
   </table>
