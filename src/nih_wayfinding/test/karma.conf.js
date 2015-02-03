@@ -147,8 +147,11 @@ module.exports = function(config) {
         testName: 'NIH Wayfinding Unit Tests'
     },
 
-    // Increase timeout in case connection in CI is slow
-    captureTimeout: 120000,
+    // Increase timeouts in case connection in CI is slow
+    captureTimeout: 4*60*1000, //default 60000
+    browserDisconnectTimeout: 120000, // default 2000
+    broswerDisconnectTolerance: 3, // default 0
+    browserNoActivityTimeout: 4*60*1000,
 
     customLaunchers: customLaunchers,
 
