@@ -223,10 +223,18 @@
             var turnIcon = Directions.getTurnIconName(position.properties.directions.turn);
             var speedMs = (ProfileService.getCurrentUser().preferences.speed || 1) * mphToMs;
             var timeMins = (distanceToTurn / speedMs / 60).toFixed(0);
-            var distanceText = 'In approximately ' +  timeMins + ' minutes (' + $filter('distance')(distanceToTurn) + ')';
+            var distanceText = 'In approximately ' +  timeMins +
+                ' minutes (' + $filter('distance')(distanceToTurn) + ').';
+            var subtitleText = distanceText;
+            if (position.properties.directions.warnings) {
+                subtitleText += position.properties.directions.warnings.join(' ');
+            }
+            if (position.properties.directions.features) {
+                subtitleText += position.properties.directions.features.join(' ');
+            }
             NavbarConfig.set({
                 title: text,
-                subtitle: distanceText,
+                subtitle: subtitleText,
                 leftImage: turnIcon
             });
         }
