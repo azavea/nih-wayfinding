@@ -2,11 +2,11 @@
     'use strict';
 
     var ReroutingOptions = [{
-        text: 'Bathroom',
+        text: 'Bathroom'
     }, {
-        text: 'Bench',
+        text: 'Bench'
     }, {
-        text: 'More Options',
+        text: 'More Options'
     }];
 
     angular.module('nih.routing')

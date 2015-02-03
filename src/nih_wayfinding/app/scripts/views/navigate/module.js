@@ -4,7 +4,7 @@
     /* ngInject */
     function StateConfig($stateProvider) {
         $stateProvider.state('navigate', {
-            url: '/navigate',
+            url: '/navigate?reroute',
             templateUrl: 'scripts/views/navigate/navigate-partial.html',
             controller: 'NavigateController',
             controllerAs: 'navigate'

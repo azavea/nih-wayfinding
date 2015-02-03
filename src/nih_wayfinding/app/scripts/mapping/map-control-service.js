@@ -3,7 +3,8 @@
 
     function MapControl ($http, $q, Config, leafletData) {
         var popup = null;
-        var boundsUrl = Config.routing.hostname + '/otp/routers/default';
+        var boundsUrl = '/otp/routers/default';
+        var userMarker = null;
 
         var module = {
             cleanLonLatParam: cleanLonLatParam,
@@ -11,7 +12,9 @@
             pointToLngLat: pointToLngLat,
             showPopup: showPopup,
             trackUser: trackUser,
-            markLocation: markLocation
+            markLocation: markLocation,
+            purgeMarkers: purgeMarkers,
+            plotGeoJSON: plotGeoJSON
         };
 
         return module;
@@ -87,41 +90,71 @@
         }
 
         /**
-         * For a given point, attach a location marker on that point
+         * Delete each location from the map from the array of icons given
          *
-         * @param point {array} [Lng, Lat] array of coordinates
-         * @return undefined Shows marker
-         *
+         * @param locations {array} An array of locations
+         * @return {undefined} Deletes markers
          */
-        function markLocation(point) {
+        function purgeMarkers(locations) {
             leafletData.getMap().then(function(map) {
-                var lnglat = [point[1], point[0]];
-                var locationMarker = new L.Marker(lnglat);
-                map.addLayer(locationMarker);
+                _(locations).forEach(function(loc) {
+                    map.removeLayer(loc);
+                });
             });
         }
 
-        var userMarker = null;
+        /**
+         * For a given point, attach a location marker on that point
+         *
+         * @param point {array} [Lng, Lat] array of coordinates
+         * @param opts {object} An options object which may contain:
+         *                        1. The function to be called when this marker is clicked upon.
+         *                           This function should take the event object as its sole argument.
+         *                        2. The icon to display for this marker
+         * @return {object} (promise) The marker displayed on map (returned so that it might be stored)
+         *
+         */
+        function markLocation(point, opts) {
+            var deferred = $q.defer();
+            leafletData.getMap().then(function(map) {
+                var lnglat = [point[1], point[0]];
+                var locationMarker = new L.Marker(lnglat, opts);
+                if (opts.clickHandler) { locationMarker.on('click', opts.clickHandler); }
+                map.addLayer(locationMarker);
+                deferred.resolve(locationMarker);
+            });
+            return deferred.promise;
+        }
+
         /**
          * For a given point attach a user marker on that point
          *
          * @param point {array} [Lng, Lat] array of coordinates
-         * @return undefined Shows (or moves) a marker
+         * @return {undefined} Shows (or moves) a marker
          */
         function trackUser(point) {
             leafletData.getMap().then(function(map) {
                 var lnglat = [point[1], point[0]];
                 if (userMarker) {
-                  userMarker.setLatLng(lnglat);
-                } else {
-                  userMarker = new L.CircleMarker(lnglat);
-                  map.addLayer(userMarker);
+                    map.removeLayer(userMarker);
                 }
+                userMarker = new L.CircleMarker(lnglat);
+                map.addLayer(userMarker);
+            });
+        }
+
+        /**
+         *
+         */
+        function plotGeoJSON(geojson) {
+            var features = L.geoJson(geojson);
+            leafletData.getMap().then(function(map) {
+                map.addLayer(features);
             });
         }
     }
 
     angular.module('nih.mapping')
-    .factory('MapControl', MapControl);
+      .factory('MapControl', MapControl);
 
 })();

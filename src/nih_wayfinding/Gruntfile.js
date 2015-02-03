@@ -18,7 +18,7 @@ module.exports = function (grunt) {
   // Configurable paths for the application
   var appConfig = {
     app: require('./bower.json').appPath || 'app',
-    dist: 'dist'
+    dist: '/srv'
   };
 
   // Define the configuration for all the tasks
@@ -288,7 +288,7 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: '<%= yeoman.dist %>',
-          src: ['*.html', 'views/{,*/}*.html'],
+          src: ['*.html', 'scripts/**/*.html'],
           dest: '<%= yeoman.dist %>'
         }]
       }
@@ -326,7 +326,7 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             '.htaccess',
             '*.html',
-            'views/{,*/}*.html',
+            'scripts/**/*.html',
             'images/{,*/}*.{webp}',
             'fonts/{,*/}*.*'
           ]
@@ -335,6 +335,11 @@ module.exports = function (grunt) {
           cwd: '.tmp/images',
           dest: '<%= yeoman.dist %>/images',
           src: ['generated/*']
+        }, {
+          expand: true,
+          cwd: 'bower_components/leaflet/dist',
+          src: '**/*.{png,jpg,svg}',
+          dest: '<%= yeoman.dist %>/styles'
         }, {
           expand: true,
           cwd: '.',

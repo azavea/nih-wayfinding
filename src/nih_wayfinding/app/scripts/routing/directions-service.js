@@ -5,7 +5,7 @@
     /* ngInject */
     function Directions ($http, $q, $timeout, Config, MapControl, ProfileService, TurnAmenities) {
 
-        var directionsUrl = Config.routing.hostname + '/otp/routers/default/plan';
+        var directionsUrl = '/otp/routers/default/plan';
         var currentRouteSummary = {
             distanceMeters: 0,
             timeMinutes: 0,

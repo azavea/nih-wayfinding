@@ -2,6 +2,7 @@
          bounds="navigate.map.bounds"
          center="navigate.map.center"
          layers="navigate.map.layers"
+         markers="navigate.map.markers"
          legend="navigate.map.legend"
          geojson="navigate.map.geojson">
 </leaflet>
@@ -15,8 +16,8 @@
     </nav>
     <nav class="row">
         <div class="btn-group-nav btn-group-justified">
-            <a ui-sref="reroute" type="button" class="btn btn-primary btn-block">Reroute</a>
-            <a ui-sref="report" type="button" class="btn btn-primary btn-block">Report</a>
+            <a ng-click="navigate.footer.left.onClick()" type="button" class="btn btn-primary btn-block">{{ navigate.footer.left.text }}</a>
+            <a ng-click="navigate.footer.right.onClick()" type="button" class="btn btn-primary btn-block">{{ navigate.footer.right.text }}</a>
         </div>
     </nav>
 </footer>

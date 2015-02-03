@@ -6,7 +6,7 @@
     function ProfileService (ProfileProvider, localStorageService) {
 
         // private variables
-        var currentUser = ProfileProvider.deserialize((localStorage.getItem('lastUser')));
+        var currentUser = ProfileProvider.deserialize((localStorageService.get('lastUser')));
 
         // Public Interface
         var module = {
@@ -35,7 +35,7 @@
          * @returns Profile object for selected user
          */
         function getCurrentUser() {
-            currentUser = fetchProfile(localStorage.getItem('lastUser'));
+            currentUser = fetchProfile(localStorageService.get('lastUser'));
             return currentUser;
         }
 
@@ -48,7 +48,7 @@
             var user = fetchProfile(name);
             if (user) {
                 currentUser = user;
-                localStorage.setItem('lastUser', name); // Save state for page refresh
+                localStorageService.set('lastUser', name); // Save state for page refresh
             } else {
                 console.error('User ' + name + ' does not exist!  Not setting current user.');
             }

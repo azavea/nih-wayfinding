@@ -10,17 +10,13 @@
 
     /* ngInject */
     function OverviewController($scope, $stateParams, $q, leafletData,
-                                Config, Directions, Map, MapControl, MapStyle, NavbarConfig,
+                                Config, Directions, Map, MapControl, MapStyle, MapRoute, NavbarConfig,
                                 Navigation, Notifications, ProfileService) {
         var ctl = this;
         var boundsLayer = null;
         var currentUser = null;
         var defaultNonZeroWalkTime = 30;
-        var mphToMs = 0.44704;
-        var directionsOptions = {
-            walkTimeMins: 0,
-            wheelchair: false
-        };
+        var directionsOptions = {};
         initialize();
 
         function initialize() {
@@ -47,14 +43,11 @@
         function getDirections(data) {
             var options = angular.extend({}, directionsOptions, {
                 wheelchair: !!(currentUser.preferences.wheelchairRequired),
-                walkSpeed: currentUser.preferences.speed * mphToMs
             });
-            Directions.get(data.origin, data.destination, options).then(setGeojson, function (error) {
-                var msg = error.msg ? error.msg : 'Unable to load route. Please try again later.';
-                Notifications.show({
-                    text: msg,
-                    timeout: 3000
-                });
+
+            MapRoute.mapRoute(data.origin, data.destination, options).then(function(mappedRoute) {
+                angular.extend(ctl.map, mappedRoute);
+                ctl.summary = angular.extend(ctl.summary, Directions.getRouteSummary());
             });
         }
 
@@ -95,20 +88,6 @@
             return dfd.promise;
         }
 
-        function routeStyle(feature) {
-            if (feature.geometry.type !== 'LineString') {
-                return;
-            }
-            var lastModified = feature && feature.properties ? feature.properties.lastModified : 0;
-            var color = MapStyle.getLineColor(lastModified);
-            return {
-                color: color,
-                weight: 4,
-                opacity: 1,
-                clickable: false
-            };
-        }
-
         /**
          * Draws the graph bounds outline on the map.
          *
@@ -135,56 +114,12 @@
             });
         }
 
-        function setGeojson(geojson) {
-            if (!(geojson && geojson.features.length)) {
-                Notifications.show({
-                    text: 'No valid route found. Please go back and try again.'
-                });
-                return;
-            }
-            var bbox = turf.extent(geojson);
-            if (!Directions.isAudited(geojson)) {
-                Notifications.show({
-                    text: 'This route contains unverified segments. Please exercise caution.'
-                });
-            }
-
-            var lastPoint = _(geojson.features)
-                .map(function (feature) { return feature.geometry.coordinates; })
-                .flatten(true)
-                .last();
-            angular.extend(ctl.map, {
-                bounds: {
-                    southWest: {
-                        lat: bbox[1],
-                        lng: bbox[0]
-                    },
-                    northEast: {
-                        lat: bbox[3],
-                        lng: bbox[2]
-                    }
-                },
-                geojson: {
-                    data: geojson,
-                    style: routeStyle,
-                    resetStyleOnMouseout: true
-                },
-                markers: {
-                    end: {
-                        lat: lastPoint[1],
-                        lng: lastPoint[0]
-                    }
-                }
-            });
-            ctl.summary = angular.extend(ctl.summary, Directions.getRouteSummary());
-        }
-
         function showPopup(event, feature) {
             MapControl.showPopup(feature);
         }
     }
 
     angular.module('nih.views.routing')
-    .controller('OverviewController', OverviewController);
+     .controller('OverviewController', OverviewController);
 
 })();
