@@ -19,6 +19,8 @@
   "smarttabs": true,
   "globals": {
     "angular": false,
+    "$": true,
+    "google": true,
     "_": true,
     "L": true,
     "turf": true
