@@ -86,7 +86,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     app.vm.network "private_network", ip: ENV.fetch("NIH_WAYFINDING_APP_IP", "33.33.33.10")
 
     app.vm.synced_folder ".", "/vagrant", disabled: true
-    app.vm.synced_folder "src/nih_wayfinding", "/opt/app/", type: "nfs", mount_options: [ "actimeo=2" ]
+    app.vm.synced_folder "src/nih_wayfinding", "/opt/app/", type: "nfs", mount_options: [
+      # If NIH_WAYFINDING_NFS_VERSION is set to 3, use nfsvers=3, otherwise, omit
+      # the setting entirely because it is not supported by NFS v4.
+      ("nfsvers=3" if ENV.fetch("NIH_WAYFINDING_NFS_VERSION", 4).to_i == 3),
+      "noatime",
+      "actimeo=1",
+    ]
 
     # Angular via Nginx
     app.vm.network "forwarded_port", {
