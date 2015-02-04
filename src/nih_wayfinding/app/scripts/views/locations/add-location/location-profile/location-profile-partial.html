@@ -20,8 +20,8 @@
                                type="text"
                                placeholder="Search Chicago..."
                                ng-model="locationsProfile.user.tempLocation.address"
-                               typeahead="location for location in locationsProfile.suggest($viewValue)"
-                               typeahead-on-select="locationsProfile.search($item)"
+                               typeahead="location as location.text for location in locationsProfile.suggest($viewValue)"
+                               typeahead-on-select="locationsProfile.search($item.text, $item.magicKey)"
                                typeahead-wait-ms="300"
                                typeahead-min-length="3" />
                     </div>

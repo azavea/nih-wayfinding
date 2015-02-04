@@ -36,9 +36,13 @@ describe('nih.geocoder: Geocoder', function () {
     var suggestUrl = /\/arcgis\/rest\/services\/World\/GeocodeServer\/suggest\?.*/;
     var suggestResponse = {
         suggestions: [{
-            text: 'one'
+            text: 'one',
+            magicKey: 'one',
+            isCollection: false
         }, {
-            text: 'two'
+            text: 'two',
+            magicKey: 'two',
+            isCollection: false
         }]
     };
 
@@ -48,10 +52,17 @@ describe('nih.geocoder: Geocoder', function () {
         Geocoder = _Geocoder_;
     }));
 
-    it('should ensure suggest returns an array of strings', function () {
+    it('should ensure suggest returns an array of objects with text and magicKey keys', function () {
+        var suggestions = [{
+            text: 'one',
+            magicKey: 'one'
+        }, {
+            text: 'two',
+            magicKey: 'two'
+        }];
         httpBackend.whenGET(suggestUrl).respond(suggestResponse);
         Geocoder.suggest('one').then(function (response) {
-            expect(response).toEqual(['one', 'two']);
+            expect(response).toEqual(suggestions);
         });
         httpBackend.flush();
     });

@@ -52,8 +52,8 @@
          * @param searchText {string} an address
          * @return {undefined}
          */
-        function search(searchText) {
-            Geocoder.search(searchText).then(onGeocoderResponse);
+        function search(searchText, magicKey) {
+            Geocoder.search(searchText, magicKey).then(onGeocoderResponse);
         }
 
         /**

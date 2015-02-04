@@ -12,7 +12,6 @@
             ctl.gridOptions = ctl.user.locations;
             ctl.optionClicked = optionClicked;
             ctl.search = search;
-            ctl.searchText = '';
             ctl.suggest = Geocoder.suggest;
 
             var title = ctl.user.username ? ctl.user.username : 'Profile';
@@ -37,8 +36,8 @@
             }
         }
 
-        function search(searchText) {
-            Geocoder.search(searchText).then(onGeocoderResponse);
+        function search(searchText, magicKey) {
+            Geocoder.search(searchText, magicKey).then(onGeocoderResponse);
         }
 
         function loadRoute(feature) {

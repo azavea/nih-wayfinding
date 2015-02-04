@@ -47,7 +47,7 @@
 
         // Hoisted function definitions
 
-        function search(text) {
+        function search(text, magicKey) {
             var dfd = $q.defer();
             $http.get(searchUrl, {
                 params: {
@@ -56,6 +56,7 @@
                     'category': searchCategories,
                     'outFields': searchOutFields,
                     'maxLocations': maxResults,
+                    'magicKey': magicKey || null,
                     'f': 'pjson'
                 }
             }).success(function (data) {
@@ -94,7 +95,9 @@
 
         // Helper function transforms response to array of suggested string locations
         function suggestToList(response) {
-            return _.pluck(response.suggestions, 'text');
+            return _.map(response.suggestions, function (suggestion) {
+                return _.pick(suggestion, ['text', 'magicKey']);
+            });
         }
     }
 

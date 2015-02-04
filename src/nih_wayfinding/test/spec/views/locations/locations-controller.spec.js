@@ -48,9 +48,6 @@ describe('nih.views.locations: LocationsController', function () {
         it('should initialize findAddressExpanded to false', function () {
             expect(LocationsController.findAddressExpanded).toEqual(false);
         });
-        it('should initialize searchText to empty string', function () {
-            expect(LocationsController.searchText).toEqual('');
-        });
 
         it('should expect search() to trigger a state change to routing', function () {
             spyOn(state, 'transitionTo');
