@@ -271,11 +271,27 @@
                 angular.forEach(keys, function (key) {
                     delete flags[key];
                 });
+
+                var warnings = [];
+                var features = [];
+                if (step.unevenSurfaces) {
+                    warnings.push('This street has uneven surfaces.');
+                }
+                if (step.aesthetics) {
+                    // TODO: what should the message here be?
+                    features.push('This street is pretty.');
+                }
+                if (step.rest) {
+                    features.push(step.rest + ' on this street.');
+                }
+
                 var properties = {
                     directions: {
                        distanceMeters: distance,
                        turn: turn,
-                       text: text
+                       text: text,
+                       warnings: warnings,
+                       features: features
                     },
                     flags: flags,
                     lastModified: lastModified
