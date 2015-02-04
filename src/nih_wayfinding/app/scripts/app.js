@@ -3,8 +3,14 @@
 
     /* ngInject */
     function DefaultRoutingConfig($urlRouterProvider) {
-
         $urlRouterProvider.otherwise('/');
+    }
+
+    /* ngInject */
+    function Initialize($rootScope, Notifications) {
+        $rootScope.$on('$stateChangeStart', function () {
+            Notifications.hide();
+        });
     }
 
     /**
@@ -22,6 +28,6 @@
         'nih.views.locations',
         'nih.views.routing',
         'nih.views.navigate'
-    ]).config(DefaultRoutingConfig);
-
+    ]).config(DefaultRoutingConfig)
+      .run(Initialize);
 })();

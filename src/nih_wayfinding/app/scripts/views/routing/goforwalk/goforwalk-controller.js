@@ -38,8 +38,7 @@
             var walkTimeMins = parseInt(value, 10);
             if (isNaN(walkTimeMins)) {
                 Notifications.show({
-                    timeout: 2000,
-                    text: 'Unable to parse entered value'
+                    timeout: 2000
                 });
             } else {
                 $state.go('routing', {walkTimeMins: walkTimeMins});
