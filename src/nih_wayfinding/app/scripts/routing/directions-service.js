@@ -277,6 +277,9 @@
                 if (step.unevenSurfaces) {
                     warnings.push('This street has uneven surfaces.');
                 }
+                if (step.maxSlope > 5) {
+                    warnings.push('This street has steep sections.');
+                }
                 if (step.aesthetics) {
                     // TODO: what should the message here be?
                     features.push('This street is pretty.');
