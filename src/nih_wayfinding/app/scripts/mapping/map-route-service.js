@@ -87,8 +87,7 @@
             function failure(error) {
                 var msg = error.msg ? error.msg : 'Unable to load route. Please try again later.';
                 Notifications.show({
-                    text: msg,
-                    timeout: 3000
+                    text: msg
                 });
                 deferred.reject(msg);
             }

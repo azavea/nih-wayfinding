@@ -68,8 +68,7 @@
             } else { // If empty result
                 ctl.user.setTempLocationProperty('feature', undefined);
                 Notifications.show({
-                    text: 'Unable to find the selected address. Please try a different one.',
-                    timeout: 3000
+                    text: 'Unable to find the selected address. Please try a different one.'
                 });
             }
         }
@@ -114,13 +113,11 @@
         function validateBeforeReview() {
             if (!ctl.user.tempLocation.text) { // If there's no label
                 Notifications.show({
-                    text: 'No label specified - please label this location.',
-                    timeout: 3000
+                    text: 'No label specified - please label this location.'
                 });
             } else if (!ctl.user.tempLocation.feature) { // If address fails to validate
                 Notifications.show({
-                    text: 'No coordinates found for this address - please choose a different address.',
-                    timeout: 3000
+                    text: 'No coordinates found for this address - please choose a different address.'
                 });
             } else { // If we have both a label and an address
                 var geom = ctl.user.tempLocation.feature.geometry;
@@ -129,7 +126,6 @@
                 $state.go('locationsReview', { destination: xyString }); // Use as url params
             }
         }
-
     }
 
     angular.module('nih.views.locations')

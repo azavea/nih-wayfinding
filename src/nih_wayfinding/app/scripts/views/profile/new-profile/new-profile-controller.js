@@ -108,8 +108,7 @@
                 ProfileService.setCurrentUser(ctl.username);
             } else {
                 Notifications.show({
-                    text: 'There was a problem saving this profile. Make sure the username is unique.',
-                    timeout: 3000
+                    text: 'There was a problem saving this profile. Make sure the username is unique.'
                 });
             }
         }
