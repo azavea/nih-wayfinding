@@ -156,7 +156,7 @@
                   map.setZoom(13);
                 });
                 Notifications.show({
-                    text: 'Select a the destination you\'d like to be routed to'
+                    text: 'Select the destination you\'d like to be routed to'
                 });
                 _(amenities)
                   .take(5)
