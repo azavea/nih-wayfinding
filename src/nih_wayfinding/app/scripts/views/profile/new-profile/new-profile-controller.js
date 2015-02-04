@@ -12,7 +12,6 @@
             ctl.newUser = ProfileService.createBlankProfile();
             ctl.errorMsg = '';
             ctl.displayUsername = '';
-            console.log(ctl.displayUsername);
 
             // Functions and values pertaining to questionnaire
             ctl.preferenceOpts = ProfilePreferenceOptions;

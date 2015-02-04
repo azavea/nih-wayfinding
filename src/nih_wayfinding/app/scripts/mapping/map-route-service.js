@@ -28,7 +28,6 @@
         }
 
         function mapRoute(origin, destination, opts) {
-            var mphToMs = 0.44704;
             var directionsOptions = {
                 walkTimeMins: 0,
                 wheelchair: false
@@ -37,7 +36,7 @@
             var deferred = $q.defer();
             var options = angular.extend(directionsOptions, opts, {
                 wheelchair: !!(currentUser.preferences.wheelchairRequired),
-                walkSpeed: currentUser.preferences.speed * mphToMs
+                walkSpeed: currentUser.preferences.speed
             });
 
             // Success handler on promise
