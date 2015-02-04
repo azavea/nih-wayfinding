@@ -193,17 +193,37 @@
         }
 
         /**
-         * Event handler to be called when the user walks off course
+         * Event handler to be called when the user walks off course, reroutes via Directions.get
+         *     and resets geojson/route
          *
          * @param event {object} The event being fired
-         * @param position {object} The point which the user now occupies
+         * @param position {geojson Point} The point which the user now occupies
          */
         function onPositionOffCourse(event, position) {
+            NavbarConfig.set({
+                title: 'Re-routing...',
+                leftImage: 'glyphicon-warning-sign'
+            });
             updateUserPosition(position);
 
-            NavbarConfig.set({
-                title: 'You are off course. Tap "Reroute" to get new directions.',
-                leftImage: 'glyphicon-warning-sign'
+            var origin = position.geometry.coordinates;
+            var destination = _(ctl.map.geojson.data.features)
+                .map(function (feature) { return feature.geometry.coordinates; })
+                .flatten(true)
+                .last();
+            Directions.get(origin, destination).then(function (geojson) {
+                ctl.map.geojson = angular.extend(ctl.map.geojson, {
+                    data: geojson
+                });
+                Navigation.setRoute(geojson);
+                Navigation.stepFirst();
+            }, function () {
+                // TODO: Improve the wording here, using "reroute" in subtitle is confusing
+                NavbarConfig.set({
+                    title: 'You are off course and we were unable to reroute you.',
+                    subtitle: 'Tap "Reroute" to choose a new destination.',
+                    leftImage: 'glyphicon-warning-sign'
+                });
             });
         }
 
