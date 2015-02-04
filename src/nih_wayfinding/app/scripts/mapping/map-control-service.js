@@ -119,7 +119,9 @@
             leafletData.getMap().then(function(map) {
                 var lnglat = [point[1], point[0]];
                 var locationMarker = new L.Marker(lnglat, opts);
-                if (opts.clickHandler) { locationMarker.on('click', opts.clickHandler); }
+                if (opts && opts.clickHandler) {
+                    locationMarker.on('click', opts.clickHandler);
+                }
                 map.addLayer(locationMarker);
                 deferred.resolve(locationMarker);
             });
