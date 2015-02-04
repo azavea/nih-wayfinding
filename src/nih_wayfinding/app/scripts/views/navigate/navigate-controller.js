@@ -200,6 +200,10 @@
          * @param position {geojson Point} The point which the user now occupies
          */
         function onPositionOffCourse(event, position) {
+            NavbarConfig.set({
+                title: 'Re-routing...',
+                leftImage: 'glyphicon-warning-sign'
+            });
             updateUserPosition(position);
 
             var origin = position.geometry.coordinates;
@@ -214,9 +218,10 @@
                 Navigation.setRoute(geojson);
                 Navigation.stepFirst();
             }, function () {
+                // TODO: Improve the wording here, using "reroute" in subtitle is confusing
                 NavbarConfig.set({
                     title: 'You are off course and we were unable to reroute you.',
-                    subtitle: 'Tap "Reroute" to get new directions.',
+                    subtitle: 'Tap "Reroute" to choose a new destination.',
                     leftImage: 'glyphicon-warning-sign'
                 });
             });
