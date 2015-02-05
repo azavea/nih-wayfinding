@@ -111,13 +111,11 @@
             if (preferences.assistanceRequired) {
                 // set "walk" speed for powered vs manual wheelchairs
                 if (preferences.asistanceType === 'motorized') {
-                    // let's say powered goes ~3.5 mph
-                    params.walkSpeed = 1.56464;
-                } else if (preferences.assistanceType === 'manual') {
-                    // manual wheelchair speed ~0.6 m/s
-                    // http://www.hindawi.com/journals/rerp/2012/753165/tab1/
                     params.wheelchair = true;
-                    params.walkSpeed = 0.6;
+                    params.walkSpeed = Config.wheelchairSpeeds.motorized;
+                } else if (preferences.assistanceType === 'manual') {
+                    params.wheelchair = true;
+                    params.walkSpeed = Config.wheelchairSpeeds.manual;
                 } else {
                     // TODO: what are we supposed to do with the other types?
                 }
@@ -276,6 +274,9 @@
                 var features = [];
                 if (step.unevenSurfaces) {
                     warnings.push('This street has uneven surfaces.');
+                }
+                if (step.maxSlope > Config.warningMinimumGrade) {
+                    warnings.push('This street has steep sections.');
                 }
                 if (step.aesthetics) {
                     // TODO: what should the message here be?

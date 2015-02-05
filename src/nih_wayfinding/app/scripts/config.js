@@ -41,15 +41,19 @@
         },
         center: {},
         nearbySearchRadius: 500,
+        wheelchairSpeeds: {
+            motorized: 1.56464, // ~3.5 mph
+            manual: 0.6 // ~0.6 m/s (http://www.hindawi.com/journals/rerp/2012/753165/tab1/)
+        },
         stubs: {
             geolocation: {
                 latitude: 41.744431,
                 longitude: -87.566115
             }
-        }
+        },
+        warningMinimumGrade: 5
     };
 
     angular.module('nih.config', [])
     .constant('Config', config);
-
 })();
