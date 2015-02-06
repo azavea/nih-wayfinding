@@ -10,9 +10,11 @@
               <div class="direction-description" ng-if="item.directions.warnings"
                 ng-repeat="warning in item.directions.warnings">
                 <span><span class="glyphicon glyphicon-warning-sign text-danger" /> {{ ::warning }}</span>
+              </div>
               <div class="direction-description" ng-if="item.directions.features"
                 ng-repeat="feature in item.directions.features">
                 <span><span class="glyphicon glyphicon-thumbs-up" /> {{ ::feature }}</span>
+              </div>
           </td>
       </tr>
   </table>
