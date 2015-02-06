@@ -19,7 +19,7 @@
             ctl.setUsingAssistance = setUsingAssistance;
             ctl.assistanceTypeDialog = false;
             ctl.setAssistanceType = setAssistanceType;
-            ctl.setSteepTerrainComfort = setSteepTerrainComfort;
+            ctl.setSurfaceTypeComfort = setSurfaceTypeComfort;
             ctl.setSpeed = setSpeed;
             ctl.setBusyness = setBusyness;
             ctl.setRestFrequency = setRestFrequency;
@@ -54,10 +54,10 @@
         }
 
         /**
-         * Set private var for profile steepTerrainComfort level.
+         * Set private var for profile surfaceTypeComfort level.
          */
-        function setSteepTerrainComfort(comfort) {
-            ctl.newUser.setPreference('steepTerrainComfort', comfort.value);
+        function setSurfaceTypeComfort(comfort) {
+            ctl.newUser.setPreference('surfaceTypeComfort', comfort.value);
             setStep(4);
         }
 

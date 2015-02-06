@@ -26,7 +26,7 @@
                 value: 'cane'
             }],
 
-            steepTerrainOpts: [{
+            surfaceTypeComfortOpts: [{
                 text: 'Not very',
                 value: 0.1
             }, {
