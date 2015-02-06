@@ -103,10 +103,7 @@
 
             params.walkSpeed = preferences.speed;
 
-            // TODO: OTP currently only can ban sloped edges; no option to weight more heavily
-            if (preferences.steepTerrainComfort < 0.5) {
-                params.allowUnevenSurfaces = false;
-            }
+            params.surfaceComfort = preferences.surfaceTypeComfort;
 
             if (preferences.assistanceRequired) {
                 // set "walk" speed for powered vs manual wheelchairs
@@ -272,11 +269,14 @@
 
                 var warnings = [];
                 var features = [];
-                if (step.unevenSurfaces) {
-                    warnings.push('This street has uneven surfaces.');
+                if (step.crossSlope) {
+                    warnings.push('This street has a cross slope.');
                 }
                 if (step.maxSlope > Config.warningMinimumGrade) {
                     warnings.push('This street has steep sections.');
+                }
+                if (step.surface !== 'Concrete') {
+                    warnings.push('Street surface is ' + step.surface);
                 }
                 if (step.aesthetics) {
                     // TODO: what should the message here be?
