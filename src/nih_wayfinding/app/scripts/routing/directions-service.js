@@ -272,20 +272,15 @@
 
                 // add properties for audited edges
                 if (lastModified > 0) {
-                    if (step.crossSlope) {
-                        warnings.push('This street has a cross slope.');
-                    }
-                    if (step.maxSlope > Config.warningMinimumGrade) {
-                        warnings.push('This street has steep sections.');
-                    }
-                    if (step.surface && (step.surface !== 'Concrete')) {
-                        warnings.push('Street surface is ' + step.surface);
+                    if (step.crossSlope || (step.maxSlope > Config.warningMinimumGrade) ||
+                        (step.surface && (step.surface !== 'Concrete'))) {
+                        warnings.push('images/icons/icon-caution.svg');
                     }
                     if (step.aesthetics) {
-                        features.push('This street is pretty.');
+                        features.push('images/icons/icon-flower.svg');
                     }
                     if (step.rest) {
-                        features.push(step.rest + ' on this street.');
+                        features.push('images/icons/icon-bench.svg');
                     }
                 }
 
