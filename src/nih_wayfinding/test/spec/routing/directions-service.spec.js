@@ -308,7 +308,7 @@ describe('nih.routing: Directions', function () {
     });
 
     it('should set OTP query parameters based on user preferences', function () {
-        var user = ProfileService.createBlankProfile();
+        var user = ProfileService.createNewProfile();
         user.username = 'test';
         user.save();
         ProfileService.setCurrentUser(user.username);

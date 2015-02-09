@@ -204,7 +204,6 @@
             var numLinestrings = lineStrings.length;
             var auditedLineStrings = 0;
             angular.forEach(lineStrings, function (lineString) {
-                console.log(lineString.properties);
                 if (lineString.properties.lastModified) {
                     auditedLineStrings++;
                 }

@@ -12,7 +12,7 @@ describe('nih.profiles: ProfileService', function () {
     beforeEach(inject(function (_ProfileService_) {
         ProfileService = _ProfileService_;
         ProfileService.deleteProfile(testUserName);
-        profile = ProfileService.createBlankProfile();
+        profile = ProfileService.createNewProfile();
         profile.username = testUserName;
         profile.save();
     }));
@@ -22,7 +22,7 @@ describe('nih.profiles: ProfileService', function () {
     });
 
     it('should not allow two profiles with the same username', function () {
-        var profile2 = ProfileService.createBlankProfile(testUserName);
+        var profile2 = ProfileService.createNewProfile(testUserName);
         profile2.username = testUserName;
         expect(profile2.save()).toBeFalsy();
     });
@@ -34,11 +34,11 @@ describe('nih.profiles: ProfileService', function () {
 
     it('should get list of all usernames', function () {
 
-        var profile2 = ProfileService.createBlankProfile();
+        var profile2 = ProfileService.createNewProfile();
         profile2.username = 'bar';
         profile2.save();
 
-        var profile3 = ProfileService.createBlankProfile();
+        var profile3 = ProfileService.createNewProfile();
         profile3.username = 'baz';
         profile3.save();
 
@@ -85,15 +85,16 @@ describe('nih.profiles: ProfileService', function () {
     });
 
     it('should reliably generate the next id', function () {
+        // already have four locations
         profile.startTempLocation();
-        expect(profile.tempLocation.id).toEqual(1);
+        expect(profile.tempLocation.id).toEqual(5);
         profile.finishTempLocation();
 
         profile.startTempLocation();
-        expect(profile.tempLocation.id).toEqual(2);
+        expect(profile.tempLocation.id).toEqual(6);
 
         profile.finishTempLocation();
-        expect(profile.newLocationID()).toEqual(3);
+        expect(profile.newLocationID()).toEqual(7);
     });
 
     it('should move tempLocation into locations', function () {
@@ -103,7 +104,7 @@ describe('nih.profiles: ProfileService', function () {
         profile.startTempLocation();
         var temp = profile.tempLocation;
         profile.finishTempLocation();
-        expect(profile.locations[1]).toEqual(temp);
+        expect(profile.locations[5]).toEqual(temp);
     });
 
     it('should set a property of tempLocation and, later, find that location', function () {
@@ -114,7 +115,7 @@ describe('nih.profiles: ProfileService', function () {
         profile.setTempLocationProperty('zipzap', 'flimflam');
         expect(profile.tempLocation.zipzap).toEqual('flimflam');
         profile.finishTempLocation();
-        expect(profile.locationByID(2).zipzap).toEqual('flimflam');
+        expect(profile.locationByID(6).zipzap).toEqual('flimflam');
     });
 
     it('should set a property of tempLocation and, later, find that location', function () {
@@ -122,8 +123,8 @@ describe('nih.profiles: ProfileService', function () {
         profile.finishTempLocation();
         profile.startTempLocation();
         profile.finishTempLocation();
-        profile.removeLocation(2);
-        expect(profile.locations.length).toEqual(1);
+        profile.removeLocation(6);
+        expect(profile.locations.length).toEqual(5);
     });
 
 });
