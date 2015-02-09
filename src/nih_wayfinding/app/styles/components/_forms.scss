@@ -4,3 +4,18 @@
     padding: 10px;
     font-size: 22px;
 }
+
+.form-search {
+  padding-left: 6rem;
+
+}
+
+.search-box {
+  position: relative;
+  & > {
+    .search-icon {
+      position: absolute;
+      margin: 1.6rem 1.4rem;
+    }
+  }
+}

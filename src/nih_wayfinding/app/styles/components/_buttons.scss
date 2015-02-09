@@ -52,3 +52,11 @@
 .btn-img {
   font-size: $font-size-h3 !important;
 }
+
+.btn-homepage {
+  height: 22rem;
+  white-space: normal;
+  text-align: left;
+  background-color: $brand-primary !important;
+  background-size: cover;
+}
