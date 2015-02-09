@@ -245,16 +245,18 @@
             var distanceText = 'In approximately ' +  timeMins +
                 ' minutes (' + $filter('distance')(distanceToTurn) + ').';
             var subtitleText = distanceText;
-            if (position.properties.directions.warnings) {
-                subtitleText += position.properties.directions.warnings.join(' ');
-            }
-            if (position.properties.directions.features) {
-                subtitleText += position.properties.directions.features.join(' ');
-            }
+            var rightImages = [];
+            _.each(position.properties.directions.warnings, function(warning) {
+                rightImages.push(warning);
+            });
+            _.each(position.properties.directions.features, function(feature) {
+                rightImages.push(feature);
+            });
             NavbarConfig.set({
                 title: text,
                 subtitle: subtitleText,
-                leftImage: turnIcon
+                leftImage: turnIcon,
+                rightImages: rightImages
             });
         }
     }

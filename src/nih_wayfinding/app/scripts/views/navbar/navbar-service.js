@@ -8,6 +8,7 @@
             title: '',
             subtitle: '',
             leftImage: '',
+            rightImages: [],
             rightButton: {
                 imgclass: 'caret',
                 text: 'Menu'
@@ -29,6 +30,7 @@
             var defaults = {
                 subtitle: '',
                 leftImage: '',
+                rightImages: [],
                 back: true      // display back button to prev view if true, display menu if false
             };
             angular.extend(config, defaults, options);

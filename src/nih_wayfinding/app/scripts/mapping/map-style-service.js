@@ -35,15 +35,24 @@
          * Uses the legend ramp as the color palette
          *
          * @param epochSeconds {int} The epoch to get a color for, in seconds
+         * @param issueCount {int} The number of issues identified along the edge
          * @returns {string} hex color
          */
-        function getLineColor(epochSeconds) {
+        function getLineColor(epochSeconds, issueCount) {
             epochSeconds = parseInt(epochSeconds, 10);
             var ramp = module.getLegendRamp();
             var rampLength = ramp.length;
             if (isNaN(epochSeconds)) {
                 return ramp[rampLength - 1];
             }
+
+            if (issueCount > 0) {
+                return ramp[1];
+            }
+
+            return ramp[0]; // audited edge with no issues
+
+            /* TODO: uncomment this section for use when we have have true audit dates?
             var nowEpochMillis = (new Date()).getTime();
             var timestampEpochMillis = epochSeconds * 1000;
             var binWidthMonths = 6;
@@ -52,6 +61,7 @@
             var index = Math.floor(ageInMonths / binWidthMonths);
             index = index >= rampLength ? rampLength - 1 : index;
             return ramp[index];
+            */
         }
     }
 
