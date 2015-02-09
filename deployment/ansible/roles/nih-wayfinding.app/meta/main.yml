@@ -3,6 +3,6 @@ dependencies:
   - { role: "azavea.git" }
   - { role: "azavea.nginx", nginx_delete_default_site: True }
   - { role: "azavea.pip" }
-  - { role: "azavea.postgresql-support" }
+  - { role: "azavea.postgresql-support", postgresql_support_libpq_version: "9.3.6*.pgdg12.04+1"}
   - { role: "azavea.python", python_development: True }
   - { role: "nih-wayfinding.nodejs" }
