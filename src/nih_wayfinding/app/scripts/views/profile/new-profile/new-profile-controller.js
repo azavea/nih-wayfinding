@@ -105,8 +105,6 @@
             ctl.newUser.username = ctl.username;
             if (ctl.newUser.save()) {
                 ProfileService.setCurrentUser(ctl.username);
-                console.log(ctl.newUser);
-                /////////////////////////////////
             } else {
                 Notifications.show({
                     text: 'There was a problem saving this profile. Make sure the username is unique.'

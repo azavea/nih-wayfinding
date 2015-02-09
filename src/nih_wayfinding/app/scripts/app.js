@@ -7,9 +7,15 @@
     }
 
     /* ngInject */
-    function Initialize($rootScope, Notifications) {
+    function Initialize($rootScope, Notifications, ProfileService) {
         $rootScope.$on('$stateChangeStart', function () {
             Notifications.hide();
+
+            // check if there are any extant user profiles; if not, create a default one
+            if (!ProfileService.getProfileNames().length) {
+                var user = ProfileService.createNewProfile();
+                ProfileService.setCurrentUser(user.username);
+            }
         });
     }
 
