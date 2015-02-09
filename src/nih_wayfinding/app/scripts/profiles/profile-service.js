@@ -3,7 +3,7 @@
     'use strict';
 
     /* ngInject */
-    function ProfileService (ProfileProvider, localStorageService) {
+    function ProfileService (Config, ProfileProvider, localStorageService) {
 
         // private variables
         // It is important that the lastUser entry be namespaced differently (hence not using the localStorageService)
@@ -15,7 +15,7 @@
             fetchProfile: fetchProfile,
             profileExists: profileExists,
             getProfileNames: getProfileNames,
-            createBlankProfile: createBlankProfile,
+            createNewProfile: createNewProfile,
             deleteProfile: deleteProfile,
             setCurrentUser: setCurrentUser,
             getCurrentUser: getCurrentUser,
@@ -68,10 +68,20 @@
          }
 
         /**
-         * Return an empty user object
+         * Return a new user object prepopulated with default settings
          */
-        function createBlankProfile() {
-            return ProfileProvider.deserialize();
+        function createNewProfile() {
+            var user = ProfileProvider.deserialize();
+            user = Config.defaultUserSettings;
+            /*
+            var settings = Config.defaultUserSettings;
+            angular.forEach(Config.defaultUserSettings, function(value, key) {
+                user[key] = value;
+            });
+            */
+            user.save();
+            localStorageService.set(Config.defaultUserSettings.username, user);
+            return user;
         }
 
         /**

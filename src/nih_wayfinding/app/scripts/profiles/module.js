@@ -12,7 +12,8 @@
     }
 
     angular.module('nih.profiles', [
-        'LocalStorageModule'
+        'LocalStorageModule',
+        'nih.config'
     ]).config(LocalStorageConfig);
 
 })();

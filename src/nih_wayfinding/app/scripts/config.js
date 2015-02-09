@@ -5,6 +5,18 @@
     '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';
 
     var config = {
+        defaultUserSettings: {
+            username: 'User',
+            locations: [],
+            preferences: {
+                assistanceRequired: false,
+                assistanceType: null,
+                busy: 0,
+                restFrequency: 0,
+                speed: 1.1176,
+                surfaceTypeComfort: 0.5
+            }
+        },
         bounds: {
             southWest: {
                 lat: 41.7056,
