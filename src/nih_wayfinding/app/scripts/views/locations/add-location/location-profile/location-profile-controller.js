@@ -43,6 +43,12 @@
             ctl.search = search;
             ctl.suggest = Geocoder.suggest;
 
+            // field validation
+            ctl.labelErrorMsg = '';
+            ctl.addressErrorMsg = '';
+            ctl.checkLabel = checkLabel;
+            ctl.checkAddress = checkAddress;
+
             // Final validation
             ctl.validateBeforeReview = validateBeforeReview;
         }
@@ -105,6 +111,34 @@
         function toggleIconUploadDialog() {
             ctl.showIconSelect = false;
             ctl.showIconUpload = !ctl.showIconUpload;
+        }
+
+        function checkLabel() {
+            if (!ctl.user.tempLocation.text) {
+                ctl.labelErrorMsg = 'Location label is required';
+                return; // 'required' check will set validity
+            }
+
+            // check if label is unique
+            var usingLabel = _.find(ctl.user.locations, function(location) {
+                return location.text === ctl.user.tempLocation.text;
+            });
+
+            if (usingLabel) {
+                ctl.labelErrorMsg = 'A location of that name already exists';
+                ctl.profile.$setValidity('locationsProfile.user.tempLocation.text', false);
+            } else {
+                ctl.labelErrorMsg = '';
+                ctl.profile.$setValidity('locationsProfile.user.tempLocation.text', true);
+            }
+        }
+
+        function checkAddress() {
+            if (!ctl.user.tempLocation.address) {
+                ctl.addressErrorMsg = 'Address is required';
+                return; // 'required' check will set validity
+            }
+            ctl.addressErrorMsg = '';
         }
 
         /**
