@@ -4,7 +4,7 @@
     /* ngInject */
     function StateConfig($stateProvider) {
         $stateProvider.state('newprofile', {
-            url: '/',
+            url: '/profiles',
             templateUrl: 'scripts/views/profile/new-profile/new-profile-partial.html',
             controller: 'NewProfileController',
             controllerAs: 'newprofile'

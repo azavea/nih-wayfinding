@@ -9,7 +9,7 @@
         function initialize() {
             ctl.step = 1;
             ctl.setStep = setStep;
-            ctl.newUser = ProfileService.createBlankProfile();
+            ctl.newUser = ProfileService.createNewProfile();
             ctl.errorMsg = '';
             ctl.displayUsername = '';
 

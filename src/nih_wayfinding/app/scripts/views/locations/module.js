@@ -4,7 +4,7 @@
     /* ngInject */
     function StateConfig($stateProvider) {
         $stateProvider.state('locations', {
-            url: '/locations',
+            url: '/',
             templateUrl: 'scripts/views/locations/locations-partial.html',
             controller: 'LocationsController',
             controllerAs: 'locations'
@@ -29,13 +29,6 @@
             templateUrl: 'scripts/views/locations/add-location/location-review/location-review-partial.html',
             controller: 'LocationsReviewController',
             controllerAs: 'locationsReview'
-        });
-
-        $stateProvider.state('locationsAnother', {
-            url: '/locations/another',
-            templateUrl: 'scripts/views/locations/add-location/location-another/location-another-partial.html',
-            controller: 'LocationsAnotherController',
-            controllerAs: 'locationsAnother'
         });
     }
 
