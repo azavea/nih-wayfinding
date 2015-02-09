@@ -12,10 +12,12 @@
 
 .search-box {
   position: relative;
-  & > {
-    .search-icon {
-      position: absolute;
-      margin: 1.6rem 1.4rem;
-    }
+  & > .search-icon {
+    position: absolute;
+    margin: 1.8rem 1.6rem;
+  }
+  & > .dropdown-menu {
+    right: 0;
+    overflow: hidden;
   }
 }

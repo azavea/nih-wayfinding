@@ -242,8 +242,8 @@
             var turnIcon = Directions.getTurnIconName(position.properties.directions.turn);
             var speedMs = (ProfileService.getCurrentUser().preferences.speed || 1) * mphToMs;
             var timeMins = (distanceToTurn / speedMs / 60).toFixed(0);
-            var distanceText = 'In approximately ' +  timeMins +
-                ' minutes (' + $filter('distance')(distanceToTurn) + ').';
+            var distanceText = 'In approx. ' +  timeMins +
+                ' min (' + $filter('distance')(distanceToTurn) + ').';
             var subtitleText = distanceText;
             var rightImages = [];
             _.each(position.properties.directions.warnings, function(warning) {

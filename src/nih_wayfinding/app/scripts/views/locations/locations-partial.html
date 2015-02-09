@@ -36,14 +36,12 @@
     </div>
     <div class="homepage-locations">
         <div class="row">
-            <div class="col-xs-6">
-                <h2>Your Locations</h2>
+            <div class="col-xs-12">
+                <h2>Your Locations <button ui-sref="locationsSelectType" class="btn btn-link" type="button">Add</button> <span class="h4">/</span> <button ui-sref="locationsSelectType" class="btn btn-link" type="button">Remove</button></h2>
             </div>
-            <div class="col-xs-6">
-                <button ui-sref="locationsSelectType" class="btn btn-secondary btn-block pull-right" type="button">
-                    <span class="h4">Add</span>
-                </button>
-                <!-- Must pass the 'option' argument to the function in on-option-clicked for this to work -->
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
                 <nih-options-grid options="locations.gridOptions" on-option-clicked="locations.optionClicked(option)"></nih-options-grid>
             </div>
         </div>

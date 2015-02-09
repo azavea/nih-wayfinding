@@ -4,7 +4,7 @@ header {
     top: 0;
     width: 100%;
     z-index: 3000;
-    height: $header-height;
+    min-height: $header-height;
     transition: background-color 400ms ease-in-out;
     &.mode-route {
         background-color: $brand-route;
@@ -33,4 +33,10 @@ footer {
 .navbar-actionheader {
     margin-top: 0;
     color: #fff;
+    padding: 2rem 11rem 2rem 0;
+    margin-bottom: 0;
+}
+
+.navbar-actionheader-subtitle {
+    padding-right: 11rem;
 }

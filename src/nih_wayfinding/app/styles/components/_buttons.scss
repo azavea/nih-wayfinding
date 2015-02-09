@@ -1,6 +1,6 @@
 .btn-nav-main {
   background-color: transparent;
-  border-left: 1px solid #fff;
+  border-left: 1px solid transparentize(#fff, .3);
   bottom: 0;
   color: #fff !important;
   font-size: $font-size-h4;
@@ -10,13 +10,12 @@
   top: 0;
   width: 6em;
   &:hover {
-    // color: #fff;
     background-color: #666;
   }
 }
 
 .btn-group-nav-main {
-  height: $header-height;
+  height: 100%;
   position: absolute;
   right: 0;
   top: 0;
@@ -40,11 +39,11 @@
       background-color: darken($gray-light, 10%);
     }
     &.active {
-      color: $gray-light;
-      background-color: #fff;
+      color: #fff;
+      background-color: $brand-primary;
     }
     &.active-delete {
-        background-color: $brand-danger;
+      background-color: $brand-danger;
     }
   }
 }
@@ -59,4 +58,9 @@
   text-align: left;
   background-color: $brand-primary !important;
   background-size: cover;
+}
+
+.btn-group-temporary .btn {
+  background-color: #aaa !important;
+  border-bottom: 1px solid #c0c3c5 !important;
 }
