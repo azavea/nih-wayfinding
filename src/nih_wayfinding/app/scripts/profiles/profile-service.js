@@ -72,15 +72,12 @@
          */
         function createNewProfile() {
             var user = ProfileProvider.deserialize();
-            user = Config.defaultUserSettings;
-            /*
             var settings = Config.defaultUserSettings;
             angular.forEach(Config.defaultUserSettings, function(value, key) {
                 user[key] = value;
             });
-            */
             user.save();
-            localStorageService.set(Config.defaultUserSettings.username, user);
+            localStorageService.set(settings.username, user);
             return user;
         }
 
