@@ -7,9 +7,11 @@
         <div class="panel-body">
             <div ng-switch="newprofile.step">
                 <div ng-switch-when="1">
-                    <form name="newprofile.newusername" ng-submit="newprofile.setStep(2)">
+                    <form name="newprofile.newusername" ng-submit="newprofile.setStep(2)"
+                        ng-class="{ 'has-error': newprofile.newusername.username.$invalid && !newprofile.newusername.username.$pristine }" class="form-inline">
                         <h2>New user name:</h2>
-                        <input type="text" ng-model="newprofile.username"
+                        <input type="text" name="username" ng-model="newprofile.username"
+                            class="form-control"
                             ng-change="newprofile.checkUsername()" autofocus required />
                             <span class="text-danger" aria-disabled="newprofile.newusername.$valid"
                             ng-show="newprofile.newusername.$invalid">{{ newprofile.errorMsg }}</span>

@@ -3,27 +3,47 @@
         <form name="locationsProfile.profile">
             <div class="block">
                 <div class="row">
-                    <div class="col-xs-12">
+                    <div class="col-xs-12" ng-class="{ 'has-error': locationsProfile.labelErrorMsg }">
                         <h4>Label</h4>
                         <input class="form-control pull-right"
+                               name="locationName"
+                               class="form-control"
                                placeholder="Enter a location name here..."
                                ng-model="locationsProfile.user.tempLocation.text"
-                               autofocus/>
+                               ng-change="locationsProfile.checkLabel()"
+                               autofocus required />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <span class="text-danger"
+                            aria-disabled="!locationsProfile.labelErrorMsg"
+                            ng-show="locationsProfile.labelErrorMsg">{{ locationsProfile.labelErrorMsg }}</span>
                     </div>
                 </div>
             </div>
             <div class="block">
                 <div class="row">
-                    <div class="col-xs-12">
+                    <div class="col-xs-12" ng-class="{ 'has-error': locationsProfile.addressErrorMsg }">
                         <h4>Address</h4>
                         <input class="form-control pull-right"
                                type="text"
+                               name="locationAddress"
+                               class="form-control"
                                placeholder="Search Chicago..."
                                ng-model="locationsProfile.user.tempLocation.address"
+                               ng-change="locationsProfile.checkAddress()"
                                typeahead="location as location.text for location in locationsProfile.suggest($viewValue)"
                                typeahead-on-select="locationsProfile.search($item.text, $item.magicKey)"
                                typeahead-wait-ms="300"
-                               typeahead-min-length="3" />
+                               typeahead-min-length="3" required />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <span class="text-danger"
+                            aria-disabled="!locationsProfile.addressErrorMsg"
+                            ng-show="locationsProfile.addressErrorMsg">{{ locationsProfile.addressErrorMsg }}</span>
                     </div>
                 </div>
             </div>
@@ -56,6 +76,7 @@
         <div class="btn-group-nav btn-group-justified">
             <a role="button"
                class="btn btn-primary btn-block"
+               ng-disabled="locationsProfile.profile.$invalid"
                ng-click="locationsProfile.validateBeforeReview()">
                 Finish
             </a>
