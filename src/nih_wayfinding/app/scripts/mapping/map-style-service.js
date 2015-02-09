@@ -42,7 +42,7 @@
             epochSeconds = parseInt(epochSeconds, 10);
             var ramp = module.getLegendRamp();
             var rampLength = ramp.length;
-            if (isNaN(epochSeconds)) {
+            if (isNaN(epochSeconds) || epochSeconds === 0) {
                 return ramp[rampLength - 1];
             }
 
