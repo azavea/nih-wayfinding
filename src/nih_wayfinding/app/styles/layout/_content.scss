@@ -14,7 +14,7 @@ body {
 .content.scroll {
   margin-top: $header-height;
   margin-bottom: $footer-height;
-  padding: 2rem;
+  padding: 5rem $grid-gutter-width/2;
 }
 
 .content.map {
@@ -39,8 +39,12 @@ body {
 }
 
 .navigation-icon {
-    width: 20px;
-    height: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.content.no-footer {
+  margin-bottom: 0;
 }
 
 .directions-table {
@@ -73,3 +77,11 @@ img {
 }
 
 nav > .btn-group-nav-main {}
+
+.homepage-locations {
+  background-color: #e6e6e6;
+  margin-left: $grid-gutter-width/-2;
+  margin-right: $grid-gutter-width/-2;
+  padding: 3rem $grid-gutter-width/2;
+  height: 50vh; // this is a temporary fix; space from "your locations" to bottom of home screen should have a grey background
+}
