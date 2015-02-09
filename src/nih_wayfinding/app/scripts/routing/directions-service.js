@@ -269,21 +269,19 @@
 
                 var warnings = [];
                 var features = [];
-                if (step.crossSlope) {
-                    warnings.push('This street has a cross slope.');
-                }
-                if (step.maxSlope > Config.warningMinimumGrade) {
-                    warnings.push('This street has steep sections.');
-                }
-                if (step.surface !== 'Concrete') {
-                    warnings.push('Street surface is ' + step.surface);
-                }
-                if (step.aesthetics) {
-                    // TODO: what should the message here be?
-                    features.push('This street is pretty.');
-                }
-                if (step.rest) {
-                    features.push(step.rest + ' on this street.');
+
+                // add properties for audited edges
+                if (lastModified > 0) {
+                    if (step.crossSlope || (step.maxSlope > Config.warningMinimumGrade) ||
+                        (step.surface && (step.surface !== 'Concrete'))) {
+                        warnings.push('images/icons/icon-caution.svg');
+                    }
+                    if (step.aesthetics) {
+                        features.push('images/icons/icon-flower.svg');
+                    }
+                    if (step.rest) {
+                        features.push('images/icons/icon-bench.svg');
+                    }
                 }
 
                 var properties = {
