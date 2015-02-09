@@ -12,7 +12,7 @@
         };
         var defaultLegend = {
             colors: MapStyle.getLegendRamp(),
-            labels: ['Recent Review', 'Older Review', 'Unreviewed']
+            labels: ['No Issues', 'Some Issues', 'Unreviewed']
         };
         var defaultMarkers = {};
 

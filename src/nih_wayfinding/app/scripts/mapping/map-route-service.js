@@ -17,8 +17,13 @@
             if (feature.geometry.type !== 'LineString') {
                 return;
             }
-            var lastModified = feature && feature.properties ? feature.properties.lastModified : 0;
-            var color = MapStyle.getLineColor(lastModified);
+            var lastModified = 0;
+            var issueCount = 0;
+            if (feature && feature.properties) {
+                lastModified = feature.properties.lastModified;
+                issueCount = feature.properties.directions ? feature.properties.directions.warnings.length : 0;
+            }
+            var color = MapStyle.getLineColor(lastModified, issueCount);
             return {
                 color: color,
                 weight: 4,
