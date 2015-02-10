@@ -92,6 +92,8 @@ nav > .btn-group-nav-main {}
 }
 
 .overview-summary {
-  padding: 2rem 3rem;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
   font-size: $font-size-h2;
 }
