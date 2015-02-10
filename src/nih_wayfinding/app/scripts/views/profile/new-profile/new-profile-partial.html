@@ -21,7 +21,7 @@
                     </form>
                 </div>
                 <div ng-switch-when="2">
-                    <div ng-hide="newprofile.assistanceTypeDialog" class="fade">
+                    <div ng-hide="newprofile.assistanceTypeDialog">
                         <h2>Do you use a wheelchair or other mobility assistance?</h2>
                         <div class="btn-group btn-group-justified" role="group"
                              aria-label="Select whether or not you use a wheelchair or other assistance">
@@ -30,7 +30,7 @@
                             </nih-options-grid>
                         </div>
                     </div>
-                    <div ng-hide="!newprofile.assistanceTypeDialog" class="fade">
+                    <div ng-hide="!newprofile.assistanceTypeDialog">
                         <h2>Is your chair electric or manual?</h2>
                         <div class="btn-group btn-group-justified" role="group"
                              aria-label="Select assistance type">
