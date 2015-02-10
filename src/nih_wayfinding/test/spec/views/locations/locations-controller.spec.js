@@ -57,12 +57,12 @@ describe('nih.views.locations: LocationsController', function () {
         });
     });
 
-    describe('tests where the geocoder returns an empty response', function () {
+    describe('tests where the geocoder returns an error message', function () {
         beforeEach(inject(function ($controller, $q) {
             Geocoder = {
                 search: function () {
                     var dfd = $q.defer();
-                    dfd.resolve([]);
+                    dfd.reject('No soup for you!');
                     return dfd.promise;
                 }
             };
@@ -73,7 +73,7 @@ describe('nih.views.locations: LocationsController', function () {
             });
         }));
 
-        it('should show a notification when the geocoder returns no data', function () {
+        it('should show a notification when the geocoder returns an error message', function () {
             spyOn(Notifications, 'show');
             LocationsController.search();
             rootScope.$digest();
