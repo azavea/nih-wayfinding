@@ -9,6 +9,9 @@ header {
     &.mode-route {
         background-color: $brand-route;
     }
+    &.mode-reroute {
+        background-color: $brand-reroute;
+    }
     &.mode-navigation {
         background-color: $brand-navigation;
     }
