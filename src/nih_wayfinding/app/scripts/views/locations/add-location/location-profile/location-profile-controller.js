@@ -4,7 +4,7 @@
     /* ngInject */
     function LocationsProfileController(
         $stateParams, $state,
-        Geocoder, NavbarConfig, Notifications, ProfileService
+        Geocoder, NavbarConfig, ProfileService
     ) {
         var ctl = this;
         initialize();
@@ -67,29 +67,20 @@
         }
 
         /**
-         * Geocode an address and pass it to onGeocoderResponse
+         * Geocode an address and save geocoded data or notify of geocoding failure
          * @param searchText {string} an address
          * @return {undefined}
          */
         function search(searchText, magicKey) {
-            Geocoder.search(searchText, magicKey).then(onGeocoderResponse);
-        }
-
-        /**
-         * Save geocoded data or notify of geocoding failure
-         * @param data {object} data from Geocoder service
-         * @return undefined
-         */
-        function onGeocoderResponse(data) {
-            if (data.length) { // If non-empty result
+            Geocoder.search(searchText, magicKey).then(function(data) {
                 // Add geometric features to location tracker
                 ctl.user.setTempLocationProperty('feature', data[0]);
-            } else { // If empty result
-                ctl.user.setTempLocationProperty('feature', undefined);
-                Notifications.show({
-                    text: 'Unable to find the selected address. Please try a different one.'
-                });
-            }
+                ctl.addressErrorMsg = '';
+                ctl.profile.$setValidity('locationsProfile.user.tempLocation.address', true);
+            }, function(error) {
+                ctl.addressErrorMsg = error;
+                ctl.profile.$setValidity('locationsProfile.user.tempLocation.address', false);
+            });
         }
 
         /**
@@ -126,6 +117,10 @@
             ctl.showIconUpload = !ctl.showIconUpload;
         }
 
+        /**
+         * Validate the location label entered.
+         * Sets error message text and Angular input validity.
+         */
         function checkLabel() {
             if (!ctl.user.tempLocation.text) {
                 ctl.labelErrorMsg = 'Location label is required';
@@ -146,6 +141,10 @@
             }
         }
 
+        /**
+         * Validate the address text entered.
+         * Sets error message text and Angular input validity.
+         */
         function checkAddress() {
             if (!ctl.user.tempLocation.address) {
                 ctl.addressErrorMsg = 'Address is required';
@@ -159,11 +158,13 @@
          */
         function validateBeforeReview() {
             if (!ctl.user.tempLocation.feature) { // If address fails to validate
-                ctl.addressErrorMsg = 'No coordinates found for this address - please choose a different address.';
+                ctl.addressErrorMsg = 'No coordinates found for this address. Please choose a different address.';
                 ctl.profile.$setValidity('locationsProfile.user.tempLocation.address', false);
             } else { // If we have both a label and an address
                 var geom = ctl.user.tempLocation.feature.geometry;
                 var xyString = geom.x.toString() + ',' + geom.y.toString(); // Cast to string
+
+                // set default image for location type, if no image selected
                 if (!ctl.user.tempLocation.img) {
                     setImageByType();
                 }

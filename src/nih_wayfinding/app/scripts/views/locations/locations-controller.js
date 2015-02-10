@@ -40,19 +40,15 @@
             ctl.deleteMode.buttonText = ctl.deleteMode.active ? 'Finish' : 'Delete';
         }
 
-        function onGeocoderResponse(data) {
-            if (data && data.length) {
+        function search(searchText, magicKey) {
+            Geocoder.search(searchText, magicKey).then(function(data) {
                 loadRoute(data[0]);
-            } else {
+            }, function(error) {
                 Notifications.show({
-                    text: 'Unable to find the selected address. Please try a different one.',
+                    text: error,
                     timeout: 3000
                 });
-            }
-        }
-
-        function search(searchText, magicKey) {
-            Geocoder.search(searchText, magicKey).then(onGeocoderResponse);
+            });
         }
 
         function deleteLocation(locationId) {
