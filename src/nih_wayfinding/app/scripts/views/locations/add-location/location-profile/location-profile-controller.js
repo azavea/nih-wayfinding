@@ -127,8 +127,6 @@
         }
 
         function checkLabel() {
-            console.log(ctl.user.tempLocation);
-
             if (!ctl.user.tempLocation.text) {
                 ctl.labelErrorMsg = 'Location label is required';
                 return; // 'required' check will set validity
@@ -160,14 +158,9 @@
          * Validate the model's data to ensure it will produce a satisfactory location
          */
         function validateBeforeReview() {
-            if (!ctl.user.tempLocation.text) { // If there's no label
-                Notifications.show({
-                    text: 'No label specified - please label this location.'
-                });
-            } else if (!ctl.user.tempLocation.feature) { // If address fails to validate
-                Notifications.show({
-                    text: 'No coordinates found for this address - please choose a different address.'
-                });
+            if (!ctl.user.tempLocation.feature) { // If address fails to validate
+                ctl.addressErrorMsg = 'No coordinates found for this address - please choose a different address.';
+                ctl.profile.$setValidity('locationsProfile.user.tempLocation.address', false);
             } else { // If we have both a label and an address
                 var geom = ctl.user.tempLocation.feature.geometry;
                 var xyString = geom.x.toString() + ',' + geom.y.toString(); // Cast to string
