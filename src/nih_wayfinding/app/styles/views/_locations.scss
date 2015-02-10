@@ -2,6 +2,10 @@
     height: 200px;
 }
 
+.location-remove .options-grid button {
+    border: solid 1px red;
+}
+
 footer .expanded {
     transition: height 0.5s ease;
     height: 40rem !important;
