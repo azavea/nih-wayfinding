@@ -72,6 +72,12 @@
                         } else {
                             dfd.reject('Address is outside the routing bounds. Please choose a different address.');
                         }
+                    }, function(error) {
+                        // could not get graph bounds
+                        console.error('Could not get graph bounds from OTP');
+                        console.error(error);
+                        // go ahead and return response
+                        dfd.resolve(response);
                     });
                 } else {
                     dfd.reject('Unable to find the selected address. Please try a different one.');
