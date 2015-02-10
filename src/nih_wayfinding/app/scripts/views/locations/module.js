@@ -38,6 +38,7 @@
         'leaflet-directive',
         'nih.mapping',
         'nih.geocoder',
+        'nih.mapping',
         'nih.notifications',
         'nih.profiles',
         'nih.views.navbar',

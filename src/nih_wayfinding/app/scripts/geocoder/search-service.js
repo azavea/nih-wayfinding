@@ -52,7 +52,6 @@
             $http.get(searchUrl, {
                 params: {
                     'text': text,
-                    'bbox': boundingBox,
                     'category': searchCategories,
                     'outFields': searchOutFields,
                     'maxLocations': maxResults,

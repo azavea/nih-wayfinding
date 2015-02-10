@@ -4,7 +4,7 @@
     /* ngInject */
     function LocationsProfileController(
         $stateParams, $state,
-        Geocoder, NavbarConfig, Notifications, ProfileService
+        Geocoder, MapControl, NavbarConfig, ProfileService
     ) {
         var ctl = this;
         initialize();
@@ -82,13 +82,26 @@
          */
         function onGeocoderResponse(data) {
             if (data.length) { // If non-empty result
-                // Add geometric features to location tracker
-                ctl.user.setTempLocationProperty('feature', data[0]);
+                // check if location is within graph bounds
+                MapControl.getGraphBounds().then(function(geojson) {
+                    var geom = data[0].geometry;
+                    // must use turf's geojson-y objects for turf.inside
+                    var point = turf.point([geom.x, geom.y]);
+                    var polygon = turf.polygon(geojson.coordinates);
+                    if (!turf.inside(point, polygon)) {
+                        ctl.addressErrorMsg = 'Address is outside the routing bounds. Please choose a different address.';
+                        ctl.profile.$setValidity('locationsProfile.user.tempLocation.address', false);
+                    } else {
+                        // Add geometric features to location tracker
+                        ctl.user.setTempLocationProperty('feature', data[0]);
+                        ctl.addressErrorMsg = '';
+                        ctl.profile.$setValidity('locationsProfile.user.tempLocation.address', true);
+                    }
+                });
             } else { // If empty result
                 ctl.user.setTempLocationProperty('feature', undefined);
-                Notifications.show({
-                    text: 'Unable to find the selected address. Please try a different one.'
-                });
+                ctl.addressErrorMsg = 'Unable to find the selected address. Please try a different one.';
+                ctl.profile.$setValidity('locationsProfile.user.tempLocation.address', false);
             }
         }
 
@@ -126,6 +139,10 @@
             ctl.showIconUpload = !ctl.showIconUpload;
         }
 
+        /**
+         * Validate the location label entered.
+         * Sets error message text and Angular input validity.
+         */
         function checkLabel() {
             if (!ctl.user.tempLocation.text) {
                 ctl.labelErrorMsg = 'Location label is required';
@@ -146,6 +163,10 @@
             }
         }
 
+        /**
+         * Validate the address text entered.
+         * Sets error message text and Angular input validity.
+         */
         function checkAddress() {
             if (!ctl.user.tempLocation.address) {
                 ctl.addressErrorMsg = 'Address is required';
@@ -159,11 +180,13 @@
          */
         function validateBeforeReview() {
             if (!ctl.user.tempLocation.feature) { // If address fails to validate
-                ctl.addressErrorMsg = 'No coordinates found for this address - please choose a different address.';
+                ctl.addressErrorMsg = 'No coordinates found for this address. Please choose a different address.';
                 ctl.profile.$setValidity('locationsProfile.user.tempLocation.address', false);
             } else { // If we have both a label and an address
                 var geom = ctl.user.tempLocation.feature.geometry;
                 var xyString = geom.x.toString() + ',' + geom.y.toString(); // Cast to string
+
+                // set default image for location type, if no image selected
                 if (!ctl.user.tempLocation.img) {
                     setImageByType();
                 }
