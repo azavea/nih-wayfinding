@@ -3,7 +3,7 @@
     'use strict';
 
     /* ngInject */
-    function Directions ($http, $q, $timeout, Config, MapControl, ProfileService, TurnAmenities) {
+    function Directions ($filter, $http, $q, $timeout, Config, MapControl, ProfileService, TurnAmenities) {
 
         var directionsUrl = '/otp/routers/default/plan';
         var currentRouteSummary = {
@@ -305,6 +305,7 @@
                 var turnTextString = '';
                 var turnLower = turn.toLowerCase();
                 var turnSplit = turnLower.replace('_', ' ');
+                street = $filter('abbreviate')(street);
                 if (turn === 'DEPART') {
                     turnTextString = 'Head ' + direction.toLowerCase() + ' on ' + street;
                 } else if (turn === 'CONTINUE') {
