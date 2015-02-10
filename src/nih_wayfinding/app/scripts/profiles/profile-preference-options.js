@@ -38,14 +38,17 @@
             }],
 
             speedOpts: [{
-                text: 'About average (2.5 mph)',
-                value: 1.1176
+                text: 'Quick',
+                value: 1.34112      // 3mph in m/s
+            },{
+                text: 'Average',
+                value: 1.1176       // 2.5 mph in m/s
             }, {
-                text: 'Slower than average (1.5 mph)',
-                value: 0.67056
+                text: 'Slightly Slow',
+                value: 0.67056      // 1.5 mph in m/s
             }, {
-                text: 'Much slower than average (1 mph)',
-                value: 0.44704
+                text: 'Slow',
+                value: 0.44704      // 1 mph in m/s
             }],
 
             busyOpts: [{
