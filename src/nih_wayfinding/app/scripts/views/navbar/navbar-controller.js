@@ -6,7 +6,6 @@
     /* ngInject */
     function NavbarController($location, $scope, $state, $timeout, NavbarConfig) {
         var ctl = this;
-        var defaultAlertHeight = 50;
         var defaultBackState = 'locations';
         var alertTimeout = null;
         var history = [];
@@ -14,6 +13,7 @@
 
         function initialize() {
             ctl.config = NavbarConfig.config;
+            ctl.active = false;
             ctl.alert = {};
             ctl.alertHeight = 0;
 
@@ -56,14 +56,14 @@
 
         function showAlert(event, alert) {
             ctl.alert = alert;
-            ctl.alertHeight = defaultAlertHeight;
+            ctl.active = true;
             if (alert.timeout) {
                 alertTimeout = $timeout(hideAlert, alert.timeout);
             }
         }
 
         function hideAlert() {
-            ctl.alertHeight = 0;
+            ctl.active = false;
             if (alertTimeout) {
                 $timeout.cancel(alertTimeout);
                 alertTimeout = null;

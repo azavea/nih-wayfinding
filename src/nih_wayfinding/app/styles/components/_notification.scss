@@ -11,3 +11,7 @@ header .notification {
     overflow: hidden;
     transition: height 0.5s ease;
 }
+
+.notification.active {
+    height: 50px;
+}
