@@ -36,12 +36,20 @@
     <div class="homepage-locations">
         <div class="row">
             <div class="col-xs-12">
-                <h2>Your Locations <button ui-sref="locationsSelectType" class="btn btn-link" type="button">Add</button> <span class="h4">/</span> <button ui-sref="locationsSelectType" class="btn btn-link" type="button">Remove</button></h2>
+                <h2>Your Locations
+                    <button ui-sref="locationsSelectType" class="btn btn-link" type="button">Add</button>
+                    <span class="h4">/</span>
+                    <button ng-click="locations.toggleDelete()" class="btn btn-link" type="button">{{ locations.deleteMode.buttonText }}</button>
+                </h2>
             </div>
         </div>
         <div class="row">
             <div class="col-xs-12">
-                <nih-options-grid options="locations.gridOptions" on-option-clicked="locations.optionClicked(option)"></nih-options-grid>
+                <nih-options-grid
+                    options="locations.gridOptions"
+                    on-option-clicked="locations.optionClicked(option)"
+                    ng-class="{'location-remove': locations.deleteMode.active}"
+                </nih-options-grid>
             </div>
         </div>
     </div>

@@ -11,8 +11,14 @@
             ctl.user = ProfileService.getCurrentUser();
             ctl.gridOptions = ctl.user.locations;
             ctl.optionClicked = optionClicked;
+            ctl.toggleDelete = toggleDelete;
             ctl.search = search;
             ctl.suggest = Geocoder.suggest;
+
+            ctl.deleteMode = {
+                active: false,
+                buttonText: 'Delete'
+            };
 
             var title = ctl.user.username ? ctl.user.username : 'Profile';
             NavbarConfig.set({
@@ -22,7 +28,16 @@
         }
 
         function optionClicked(option) {
-            loadRoute(option.feature);
+            if (ctl.deleteMode.active) {
+                deleteLocation(option.id);
+            } else {
+                loadRoute(option.feature);
+            }
+        }
+
+        function toggleDelete() {
+            ctl.deleteMode.active = !ctl.deleteMode.active;
+            ctl.deleteMode.buttonText = ctl.deleteMode.active ? 'Finish' : 'Delete';
         }
 
         function onGeocoderResponse(data) {
@@ -38,6 +53,12 @@
 
         function search(searchText, magicKey) {
             Geocoder.search(searchText, magicKey).then(onGeocoderResponse);
+        }
+
+        function deleteLocation(locationId) {
+            ctl.user.removeLocation(locationId);
+            ctl.user.save();
+            ctl.gridOptions = ctl.user.locations;       // manually update
         }
 
         function loadRoute(feature) {
