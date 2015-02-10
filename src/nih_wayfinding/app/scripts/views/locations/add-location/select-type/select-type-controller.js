@@ -16,7 +16,7 @@
                 { text: 'House' },
                 { text: 'Park' },
                 { text: 'Shopping' },
-                { text: 'Auto Shop' },
+                { text: 'Donut Shop' },
                 { text: 'Other' }
             ];
         }

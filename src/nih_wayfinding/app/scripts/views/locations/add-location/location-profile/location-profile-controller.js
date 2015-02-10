@@ -20,13 +20,14 @@
             ctl.showIconSelect = false;
             ctl.toggleIconSelectDialog = toggleIconSelectDialog;
             ctl.imgOpts = [
-                { img: '/images/icons/icon-house.svg' },
-                { img: '/images/icons/icon-house.svg' },
-                { img: '/images/icons/icon-house.svg' },
-                { img: '/images/icons/icon-house.svg' },
-                { img: '/images/icons/icon-house.svg' },
-                { img: '/images/icons/icon-house.svg' },
+                { img: '/images/icons/icon-cafe.svg', type: 'Cafe' },
+                { img: '/images/icons/icon-house.svg', type: 'House' },
+                { img: '/images/icons/icon-park.svg', type: 'Park' },
+                { img: '/images/icons/icon-shopping.svg', type: 'Shopping' },
+                { img: '/images/icons/icon-cafe.svg', type: 'Donut Shop' },
+                { img: '/images/icons/icon-house.svg', type: 'Other' },
             ];
+
             ctl.imgOptionClicked = imgOptionClicked;
 
             // Hidden upload dialog
@@ -51,6 +52,18 @@
 
             // Final validation
             ctl.validateBeforeReview = validateBeforeReview;
+        }
+
+        /**
+         * Use the default icon for the selected location type
+         */
+        function setImageByType() {
+            _.each(ctl.imgOpts, function(imgOpt) {
+                if (imgOpt.type === ctl.user.tempLocation.type) {
+                    ctl.user.tempLocation.img = imgOpt.img;
+                    return;
+                }
+            });
         }
 
         /**
@@ -145,17 +158,15 @@
          * Validate the model's data to ensure it will produce a satisfactory location
          */
         function validateBeforeReview() {
-            if (!ctl.user.tempLocation.text) { // If there's no label
-                Notifications.show({
-                    text: 'No label specified - please label this location.'
-                });
-            } else if (!ctl.user.tempLocation.feature) { // If address fails to validate
-                Notifications.show({
-                    text: 'No coordinates found for this address - please choose a different address.'
-                });
+            if (!ctl.user.tempLocation.feature) { // If address fails to validate
+                ctl.addressErrorMsg = 'No coordinates found for this address - please choose a different address.';
+                ctl.profile.$setValidity('locationsProfile.user.tempLocation.address', false);
             } else { // If we have both a label and an address
                 var geom = ctl.user.tempLocation.feature.geometry;
                 var xyString = geom.x.toString() + ',' + geom.y.toString(); // Cast to string
+                if (!ctl.user.tempLocation.img) {
+                    setImageByType();
+                }
                 ctl.user.save();
                 $state.go('locationsReview', { destination: xyString }); // Use as url params
             }
