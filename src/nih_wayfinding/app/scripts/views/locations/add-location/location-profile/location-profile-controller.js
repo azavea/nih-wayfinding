@@ -4,7 +4,7 @@
     /* ngInject */
     function LocationsProfileController(
         $stateParams, $state,
-        Geocoder, MapControl, NavbarConfig, ProfileService
+        Geocoder, NavbarConfig, ProfileService
     ) {
         var ctl = this;
         initialize();
@@ -67,42 +67,20 @@
         }
 
         /**
-         * Geocode an address and pass it to onGeocoderResponse
+         * Geocode an address and save geocoded data or notify of geocoding failure
          * @param searchText {string} an address
          * @return {undefined}
          */
         function search(searchText, magicKey) {
-            Geocoder.search(searchText, magicKey).then(onGeocoderResponse);
-        }
-
-        /**
-         * Save geocoded data or notify of geocoding failure
-         * @param data {object} data from Geocoder service
-         * @return undefined
-         */
-        function onGeocoderResponse(data) {
-            if (data.length) { // If non-empty result
-                // check if location is within graph bounds
-                MapControl.getGraphBounds().then(function(geojson) {
-                    var geom = data[0].geometry;
-                    // must use turf's geojson-y objects for turf.inside
-                    var point = turf.point([geom.x, geom.y]);
-                    var polygon = turf.polygon(geojson.coordinates);
-                    if (!turf.inside(point, polygon)) {
-                        ctl.addressErrorMsg = 'Address is outside the routing bounds. Please choose a different address.';
-                        ctl.profile.$setValidity('locationsProfile.user.tempLocation.address', false);
-                    } else {
-                        // Add geometric features to location tracker
-                        ctl.user.setTempLocationProperty('feature', data[0]);
-                        ctl.addressErrorMsg = '';
-                        ctl.profile.$setValidity('locationsProfile.user.tempLocation.address', true);
-                    }
-                });
-            } else { // If empty result
-                ctl.user.setTempLocationProperty('feature', undefined);
-                ctl.addressErrorMsg = 'Unable to find the selected address. Please try a different one.';
+            Geocoder.search(searchText, magicKey).then(function(data) {
+                // Add geometric features to location tracker
+                ctl.user.setTempLocationProperty('feature', data[0]);
+                ctl.addressErrorMsg = '';
+                ctl.profile.$setValidity('locationsProfile.user.tempLocation.address', true);
+            }, function(error) {
+                ctl.addressErrorMsg = error;
                 ctl.profile.$setValidity('locationsProfile.user.tempLocation.address', false);
-            }
+            });
         }
 
         /**

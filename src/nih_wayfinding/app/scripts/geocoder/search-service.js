@@ -3,7 +3,7 @@
     'use strict';
 
     /* ngInject */
-    function Geocoder ($http, $q, Config) {
+    function Geocoder ($http, $q, MapControl, Config) {
 
         // Private variables
         var searchUrl = 'http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find';
@@ -59,10 +59,26 @@
                     'f': 'pjson'
                 }
             }).success(function (data) {
-                dfd.resolve(searchToList(data));
-            }).error(function (data) {
-                dfd.resolve([]);
-                console.error('Geocoder.search(): ', data);
+                var response = searchToList(data);
+                if (response.length) {
+                    // check if location is within graph bounds
+                    MapControl.getGraphBounds().then(function(geojson) {
+                        var geom = response[0].geometry;
+                        // must use turf's geojson-y objects for turf.inside
+                        var point = turf.point([geom.x, geom.y]);
+                        var polygon = turf.polygon(geojson.coordinates);
+                        if (turf.inside(point, polygon)) {
+                            dfd.resolve(response);
+                        } else {
+                            dfd.reject('Address is outside the routing bounds. Please choose a different address.');
+                        }
+                    });
+                } else {
+                    dfd.reject('Unable to find the selected address. Please try a different one.');
+                }
+            }).error(function (error) {
+                dfd.reject('Error attempting to geocode address.');
+                console.error('Geocoder.search(): ', error);
             });
             return dfd.promise;
         }
