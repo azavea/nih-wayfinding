@@ -6,14 +6,13 @@
                 <div class="search-box">
                     <span class="glyphicon glyphicon-search search-icon"></span>
                     <input class="form-control pull-right form-search"
-                           type="text"
-                           ng-model="locations.searchText"
-                           ng-focus="locations.findAddressExpanded = true"
-                           typeahead="location as location.text for location in locations.suggest($viewValue)"
-                           typeahead-on-select="locations.search($item.text, $item.magicKey)"
-                           typeahead-wait-ms="300"
-                           autofocus="autofocus"
-                           typeahead-min-length="3" />
+                        type="text"
+                        ng-model="locations.searchText"
+                        ng-focus="locations.findAddressExpanded = true"
+                        typeahead="location as location.text for location in locations.suggest($viewValue)"
+                        typeahead-on-select="locations.search($item.text, $item.magicKey)"
+                        typeahead-wait-ms="300"
+                        typeahead-min-length="3" />
                 </div>
             </div>
         </div>
