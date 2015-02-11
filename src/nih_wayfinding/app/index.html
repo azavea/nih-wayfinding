@@ -49,7 +49,7 @@
             </ul>
           </div>
         </div>
-        <div class="notification" ng-style="{height: navbar.alertHeight}">
+        <div class="notification" ng-class="{'active': navbar.active}">
             <span class="glyphicon"
                   ng-class="navbar.alert.imageClass"
                   ng-if="navbar.alert.imageClass"></span>

@@ -41,14 +41,14 @@ describe('nih.views.navbar: NavbarController', function () {
     expect(rootScope.$broadcast).toHaveBeenCalledWith(NavbarConfig.events.updated);
   });
 
-  it('should ensure alertHeight gets set on showAlert', function () {
+  it('should ensure active propertie gets set to true on showAlert', function () {
     var testText = 'test';
-    expect(NavbarController.alertHeight).toEqual(0);
+    expect(NavbarController.active).toEqual(false);
     Notifications.show({text: testText});
     timeout.flush(1);
     rootScope.$digest();
     expect(NavbarController.alert.text).toEqual(testText);
-    expect(NavbarController.alertHeight).toBeGreaterThan(0);
+    expect(NavbarController.active).toEqual(true);
   });
 
   it('should ensure an alert that times out gets hidden automatically', function () {
@@ -57,9 +57,9 @@ describe('nih.views.navbar: NavbarController', function () {
     Notifications.show({text: testText, timeout: timeoutDuration});
     rootScope.$digest();
     timeout.flush(timeoutDuration - 100);
-    expect(NavbarController.alertHeight).toBeGreaterThan(0);
+    expect(NavbarController.active).toEqual(true);
     timeout.flush(timeoutDuration);
-    expect(NavbarController.alertHeight).toEqual(0);
+    expect(NavbarController.active).toEqual(false);
   });
 
   it('should ensure that the timeout is cleared and the alert is hidden ' +
@@ -69,9 +69,9 @@ describe('nih.views.navbar: NavbarController', function () {
     Notifications.show({text: testText, timeout: timeoutDuration});
     rootScope.$digest();
     timeout.flush(timeoutDuration / 2);
-    expect(NavbarController.alertHeight).toBeGreaterThan(0);
+    expect(NavbarController.active).toEqual(true);
     NavbarController.hideAlert();
-    expect(NavbarController.alertHeight).toEqual(0);
+    expect(NavbarController.active).toEqual(false);
     timeout.verifyNoPendingTasks();
   });
 
