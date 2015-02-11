@@ -9,7 +9,7 @@
         function initialize() {
             NavbarConfig.set({
                 title: 'Reroute',
-                color: NavbarConfig.colors.navigation
+                color: NavbarConfig.colors.reroute
             });
             ctl.gridOptions = Rerouting.getReroutingOptions();
             ctl.optionClicked = optionClicked;

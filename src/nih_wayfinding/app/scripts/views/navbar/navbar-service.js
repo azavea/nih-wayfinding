@@ -9,6 +9,7 @@
             default: '#000',
             profile: '#9A9A9A',
             routing: '#9E5C28',
+            reroute: '#00C3A6',
             navigation: '#38769F'
         };
         var config = {
