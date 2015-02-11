@@ -106,15 +106,12 @@
             params.surfaceComfort = preferences.surfaceTypeComfort;
 
             if (preferences.assistanceRequired) {
-                // set "walk" speed for powered vs manual wheelchairs
                 if (preferences.asistanceType === 'motorized') {
                     params.wheelchair = true;
-                    params.walkSpeed = Config.wheelchairSpeeds.motorized;
                 } else if (preferences.assistanceType === 'manual') {
                     params.wheelchair = true;
-                    params.walkSpeed = Config.wheelchairSpeeds.manual;
                 } else {
-                    // TODO: what are we supposed to do with the other types?
+                    // TODO: set walker/cane here
                 }
             }
 

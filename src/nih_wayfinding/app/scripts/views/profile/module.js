@@ -15,6 +15,7 @@
         'ngAnimate',
         'ngAria',
         'ui.router',
+        'nih.config',
         'nih.profiles',
         'nih.views.navbar',
         'nih.views.modals'

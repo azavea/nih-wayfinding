@@ -2,7 +2,7 @@
     'use strict';
 
     /* ngInject */
-    function NewProfileController($state, ProfileService, ProfilePreferenceOptions, Notifications) {
+    function NewProfileController($state, Config, ProfileService, ProfilePreferenceOptions, Notifications) {
         var ctl = this;
         initialize();
 
@@ -49,7 +49,14 @@
          * Set private var for whether using a wheelchair or scooter.
         */
         function setAssistanceType(assistanceType) {
-            ctl.newUser.setPreference('assistanceType', assistanceType.value);
+            var assistance = assistanceType.value;
+            ctl.newUser.setPreference('assistanceType', assistance);
+
+            // if using assistance, set speed based on type
+            if (ctl.newUser.preferences.assistanceRequired) {
+                ctl.newUser.setPreference('speed', Config.assistanceSpeeds[assistance]);
+            }
+
             setStep(3);
         }
 
@@ -58,7 +65,13 @@
          */
         function setSurfaceTypeComfort(comfort) {
             ctl.newUser.setPreference('surfaceTypeComfort', comfort.value);
-            setStep(4);
+
+            // if using wheelchair/walker/cane, skip speed question
+            if (ctl.newUser.preferences.assistanceRequired) {
+                setStep(5);
+            } else {
+                setStep(4);
+            }
         }
 
         /**
@@ -112,7 +125,7 @@
             }
         }
 
-        /*k
+        /*
          *
          * Check entered username is valid, and set error message if not.
          */
@@ -130,7 +143,6 @@
                 ctl.newusername.$setValidity('newprofile.username', true);
             }
         }
-
     }
 
     angular.module('nih.views.newprofile')

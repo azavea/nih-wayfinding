@@ -58,9 +58,16 @@
         },
         center: {},
         nearbySearchRadius: 500,
-        wheelchairSpeeds: {
+        // walker/cane speeds median from this study:
+        // http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2941391/
+        // chart: http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2941391/figure/F1/
+        // wheelchair speeds from here:
+        // http://www.hindawi.com/journals/rerp/2012/753165/tab1/
+        assistanceSpeeds: {
             motorized: 1.56464, // ~3.5 mph
-            manual: 0.6 // ~0.6 m/s (http://www.hindawi.com/journals/rerp/2012/753165/tab1/)
+            manual: 0.6,
+            walker: 0.2,
+            cane: 0.4,
         },
         stubs: {
             geolocation: {
