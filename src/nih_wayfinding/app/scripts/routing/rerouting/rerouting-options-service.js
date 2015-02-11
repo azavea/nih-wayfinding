@@ -2,7 +2,7 @@
     'use strict';
 
     /* ngInject */
-    function Rerouting(ReroutingOptions, Config, AmenitiesSearch, Notifications) {
+    function Rerouting(ReroutingOptions, Config, AmenitiesSearch, Navigation) {
         // Rough guesses at how to find an amenity of this type nearby
         var googleAmenityTypes = {
             Bathroom: ['cafe', 'department_store', 'gas_station',
@@ -21,12 +21,10 @@
             return ReroutingOptions;
         }
 
-        function reroute(preference) {
-            // TODO: Update this when location mocking is in place
-            var currentLocation = [41.72866461875987,-87.56206512451172];
+        function reroute(searchPosition, preference) {
             var searchRadius = Config.nearbySearchRadius;
             var searchOptions = {types: googleAmenityTypes[preference]};
-            return AmenitiesSearch.searchNearby(currentLocation, searchRadius, searchOptions);
+            return AmenitiesSearch.searchNearby(searchPosition, searchRadius, searchOptions);
         }
     }
 

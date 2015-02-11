@@ -4,7 +4,7 @@
     /* ngInject */
     function StateConfig($stateProvider) {
         $stateProvider.state('navigate', {
-            url: '/navigate?reroute',
+            url: '/navigate',
             templateUrl: 'scripts/views/navigate/navigate-partial.html',
             controller: 'NavigateController',
             controllerAs: 'navigate'
@@ -15,6 +15,13 @@
             templateUrl: 'scripts/views/navigate/reroute/reroute-partial.html',
             controller: 'RerouteController',
             controllerAs: 'reroute'
+        });
+
+        $stateProvider.state('reroute-list', {
+            url: '/navigate/reroute-list?type',
+            templateUrl: 'scripts/views/navigate/reroute/reroute-results-list-partial.html',
+            controller: 'RerouteListController',
+            controllerAs: 'list'
         });
 
         $stateProvider.state('report', {

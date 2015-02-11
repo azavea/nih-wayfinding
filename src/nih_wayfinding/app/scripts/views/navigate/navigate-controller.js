@@ -18,9 +18,8 @@
     /* ngInject */
     function NavigateController(
         $filter, $scope, $stateParams, $state,
-        leafletData,
-        Navigation, Directions, Map, MapControl, MapRoute, NavbarConfig,
-        Rerouting, Notifications, ProfileService
+        Navigation, Directions, Map, MapControl, NavbarConfig,
+        Notifications, ProfileService
     ) {
         var ctl = this;
         var mphToMs = 0.44704;
@@ -37,10 +36,6 @@
             ctl.map = Map;
             ctl.nextStep = Navigation.stepNext;
             ctl.offCourse = Navigation.offCourse;
-
-            if ($stateParams.reroute) {
-                handleReroute($stateParams.reroute);
-            }
 
             // Subscribe to the location update event
             $scope.$on('nih.navigation.positionOffCourse', onPositionOffCourse);
@@ -67,115 +62,6 @@
                     onClick: function() { $state.go('report'); }
                 }
             };
-        }
-
-        /**
-         * The footer dialog on this page requires alternative state so that rerouting can be
-         *  incorporated directly onto the map page rather than in another dialog. This function
-         *  provides the rerouting state
-         */
-        function setRerouteFooter() {
-            ctl.footer = {
-                left:  {
-                    text: 'Cancel',
-                    onClick: clearReroute
-                },
-                right: {
-                    text: 'Route',
-                    onClick: planReroute
-                }
-            };
-        }
-
-        /**
-         * Generate a route and display it on the map for a given user position and targetted destination
-         */
-        function planReroute() {
-            var currentPosition;
-            Navigation.getCurrentPosition().then(function(position) {
-                currentPosition = [position.coords.longitude, position.coords.latitude];
-                MapControl.trackUser(currentPosition);
-                Directions.get(currentPosition,
-                               [ctl.destination.lng, ctl.destination.lat]).then(success, failure);
-            });
-            function success(response) {
-                clearReroute();
-                MapControl.plotGeoJSON(response);
-
-                MapRoute.mapRoute(currentPosition,
-                                  [ctl.destination.lng, ctl.destination.lat]).then(function(mappedRoute) {
-                    angular.extend(ctl.map, mappedRoute);
-                    Navigation.setRoute(ctl.map.geojson.data);
-                    Navigation.stepFirst();
-                });
-
-            }
-            function failure() {
-                clearReroute();
-            }
-        }
-
-        /**
-         * Delete all markers from reroute dialog
-         */
-        function clearReroute() {
-            MapControl.purgeMarkers(ctl.markedLocations);
-            setDefaultFooter();
-        }
-
-        /**
-         * Click handler for reroute dialog markers
-         */
-        function registerMarker(event) {
-            _(ctl.markedLocations)
-                .forEach(function(markedLocation) {
-                    markedLocation.setIcon(new L.Icon.Default());
-                });
-            // Change the look of icon
-            var newIcon = L.AwesomeMarkers.icon({icon: 'coffee', markerColor: 'green'});
-            event.target.setIcon(newIcon);
-
-            // Register this icon as selected on $scope
-            var latlng = event.latlng;
-            ctl.destination = latlng;
-        }
-
-        /**
-         * Called whenever this controller is instantiated - if a `reroute` query parameter is specified,
-         *  find nearby amenities which match that query parameter and display them on the map. If any
-         *  are displayed on the map, change the bottom dialog to 'Cancel' and 'Route' buttons, which
-         *  control whether and when the route is changed to some nearby amenity.
-         *
-         * @param rerouteType {string} The query parameter string fed to `?reroute=`
-         */
-        function handleReroute(rerouteType) {
-            ctl.markedLocations = [];
-            setRerouteFooter();
-            Rerouting.reroute(rerouteType).then(success, failure);
-            function success(amenities) {
-                leafletData.getMap().then(function(map) {
-                  map.setZoom(13);
-                });
-                Notifications.show({
-                    text: 'Select the destination you\'d like to be routed to'
-                });
-                _(amenities)
-                  .take(5)
-                  .forEach(function(amenity) {
-                      var geo = amenity.geometry.location;
-                      MapControl.markLocation([geo.B, geo.k], {clickHandler: registerMarker})
-                        .then(function(marker) {
-                            ctl.markedLocations = ctl.markedLocations.concat(marker);
-                        });
-                  });
-            }
-            function failure() {
-                setDefaultFooter();
-                Notifications.show({
-                    text: 'Failed to find nearby amenities',
-                    timeout: 3000
-                });
-            }
         }
 
         /**
