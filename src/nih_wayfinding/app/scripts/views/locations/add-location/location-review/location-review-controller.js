@@ -11,6 +11,7 @@
             ctl.user = ProfileService.getCurrentUser();
             NavbarConfig.set({
                 title: 'Review Location',
+                color: NavbarConfig.colors.profile,
                 back: 'locationsProfile'
             });
             ctl.currentUser = ProfileService.getCurrentUser().username;

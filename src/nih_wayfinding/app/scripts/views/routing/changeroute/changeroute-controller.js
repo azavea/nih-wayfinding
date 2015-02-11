@@ -19,10 +19,13 @@
             }];
             ctl.optionClicked = optionClicked;
 
-            NavbarConfig.set({title: 'Change Route'});
+            NavbarConfig.set({
+                title: 'Change Route',
+                color: NavbarConfig.colors.routing
+            });
         }
 
-        function optionClicked(option) {
+        function optionClicked() {
             // TODO: Handle/test option logic when we actually have some concrete options to handle
             $state.go('routing', $stateParams);
         }

@@ -31,6 +31,7 @@
             setDefaultFooter();
             NavbarConfig.set({
                 title: 'Navigate Route',
+                color: NavbarConfig.colors.navigation,
                 back: 'routing'
             });
             ctl.map = Map;
@@ -255,6 +256,7 @@
             NavbarConfig.set({
                 title: text,
                 subtitle: subtitleText,
+                color: NavbarConfig.colors.navigation,
                 leftImage: turnIcon,
                 rightImages: rightImages
             });

@@ -7,7 +7,10 @@
         initialize();
 
         function initialize() {
-            NavbarConfig.set({ title: 'Report' });
+            NavbarConfig.set({
+                title: 'Report',
+                color: NavbarConfig.colors.navigation
+            });
             ctl.gridOptions = Reporting.getReportingOptions();
             ctl.optionClicked = optionClicked;
         }
