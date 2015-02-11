@@ -15,6 +15,7 @@
   & > .search-icon {
     position: absolute;
     margin: 1.8rem 1.6rem;
+    pointer-events: none;
   }
   & > .dropdown-menu {
     right: 0;
