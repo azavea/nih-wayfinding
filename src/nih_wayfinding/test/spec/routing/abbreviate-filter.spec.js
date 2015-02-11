@@ -43,6 +43,20 @@ describe('nih.routing: Filters Abbreviate', function () {
         expect(result).toEqual('Baltimore Ave');
     });
 
+    it('should handle a few special and/or odd cases', function () {
+        var result = filter('abbreviate')('South South Something Street');
+        expect(result).toEqual('S South Something St');
+
+        result = filter('abbreviate')('1234 South South Something Street');
+        expect(result).toEqual('1234 S South Something St');
+
+        result = filter('abbreviate')('1234 S South Something St');
+        expect(result).toEqual('1234 S South Something St');
+
+        result = filter('abbreviate')('1234 s South Something ave');
+        expect(result).toEqual('1234 S South Something Ave');
+    });
+
     it('should handle starting the address with a number', function () {
         var result = filter('abbreviate')('1000 ' + addressCase1);
         expect(result).toEqual('1000 N Baltimore Ave');
