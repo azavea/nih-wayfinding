@@ -93,6 +93,7 @@ module.exports = function(config) {
       'app/scripts/routing/directions-service.js',
       'app/scripts/routing/distance-filter.js',
       'app/scripts/routing/routing-response-stub.js',
+      'app/scripts/routing/otp-response-stub.js',
       'app/scripts/routing/turnamenities-service.js',
       'app/scripts/routing/rerouting/rerouting-options-service.js',
       'app/scripts/routing/rerouting/rerouting-options-stub.js',
