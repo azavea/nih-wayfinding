@@ -106,7 +106,7 @@
             params.surfaceComfort = preferences.surfaceTypeComfort;
 
             if (preferences.assistanceRequired) {
-                if (preferences.asistanceType === 'motorized' || preferences.asistanceType === 'manual') {
+                if (preferences.assistanceType === 'motorized' || preferences.assistanceType === 'manual') {
                     params.wheelchair = true;
                 } else {
                     // must be using walker or cane
@@ -268,7 +268,7 @@
 
                 // add properties for audited edges
                 if (lastModified > 0) {
-                    if (step.crossSlope || (step.maxSlope > Config.warningMinimumGrade) ||
+                    if (step.hazards || step.crossSlope || (step.maxSlope > Config.warningMinimumGrade) ||
                         (step.surface && (step.surface !== 'Concrete'))) {
                         warnings.push('images/icons/icon-caution.svg');
                     }
