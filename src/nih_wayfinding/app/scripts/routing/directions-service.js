@@ -106,12 +106,11 @@
             params.surfaceComfort = preferences.surfaceTypeComfort;
 
             if (preferences.assistanceRequired) {
-                if (preferences.asistanceType === 'motorized') {
-                    params.wheelchair = true;
-                } else if (preferences.assistanceType === 'manual') {
+                if (preferences.asistanceType === 'motorized' || preferences.asistanceType === 'manual') {
                     params.wheelchair = true;
                 } else {
-                    // TODO: set walker/cane here
+                    // must be using walker or cane
+                    params.usingWalkerCane = true;
                 }
             }
 
