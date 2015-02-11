@@ -2,7 +2,7 @@
     'use strict';
 
     /* ngInject */
-    function ProfilesController(Modals, NavbarConfig, ProfileService) {
+    function ProfilesController(Config, Modals, NavbarConfig, ProfileService) {
         var ctl = this;
         initialize();
 
@@ -55,6 +55,7 @@
             var title = ctl.currentUser.username ? ctl.currentUser.username : 'Profile';
             NavbarConfig.set({
                 title: title,
+                color: NavbarConfig.colors.profile,
                 back: false
             });
         }

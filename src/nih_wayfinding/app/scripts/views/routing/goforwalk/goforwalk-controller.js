@@ -31,7 +31,10 @@
             }];
             ctl.optionClicked = optionClicked;
 
-            NavbarConfig.set({title: 'Take a Walk'});
+            NavbarConfig.set({
+                title: 'Take a Walk',
+                color: NavbarConfig.colors.routing
+            });
         }
 
         function handleModalResponse(value) {

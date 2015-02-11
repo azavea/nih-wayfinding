@@ -22,7 +22,8 @@
         function initialize() {
             NavbarConfig.set({
                 title: 'Preview Route',
-                back: 'locations'
+                back: 'locations',
+                color: NavbarConfig.colors.routing
             });
             ctl.map = Map;
             ctl.summary = {

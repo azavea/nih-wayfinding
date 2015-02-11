@@ -10,7 +10,10 @@
         initialize();
 
         function initialize() {
-            NavbarConfig.set({ title: 'Location Profile' });
+            NavbarConfig.set({
+                title: 'Location Profile',
+                color: NavbarConfig.colors.profile
+            });
             ctl.user = ProfileService.getCurrentUser();
             if (!ctl.user.tempLocation) {
                 $state.go('locationsSelectType');

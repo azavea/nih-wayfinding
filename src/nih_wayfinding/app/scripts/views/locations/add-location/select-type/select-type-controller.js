@@ -9,7 +9,10 @@
         function initialize() {
             ctl.user = ProfileService.getCurrentUser();
             ctl.user.startTempLocation();
-            NavbarConfig.set({ title: 'Location Type' });
+            NavbarConfig.set({
+                title: 'Location Type',
+                color: NavbarConfig.colors.profile
+            });
             ctl.optionClicked = optionClicked;
             ctl.gridOptions = [
                 { text: 'Cafe' },

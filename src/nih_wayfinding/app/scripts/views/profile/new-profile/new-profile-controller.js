@@ -2,7 +2,7 @@
     'use strict';
 
     /* ngInject */
-    function NewProfileController($state, ProfileService, ProfilePreferenceOptions, Notifications) {
+    function NewProfileController($state, NavbarConfig, ProfileService, ProfilePreferenceOptions, Notifications) {
         var ctl = this;
         initialize();
 
@@ -24,6 +24,10 @@
             ctl.setBusyness = setBusyness;
             ctl.setRestFrequency = setRestFrequency;
             ctl.willCreateLocations = willCreateLocations;
+
+            NavbarConfig.set({
+                color: NavbarConfig.colors.profile
+            });
         }
         /**
          * Progress through the form sections.

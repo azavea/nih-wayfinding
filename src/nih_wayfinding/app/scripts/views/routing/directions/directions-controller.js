@@ -8,7 +8,10 @@
         initialize();
 
         function initialize() {
-            NavbarConfig.set({ title: 'Directions'});
+            NavbarConfig.set({
+                title: 'Directions',
+                color: NavbarConfig.colors.routing
+            });
 
             ctl.getFlagIconName = Directions.getFlagIconName;
             ctl.getLineColor = MapStyle.getLineColor;
