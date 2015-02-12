@@ -6,7 +6,7 @@
 
     /* ngInject */
     function MapRoute($q,
-                      Config, Directions, MapStyle, NavigationQueue, Notifications, ProfileService) {
+                      Config, Directions, MapStyle, Notifications, ProfileService) {
 
         var module = {
             mapRoute: mapRoute
@@ -62,7 +62,6 @@
                     .map(function (feature) { return feature.geometry.coordinates; })
                     .flatten(true)
                     .last();
-                NavigationQueue.push(geojson);
                 deferred.resolve({
                     bounds: {
                         southWest: {

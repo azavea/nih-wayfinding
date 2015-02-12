@@ -26,10 +26,14 @@
             distance: 0,
             stepped: 0
         };
+        var originalDestination = null;
 
         var module = {
             getCurrentPosition: getCurrentPosition,
+            isRerouting: isRerouting,
             offCourse: offCourse,
+            getDestination: getDestination,
+            setDestination: setDestination,
             setRoute: setRoute,
             stepNext: stepNext,
             stepPrevious: stepPrevious,
@@ -95,6 +99,14 @@
             });
         }
 
+        function getDestination() {
+            return originalDestination;
+        }
+
+        function setDestination(destination) {
+            originalDestination = destination;
+        }
+
         /**
          * Set navigation route to a geojson object returned by Directions.get
          * @param {FeatureCollection} newRoute Feature collection of linestrings with directions properties
@@ -154,6 +166,16 @@
 
         function routeExists() {
             return !!(currentRoute.geom);
+        }
+
+        function isRerouting() {
+            if (!(currentRoute.geom && currentRoute.geom.geometry)) {
+                return false;
+            }
+            var src = turf.point(originalDestination);
+            var dest = turf.point(_(currentRoute.geom.geometry.coordinates).last());
+            var distanceMeters = turf.distance(src, dest, 'kilometers') * 1000;
+            return distanceMeters > 15;
         }
 
         /**

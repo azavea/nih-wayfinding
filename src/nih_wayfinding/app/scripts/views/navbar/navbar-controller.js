@@ -4,7 +4,7 @@
     //       we have profiles to link to
 
     /* ngInject */
-    function NavbarController($location, $scope, $state, $timeout, NavbarConfig) {
+    function NavbarController($location, $rootScope, $scope, $state, $timeout, NavbarConfig) {
         var ctl = this;
         var defaultBackState = 'locations';
         var alertTimeout = null;
@@ -19,6 +19,7 @@
 
             ctl.back = back;
             ctl.hideAlert = hideAlert;
+            ctl.onRightButtonClicked = onRightButtonClicked;
 
             $scope.$on('nih.notifications.hide', hideAlert);
             $scope.$on('nih.notifications.show', showAlert);
@@ -52,6 +53,10 @@
                 stateName = defaultBackState;
             }
             $state.go(stateName, stateParams);
+        }
+
+        function onRightButtonClicked() {
+            $rootScope.$broadcast(NavbarConfig.events.buttonclicked);
         }
 
         function showAlert(event, alert) {

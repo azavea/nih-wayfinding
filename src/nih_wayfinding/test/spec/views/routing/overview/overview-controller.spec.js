@@ -35,7 +35,8 @@ describe('nih.views.routing: OverviewController', function () {
                     }
                 });
                 return dfd.promise;
-            }
+            },
+            setDestination: function () {}
         };
     }
     function mockMapRouteService($q) {

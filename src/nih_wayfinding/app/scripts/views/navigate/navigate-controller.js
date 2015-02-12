@@ -18,7 +18,7 @@
     /* ngInject */
     function NavigateController(
         $filter, $scope, $stateParams, $state,
-        Navigation, NavigationQueue, Directions, Map, MapControl, NavbarConfig,
+        Navigation, Directions, Map, MapControl, NavbarConfig,
         Notifications, ProfileService
     ) {
         var ctl = this;
@@ -40,6 +40,7 @@
             // Subscribe to the location update event
             $scope.$on('nih.navigation.positionOffCourse', onPositionOffCourse);
             $scope.$on('nih.navigation.positionUpdated', onPositionUpdated);
+            $scope.$on('nih.navbarconfig.rightbuttonclicked', onNavbarButtonClicked);
 
             var geojson = ctl.map.geojson.data;
 
@@ -66,9 +67,16 @@
         }
 
         function setNavbar(options) {
-            var isRerouting = NavigationQueue.length() > 1;
+            var isRerouting = Navigation.isRerouting();
+            var color = isRerouting ? NavbarConfig.colors.reroute : NavbarConfig.colors.navigation;
+            var back = isRerouting ? false : 'routing';
             var defaults = {
-                color: isRerouting ? NavbarConfig.colors.reroute : NavbarConfig.colors.navigation
+                color: color,
+                rightButton: {
+                    text: 'RESUME ROUTE',
+                    dropdown: false
+                },
+                back: back
             };
             NavbarConfig.set(angular.extend({}, defaults, options));
         }
@@ -153,6 +161,20 @@
                 subtitle: subtitleText,
                 leftImage: turnIcon,
                 rightImages: rightImages
+            });
+        }
+
+        function onNavbarButtonClicked() {
+            Navigation.getCurrentPosition().then(function (position) {
+                var origin = [position.coords.longitude, position.coords.latitude];
+                var destination = Navigation.getDestination();
+                Directions.get(origin, destination).then(function (geojson) {
+                    ctl.map.geojson = angular.extend(ctl.map.geojson, {
+                        data: geojson
+                    });
+                    Navigation.setRoute(geojson);
+                    Navigation.stepFirst();
+                });
             });
         }
     }
