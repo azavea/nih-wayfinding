@@ -18,7 +18,7 @@
     /* ngInject */
     function NavigateController(
         $filter, $scope, $stateParams, $state,
-        Navigation, Directions, Map, MapControl, NavbarConfig,
+        Navigation, NavigationQueue, Directions, Map, MapControl, NavbarConfig,
         Notifications, ProfileService
     ) {
         var ctl = this;
@@ -28,11 +28,11 @@
 
         function initialize() {
             setDefaultFooter();
-            NavbarConfig.set({
+            setNavbar({
                 title: 'Navigate Route',
-                color: NavbarConfig.colors.navigation,
                 back: 'routing'
             });
+
             ctl.map = Map;
             ctl.nextStep = Navigation.stepNext;
             ctl.offCourse = Navigation.offCourse;
@@ -42,6 +42,7 @@
             $scope.$on('nih.navigation.positionUpdated', onPositionUpdated);
 
             var geojson = ctl.map.geojson.data;
+
             Navigation.setRoute(geojson);
             Navigation.stepFirst();
         }
@@ -62,6 +63,14 @@
                     onClick: function() { $state.go('report'); }
                 }
             };
+        }
+
+        function setNavbar(options) {
+            var isRerouting = NavigationQueue.length() > 1;
+            var defaults = {
+                color: isRerouting ? NavbarConfig.colors.reroute : NavbarConfig.colors.navigation
+            };
+            NavbarConfig.set(angular.extend({}, defaults, options));
         }
 
         /**
@@ -139,10 +148,9 @@
             _.each(position.properties.directions.features, function(feature) {
                 rightImages.push(feature);
             });
-            NavbarConfig.set({
+            setNavbar({
                 title: text,
                 subtitle: subtitleText,
-                color: NavbarConfig.colors.navigation,
                 leftImage: turnIcon,
                 rightImages: rightImages
             });

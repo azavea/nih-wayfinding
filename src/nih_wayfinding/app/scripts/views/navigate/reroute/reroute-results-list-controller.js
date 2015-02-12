@@ -5,7 +5,7 @@
     /* ngInject */
     function RerouteListController(
             $state, $stateParams,
-            Directions, Map, NavbarConfig, Navigation, Notifications, Rerouting
+            Directions, Map, NavbarConfig, Navigation, NavigationQueue, Notifications, Rerouting
     ) {
         var ctl = this;
         initialize();
@@ -69,6 +69,7 @@
                 angular.extend(Map.geojson, {
                     data: response
                 });
+                NavigationQueue.push(response);
                 $state.go('navigate');
             }
             function failure(error) {

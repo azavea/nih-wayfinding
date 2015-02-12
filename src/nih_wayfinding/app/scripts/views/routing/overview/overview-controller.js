@@ -11,7 +11,7 @@
     /* ngInject */
     function OverviewController($scope, $stateParams, $q, leafletData,
                                 Config, Directions, Map, MapControl, MapStyle, MapRoute, NavbarConfig,
-                                Navigation, Notifications, ProfileService) {
+                                Navigation, NavigationQueue, Notifications, ProfileService) {
         var ctl = this;
         var boundsLayer = null;
         var currentUser = null;
@@ -46,6 +46,7 @@
                 wheelchair: !!(currentUser.preferences.wheelchairRequired),
             });
 
+            NavigationQueue.clear();
             MapRoute.mapRoute(data.origin, data.destination, options).then(function(mappedRoute) {
                 angular.extend(ctl.map, mappedRoute);
                 ctl.summary = angular.extend(ctl.summary, Directions.getRouteSummary());
