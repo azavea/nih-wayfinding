@@ -3,15 +3,7 @@
     'use strict';
 
     /* ngInject */
-    function AmenitiesSearch ($q) {
-
-        // TODO: This is a hack; PlacesService throws really weird errors if you don't pass
-        // it a <div> or a Map object, but since Google Maps is wrapped in Leaflet which is
-        // in turn wrapped in angular-leaflet, doing this correctly would add significant
-        // complexity to this service.
-        var mapDiv = $('div.angular-leaflet-map > div.leaflet-google-layer')[0];
-        // Private variables
-        var googlePlaceService = new google.maps.places.PlacesService(mapDiv);
+    function AmenitiesSearch ($q, leafletData, leafletHelpers) {
 
         // Public interface
         var module = {
@@ -30,24 +22,48 @@
          * @return {object} List of nearby amenities
          */
         function searchNearby(point, radius, options) {
-            var googPoint = new google.maps.LatLng(point[0], point[1]);
-            var request = {
-                location: googPoint,
-                radius: radius,
-                rankBy: google.maps.places.RankBy.Distance
-            };
-            angular.extend(request, options);
             // Wrap google's callback-style API in a promise.
             var result = $q.defer();
-            var nearbyPromiseWrapper = function(results, status) {
-                if (status === google.maps.places.PlacesServiceStatus.OK) {
-                    result.resolve(results);
-                } else {
-                    result.reject({ results: results, status: status});
-                }
-            };
-            googlePlaceService.nearbySearch(request, nearbyPromiseWrapper);
+            leafletData.getMap().then(function (map) {
+                var googlemap = getGoogleMapObject(map);
+                // Initializing a new PlacesService for every request seems ok
+                var googlePlaceService = new google.maps.places.PlacesService(googlemap);
+                var googPoint = new google.maps.LatLng(point[0], point[1]);
+                var request = {
+                    location: googPoint,
+                    radius: radius,
+                    rankBy: google.maps.places.RankBy.Distance
+                };
+                angular.extend(request, options);
+                var nearbyPromiseWrapper = function(results, status) {
+                    if (status === google.maps.places.PlacesServiceStatus.OK) {
+                        result.resolve(results);
+                    } else {
+                        result.reject({ results: results, status: status});
+                    }
+                };
+                googlePlaceService.nearbySearch(request, nearbyPromiseWrapper);
+            });
             return result.promise;
+        }
+
+        /**
+         * Get google map object from internal google map leaflet layer
+         *
+         *  NOTE: Relies on a private variable of the leaflet plugins google tile layer plugin
+         *          This could break in the future.
+         *
+         * @param  {L.map} map
+         * @return {google.maps.Map}
+         */
+        function getGoogleMapObject(map) {
+            var googlemap = null;
+            map.eachLayer(function (layer) {
+                if (leafletHelpers.GoogleLayerPlugin.is(layer)) {
+                    googlemap = layer._google;
+                }
+            });
+            return googlemap;
         }
     }
 
