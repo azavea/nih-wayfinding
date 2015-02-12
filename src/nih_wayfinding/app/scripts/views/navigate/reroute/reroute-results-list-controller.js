@@ -5,7 +5,7 @@
     /* ngInject */
     function RerouteListController(
             $state, $stateParams,
-            Directions, Map, NavbarConfig, Navigation, Rerouting
+            Directions, Map, NavbarConfig, Navigation, Notifications, Rerouting
     ) {
         var ctl = this;
         initialize();
@@ -19,34 +19,44 @@
                 color: NavbarConfig.colors.reroute,
                 back: 'reroute'
             });
-            handleReroute($stateParams.type);
+            getNearbyAmenities($stateParams.type);
+        }
+
+        function onSelectAmenity(amenity) {
+            planReroute({
+                lat: amenity.geometry.location.k,
+                lng: amenity.geometry.location.B
+            });
         }
 
         /**
          * Called whenever this controller is instantiated - if a `reroute` query parameter is specified,
-         *  find nearby amenities which match that query parameter and display them on the map. If any
-         *  are displayed on the map, change the bottom dialog to 'Cancel' and 'Route' buttons, which
-         *  control whether and when the route is changed to some nearby amenity.
+         *  find nearby amenities which match that query parameter and display them in a list.
          *
-         * @param rerouteType {string} The query parameter string fed to `?reroute=`
+         * @param amenityType {string} The query parameter string fed to `?type=`
          */
-        function handleReroute(rerouteType) {
+        function getNearbyAmenities(amenityType) {
             Navigation.getCurrentPosition().then(function (position) {
                 var currentPosition = [position.coords.latitude, position.coords.longitude];
-                Rerouting.reroute(currentPosition, rerouteType).then(success, failure);
-                function success(amenities) {
-                    // Amenities are already sorted by distance
-                    ctl.amenities = _.take(amenities, 5);
-                }
-                function failure(error) {
-                    // TODO: error handle when workflow is decided
-                    console.log(error);
+                var originPoint = turf.point(currentPosition.slice().reverse());
+                Rerouting.reroute(currentPosition, amenityType).then(function (amenities) {
+                    angular.forEach(amenities, function (amenity) {
+                        var destinationPoint = turf.point([amenity.geometry.location.B, amenity.geometry.location.k]);
+                        amenity.distance = turf.distance(originPoint, destinationPoint, 'kilometers') * 1000;   // meters
+                    });
+                    ctl.amenities = _.take(amenities, 5).sort(function (a, b) {
+                        return a.distance - b.distance;
+                    });
+                }, failure);
+                function failure() {
+                    ctl.amenities = [];
+                    ctl.errorMessage = 'No nearby amenities for the selected type. Tap \'Back\' to try again.';
                 }
             });
         }
 
         /**
-         * Generate a route and display it on the map for a given user position and targetted destination
+         * Generate a route and display it on the map for a given user position and targeted destination
          */
         function planReroute(destination) {
             var currentPosition;
@@ -62,19 +72,12 @@
                 $state.go('navigate');
             }
             function failure(error) {
-                // TODO: error handle when workflow is decided
-                console.log(error);
+                var msg = error.msg ? error.msg : 'Unable to load route. Please try a different destination.';
+                Notifications.show({
+                    text: msg
+                });
             }
         }
-
-
-        function onSelectAmenity(amenity) {
-            planReroute({
-                lat: amenity.geometry.location.k,
-                lng: amenity.geometry.location.B
-            });
-        }
-
     }
 
     angular.module('nih.views.navigate')
