@@ -106,15 +106,11 @@
             params.surfaceComfort = preferences.surfaceTypeComfort;
 
             if (preferences.assistanceRequired) {
-                // set "walk" speed for powered vs manual wheelchairs
-                if (preferences.asistanceType === 'motorized') {
+                if (preferences.assistanceType === 'motorized' || preferences.assistanceType === 'manual') {
                     params.wheelchair = true;
-                    params.walkSpeed = Config.wheelchairSpeeds.motorized;
-                } else if (preferences.assistanceType === 'manual') {
-                    params.wheelchair = true;
-                    params.walkSpeed = Config.wheelchairSpeeds.manual;
                 } else {
-                    // TODO: what are we supposed to do with the other types?
+                    // must be using walker or cane
+                    params.usingWalkerCane = true;
                 }
             }
 
@@ -272,7 +268,7 @@
 
                 // add properties for audited edges
                 if (lastModified > 0) {
-                    if (step.crossSlope || (step.maxSlope > Config.warningMinimumGrade) ||
+                    if (step.hazards || step.crossSlope || (step.maxSlope > Config.warningMinimumGrade) ||
                         (step.surface && (step.surface !== 'Concrete'))) {
                         warnings.push('images/icons/icon-caution.svg');
                     }
