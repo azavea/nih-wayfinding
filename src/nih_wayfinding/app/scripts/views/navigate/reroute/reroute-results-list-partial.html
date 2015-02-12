@@ -1,0 +1,25 @@
+<div class="content scroll">
+    <div class="row">
+        <div class="col-xs-9 col-md-9">
+            <h4>Select a nearby option:</h4>
+        </div>
+    </div>
+
+    <div class="row" ng-if="!list.amenities.length">
+        <div class="col-xs-12">
+            <h3>{{ list.errorMessage }}</h3>
+        </div>
+    </div>
+    <div class="row" ng-if="list.amenities.length" ng-repeat="amenity in list.amenities" ng-click="list.onSelectAmenity(amenity)">
+        <div class="col-xs-2 col-md-2">
+            <img ng-src="{{ ::amenity.icon }}" />
+        </div>
+        <div class="col-xs-8 col-md-8">
+            <h3>{{ ::amenity.name }}</h3>
+            <p>{{ ::amenity.types[0] }}</p>
+        </div>
+        <div class="col-xs-2 col-md-2">
+            <p>{{ ::amenity.distance | distance }}</p>
+        </div>
+    </div>
+</div>

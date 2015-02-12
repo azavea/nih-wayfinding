@@ -9,7 +9,8 @@
         function initialize() {
             NavbarConfig.set({
                 title: 'Reroute',
-                color: NavbarConfig.colors.reroute
+                color: NavbarConfig.colors.reroute,
+                back: 'navigate'
             });
             ctl.gridOptions = Rerouting.getReroutingOptions();
             ctl.optionClicked = optionClicked;
@@ -20,7 +21,7 @@
       }
 
       function rerouteWith(option) {
-          $state.go('navigate', {reroute: option.text});
+          $state.go('reroute-list', {type: option.text});
       }
     }
 

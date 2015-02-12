@@ -80,6 +80,7 @@
                     if (_.isEqual(origin, destination)) {
                         directionsOptions.walkTimeMins = defaultNonZeroWalkTime;
                     }
+                    MapControl.trackUser(currentPosition);
                     dfd.resolve({
                         origin: origin,
                         destination: destination
