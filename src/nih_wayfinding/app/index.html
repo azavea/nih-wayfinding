@@ -39,7 +39,13 @@
           <button ng-if="navbar.config.back" type="button" class="btn btn-nav-main" ng-click="navbar.back()">
             <span class="glyphicon glyphicon-chevron-left"></span> Back
           </button>
-          <div ng-if="!navbar.config.back" class="btn-group btn-group-nav-main" dropdown>
+          <button ng-if="navbar.config.back === false && navbar.config.rightButton.dropdown === false"
+                  type="button"
+                  class="btn btn-nav-main"
+                  ng-click="navbar.onRightButtonClicked()">
+            {{ navbar.config.rightButton.text }}
+          </button>
+          <div ng-if="navbar.config.back === false && navbar.config.rightButton.dropdown" class="btn-group btn-group-nav-main" dropdown>
             <button type="button" class="btn btn-nav-main navbar-button dropdown-toggle" dropdown-toggle ng-cloak>
               <span class="glyphicon glyphicon-align-justify"></span> {{ navbar.config.rightButton.text }}
             </button>

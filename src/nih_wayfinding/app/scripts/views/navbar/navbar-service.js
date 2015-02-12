@@ -12,18 +12,22 @@
             reroute: '#00C3A6',
             navigation: '#38769F'
         };
-        var config = {
+        var defaults = {
             title: '',
             subtitle: '',
             leftImage: '',
-            color: colors.default,
             rightImages: [],
             rightButton: {
+                text: 'Menu',
                 imgclass: 'caret',
-                text: 'Menu'
-            }
+                dropdown: true
+            },
+            color: colors.default,
+            back: true      // display back button to prev view if true, display menu if false
         };
+        var config = angular.extend({}, defaults);
         var events = {
+            buttonclicked: 'nih.navbarconfig.rightbuttonclicked',
             updated: 'nih.navbarconfig.updated'
         };
 
@@ -37,13 +41,6 @@
         return module;
 
         function set(options) {
-            var defaults = {
-                subtitle: '',
-                leftImage: '',
-                rightImages: [],
-                color: colors.default,
-                back: true      // display back button to prev view if true, display menu if false
-            };
             angular.extend(config, defaults, options);
             $rootScope.$broadcast(events.updated);
         }

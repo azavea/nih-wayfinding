@@ -46,6 +46,7 @@
                 wheelchair: !!(currentUser.preferences.wheelchairRequired),
             });
 
+            Navigation.setDestination(data.destination);
             MapRoute.mapRoute(data.origin, data.destination, options).then(function(mappedRoute) {
                 angular.extend(ctl.map, mappedRoute);
                 ctl.summary = angular.extend(ctl.summary, Directions.getRouteSummary());

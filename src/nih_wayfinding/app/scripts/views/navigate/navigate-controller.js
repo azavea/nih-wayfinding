@@ -28,11 +28,11 @@
 
         function initialize() {
             setDefaultFooter();
-            NavbarConfig.set({
+            setNavbar({
                 title: 'Navigate Route',
-                color: NavbarConfig.colors.navigation,
                 back: 'routing'
             });
+
             ctl.map = Map;
             ctl.nextStep = Navigation.stepNext;
             ctl.offCourse = Navigation.offCourse;
@@ -40,8 +40,10 @@
             // Subscribe to the location update event
             $scope.$on('nih.navigation.positionOffCourse', onPositionOffCourse);
             $scope.$on('nih.navigation.positionUpdated', onPositionUpdated);
+            $scope.$on('nih.navbarconfig.rightbuttonclicked', onNavbarButtonClicked);
 
             var geojson = ctl.map.geojson.data;
+
             Navigation.setRoute(geojson);
             Navigation.stepFirst();
         }
@@ -62,6 +64,21 @@
                     onClick: function() { $state.go('report'); }
                 }
             };
+        }
+
+        function setNavbar(options) {
+            var isRerouting = Navigation.isRerouting();
+            var color = isRerouting ? NavbarConfig.colors.reroute : NavbarConfig.colors.navigation;
+            var back = isRerouting ? false : 'routing';
+            var defaults = {
+                color: color,
+                rightButton: {
+                    text: 'RESUME ROUTE',
+                    dropdown: false
+                },
+                back: back
+            };
+            NavbarConfig.set(angular.extend({}, defaults, options));
         }
 
         /**
@@ -139,12 +156,25 @@
             _.each(position.properties.directions.features, function(feature) {
                 rightImages.push(feature);
             });
-            NavbarConfig.set({
+            setNavbar({
                 title: text,
                 subtitle: subtitleText,
-                color: NavbarConfig.colors.navigation,
                 leftImage: turnIcon,
                 rightImages: rightImages
+            });
+        }
+
+        function onNavbarButtonClicked() {
+            Navigation.getCurrentPosition().then(function (position) {
+                var origin = [position.coords.longitude, position.coords.latitude];
+                var destination = Navigation.getDestination();
+                Directions.get(origin, destination).then(function (geojson) {
+                    ctl.map.geojson = angular.extend(ctl.map.geojson, {
+                        data: geojson
+                    });
+                    Navigation.setRoute(geojson);
+                    Navigation.stepFirst();
+                });
             });
         }
     }
