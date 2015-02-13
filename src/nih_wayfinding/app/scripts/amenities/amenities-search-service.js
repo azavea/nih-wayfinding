@@ -53,7 +53,6 @@
                 };
                 angular.extend(request, options);
                 var nearbyPromiseWrapper = function(results, status) {
-                    console.log(results);
                     if (status === google.maps.places.PlacesServiceStatus.OK) {
                         result.resolve(results);
                     } else {
