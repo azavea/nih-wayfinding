@@ -2,7 +2,7 @@
     'use strict';
 
     /* ngInject */
-    function Rerouting(ReroutingOptions, Config, AmenitiesSearch, Navigation) {
+    function Rerouting(ReroutingOptions, Config, AmenitiesSearch) {
         // Rough guesses at how to find an amenity of this type nearby
         var googleAmenityTypes = {
             Bathroom: ['cafe', 'department_store', 'gas_station',

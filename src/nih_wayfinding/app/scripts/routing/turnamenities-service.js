@@ -3,10 +3,14 @@
     'use strict';
 
     /* ngInject */
-    function TurnAmenities ($http, $q) {
+    function TurnAmenities ($http, $q, AmenitiesSearch) {
 
-        var overpassUrl = 'http://overpass-api.de/api/interpreter';
-        var radiusMeters = 75;  // radius around point to search
+        var radiusMeters = 50;  // radius around point to search
+        var types = [
+            'bank', 'book_store', 'cafe', 'department_store', 'gas_station',
+            'grocery_or_supermarket', 'shopping_mall', 'food', 'church', 'park',
+            'restaurant', 'school', 'transit_station'
+        ];
 
         var module = {
             get: get,
@@ -15,35 +19,16 @@
 
         return module;
 
-        function overpassQuery(x, y) {
-            var q = '[out:json];' +
-                    'node(around:' + radiusMeters +
-                    ',' + y +
-                    ',' + x +
-                    ')' +
-                    '[amenity][name][amenity!="bicycle_rental"];' +
-                    'out;';
-            return q;
-        }
-
         /**
-         * Look up an amenity from OpenStreetMap to add to the turn by turn
-         * directions. Promise resolves with an OSM node object.
+         * Look up an amenity from Google Places to add to the turn by turn
+         * directions. Promise resolves with a Places object.
          *
          * @param x longitude
          * @param y latitude
          */
         function get(x, y) {
-
-            return $http.get(overpassUrl, {
-                params: {
-                    'data': overpassQuery(x, y)
-                }
-            }).then(function (data) {
-                if(data.data.elements.length === 0) {
-                    return null;
-                }
-                return _.first(data.data.elements);
+            return AmenitiesSearch.searchNearby([y, x], radiusMeters, {
+                types: types
             });
         }
 
@@ -62,7 +47,8 @@
                 .forEach(function (feature) {
                     var coords = _.first(feature.geometry.coordinates);
                     promises.push(
-                        get(coords[0], coords[1]).then(function (amenity) {
+                        get(coords[0], coords[1]).then(function (amenities) {
+                            var amenity = _.first(amenities);
                             feature.properties.turnamenity = amenity;
                             return amenity;
                         })

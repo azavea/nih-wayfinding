@@ -147,7 +147,10 @@
             var speedMs = (ProfileService.getCurrentUser().preferences.speed || 1) * mphToMs;
             var timeMins = (distanceToTurn / speedMs / 60).toFixed(0);
             var distanceText = 'In approx. ' +  timeMins +
-                ' min (' + $filter('distance')(distanceToTurn) + ').';
+                ' min (' + $filter('distance')(distanceToTurn) + ')';
+            if (position.properties.turnamenity) {
+                distanceText += ' at the ' + position.properties.turnamenity.name;
+            }
             var subtitleText = distanceText;
             var rightImages = [];
             _.each(position.properties.directions.warnings, function(warning) {
