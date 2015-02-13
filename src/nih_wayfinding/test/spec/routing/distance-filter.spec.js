@@ -20,8 +20,18 @@ describe('nih.routing: Filters', function () {
         expect(result).toEqual('656 ft');
     });
 
-    it('should return mi for values greater than 1000 ft', function () {
-        var result = filter('distance')(400);
-        expect(result).toEqual('0.2 mi');
+    it('should return fractions for values greater than 1000 ft but less than 1 mi', function () {
+        var result = filter('distance')(1000);
+        expect(result).toEqual('2/3 mi');
+    });
+
+    it('should return 1 mi for values between 9/10 and 1 mi', function () {
+        var result = filter('distance')(1600);
+        expect(result).toEqual('1 mi');
+    });
+
+    it('should return decimals for values greater than 1 mi', function () {
+        var result = filter('distance')(2000);
+        expect(result).toEqual('1.2 mi');
     });
 });
