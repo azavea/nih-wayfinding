@@ -5,6 +5,8 @@
     /* ngInject */
     function AmenitiesSearch ($q, leafletData, leafletHelpers) {
 
+        var googlePlaceService = null;
+
         // Public interface
         var module = {
             searchNearby: searchNearby
@@ -24,10 +26,25 @@
         function searchNearby(point, radius, options) {
             // Wrap google's callback-style API in a promise.
             var result = $q.defer();
-            leafletData.getMap().then(function (map) {
-                var googlemap = getGoogleMapObject(map);
-                // Initializing a new PlacesService for every request seems ok
-                var googlePlaceService = new google.maps.places.PlacesService(googlemap);
+            if (!googlePlaceService) {
+                leafletData.getMap().then(function (map) {
+                    // The variable be initialized by the time this promise resolves from another
+                    // searchNearby call, so check to make sure it doesn't exist here too
+                    if (!googlePlaceService) {
+                        var googlemap = getGoogleMapObject(map);
+                        googlePlaceService = new google.maps.places.PlacesService(googlemap);
+                    }
+                    makePlacesRequest(point, radius, options);
+                });
+            } else {
+                makePlacesRequest(point, radius, options);
+            }
+            return result.promise;
+
+            // local function that simply wraps the places setup + request, which we have to make
+            // in two places due to the caching logic. It depends on having result in the parent
+            // scope, so don't go moving it around
+            function makePlacesRequest(point, radius, options) {
                 var googPoint = new google.maps.LatLng(point[0], point[1]);
                 var request = {
                     location: googPoint,
@@ -43,8 +60,7 @@
                     }
                 };
                 googlePlaceService.nearbySearch(request, nearbyPromiseWrapper);
-            });
-            return result.promise;
+            }
         }
 
         /**
@@ -65,6 +81,7 @@
             });
             return googlemap;
         }
+
     }
 
     angular.module('nih.amenities')

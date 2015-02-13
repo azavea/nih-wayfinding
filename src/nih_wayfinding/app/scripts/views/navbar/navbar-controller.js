@@ -34,21 +34,28 @@
         /**
          * Navigate backwards, with the following logic
          * If config.back === true, use history to get last state
-         * If config.back === String, use the value of config.back as the state name to go to
+         * If config.back === String, pop off the history stack until we hit a state with that name
+         *      then navigate to it. This allows us to keep $stateParams.
+         *      If no valid state was found, default to the statename with no params
          * Default navigate in all other cases to defaultBackState
          */
         function back() {
+            var state = {};
             var stateName;
             var stateParams = {};
             if (ctl.config.back === true && history.length > 1) {
                 // Get the last two states from the history array
                 //  [0] is last state, [1] is current state
                 // and return the state name
-                var state = history.splice(-2)[0];
+                state = history.splice(-2)[0];
                 stateName = state.name;
                 stateParams = state.params;
             } else if (_.isString(ctl.config.back)) {
-                stateName = ctl.config.back;
+                while (state.name !== ctl.config.back && history.length > 0) {
+                    state = history.pop();
+                }
+                stateName = state.name || ctl.config.back;
+                stateParams = state.params || {};
             } else {
                 stateName = defaultBackState;
             }
