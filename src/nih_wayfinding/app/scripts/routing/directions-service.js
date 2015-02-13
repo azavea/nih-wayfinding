@@ -14,7 +14,6 @@
 
         var module = {
             get: get,
-            getFlagIconName: getFlagIconName,
             getTurnIconName: getTurnIconName,
             getRouteSummary: getRouteSummary,
             isAudited: isAudited,
@@ -119,24 +118,6 @@
             }
 
             return params;
-        }
-
-        function getFlagIconName(flagType, value) {
-            // TODO: Write tests once actual icons exist
-            if (!value) {
-                return '';
-            }
-
-            switch (flagType) {
-                case 'benches':
-                    return 'glyphicon-flash';
-                case 'hazards':
-                    return 'glyphicon-warning-sign';
-                case 'bathrooms':
-                    return 'glyphicon-trash';
-                default:
-                    return '';
-            }
         }
 
         function getTurnIconName(turnType) {

@@ -13,7 +13,6 @@
                 color: NavbarConfig.colors.routing
             });
 
-            ctl.getFlagIconName = Directions.getFlagIconName;
             ctl.getLineColor = MapStyle.getLineColor;
             ctl.getTurnIconName = Directions.getTurnIconName;
 
