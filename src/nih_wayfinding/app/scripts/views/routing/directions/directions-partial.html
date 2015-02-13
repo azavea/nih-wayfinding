@@ -1,6 +1,6 @@
 <div class="content scroll">
   <table class="directions-table">
-    <tr ng-repeat="item in directions.list">
+    <tr ng-repeat="item in directions.list" row-detail>
       <td class="direction-sign">
         <span class="glyphicon" ng-class="directions.getTurnIconName(item.directions.turn)"></span>
       </td>

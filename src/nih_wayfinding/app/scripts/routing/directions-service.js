@@ -16,6 +16,7 @@
             get: get,
             getTurnIconName: getTurnIconName,
             getRouteSummary: getRouteSummary,
+            textForImage: textForImage,
             isAudited: isAudited,
             isTurn: isTurn
         };
@@ -146,6 +147,19 @@
                 default:
                     return 'glyphicon-remove-circle';
             }
+        }
+
+        function textForImage(imgUrl) {
+            if (imgUrl.indexOf('caution') !== -1) {
+                return 'Hazardous street';
+            } else if (imgUrl.indexOf('flower') !== -1) {
+                return 'Pretty street';
+            } else if (imgUrl.indexOf('bench') !== -1) {
+                return 'Has a place to rest';
+            } else {
+                return 'Unknown issue';
+            }
+            return 'Place to rest';
         }
 
         /**
