@@ -32,7 +32,6 @@ describe('nih.views.routing: DirectionsController', function () {
 
     it('should ensure that scope functions exist', function () {
         expect(DirectionsController.getLineColor).toBeDefined();
-        expect(DirectionsController.getFlagIconName).toBeDefined();
         expect(DirectionsController.getTurnIconName).toBeDefined();
     });
 

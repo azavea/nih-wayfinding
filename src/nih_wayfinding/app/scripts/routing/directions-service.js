@@ -14,9 +14,9 @@
 
         var module = {
             get: get,
-            getFlagIconName: getFlagIconName,
             getTurnIconName: getTurnIconName,
             getRouteSummary: getRouteSummary,
+            textForImage: textForImage,
             isAudited: isAudited,
             isTurn: isTurn
         };
@@ -121,24 +121,6 @@
             return params;
         }
 
-        function getFlagIconName(flagType, value) {
-            // TODO: Write tests once actual icons exist
-            if (!value) {
-                return '';
-            }
-
-            switch (flagType) {
-                case 'benches':
-                    return 'glyphicon-flash';
-                case 'hazards':
-                    return 'glyphicon-warning-sign';
-                case 'bathrooms':
-                    return 'glyphicon-trash';
-                default:
-                    return '';
-            }
-        }
-
         function getTurnIconName(turnType) {
             // TODO: Write tests once actual icons exist
             switch (turnType) {
@@ -165,6 +147,19 @@
                 default:
                     return 'glyphicon-remove-circle';
             }
+        }
+
+        function textForImage(imgUrl) {
+            if (imgUrl.indexOf('caution') !== -1) {
+                return 'Hazardous street';
+            } else if (imgUrl.indexOf('flower') !== -1) {
+                return 'Pretty street';
+            } else if (imgUrl.indexOf('bench') !== -1) {
+                return 'Has a place to rest';
+            } else {
+                return 'Unknown issue';
+            }
+            return 'Place to rest';
         }
 
         /**
