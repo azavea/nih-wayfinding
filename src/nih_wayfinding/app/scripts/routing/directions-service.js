@@ -151,7 +151,7 @@
 
         function textForImage(imgUrl) {
             if (imgUrl.indexOf('caution') !== -1) {
-                return 'Hazardous street';
+                return 'Block may have issues';
             } else if (imgUrl.indexOf('flower') !== -1) {
                 return 'Pretty street';
             } else if (imgUrl.indexOf('bench') !== -1) {
