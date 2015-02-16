@@ -35,6 +35,7 @@
             getDestination: getDestination,
             setDestination: setDestination,
             setRoute: setRoute,
+            stepCurrent: stepCurrent,
             stepNext: stepNext,
             stepPrevious: stepPrevious,
             stepFirst: stepFirst,
@@ -120,9 +121,13 @@
             currentRoute.stepBoxes = generateStepBoxes(geojsonRoute);
             // Flatten the original FeatureCollection linestring to a single linestring
             //  so we can properly step along it
-            currentRoute.geom = turf.linestring(coordinates);
-            currentRoute.distance = turf.lineDistance(currentRoute.geom, 'miles');
-            currentRoute.stepped = 0;
+            // Only reset the line string if the route is new
+            var newLinestring = turf.linestring(coordinates);
+            if (!linestringEquals(currentRoute.geom, newLinestring)) {
+                currentRoute.geom = turf.linestring(coordinates);
+                currentRoute.distance = turf.lineDistance(currentRoute.geom, 'miles');
+                currentRoute.stepped = 0;
+            }
         }
 
         function stepNext() {
@@ -141,6 +146,10 @@
 
         function stepLast() {
             setPosition(currentRoute.distance);
+        }
+
+        function stepCurrent() {
+            setPosition(currentRoute.stepped);
         }
 
         function setPosition(distance) {
@@ -214,6 +223,26 @@
                 stepBoxes.push(stepBox);
             });
             return stepBoxes;
+        }
+
+        // For our purposes in determining whether the linestring route geom has changed, two
+        // linestrings are equal if their lengths match and the first and last points in the
+        // line are the same
+        function linestringEquals(a, b) {
+            if (!a || !b || a.length !== b.length) {
+                return false;
+            }
+            var len = a.geometry.coordinates.length;
+            var aFirst = a.geometry.coordinates[0];
+            var bFirst = b.geometry.coordinates[0];
+            var aLast = a.geometry.coordinates[len - 1];
+            var bLast = b.geometry.coordinates[len - 1];
+            if (aFirst[0] === bFirst[0] && aFirst[1] === bFirst[1] &&
+                aLast[0] === bLast[0] && aLast[1] === bLast[1]) {
+                return true;
+            } else {
+                return false;
+            }
         }
 
         /**

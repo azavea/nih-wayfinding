@@ -45,7 +45,7 @@
             var geojson = ctl.map.geojson.data;
 
             Navigation.setRoute(geojson);
-            Navigation.stepFirst();
+            Navigation.stepCurrent();
         }
 
         /**
