@@ -11,7 +11,7 @@
     /* ngInject */
     function OverviewController($scope, $stateParams, $q, leafletData,
                                 Config, Directions, Map, MapControl, MapStyle, MapRoute, NavbarConfig,
-                                Navigation, Notifications, ProfileService) {
+                                Navigation, Notifications, ProfileService, Walk) {
         var ctl = this;
         var boundsLayer = null;
         var currentUser = null;
@@ -42,6 +42,10 @@
         }
 
         function getDirections(data) {
+            if (directionsOptions.walkTimeMins > 0) {
+                Walk.getStops(turf.point(data.origin), currentUser.getWalkDistance(directionsOptions.walkTimeMins));
+            }
+
             Navigation.setDestination(data.destination);
             MapRoute.mapRoute(data.origin, data.destination).then(function(mappedRoute) {
                 angular.extend(ctl.map, mappedRoute);

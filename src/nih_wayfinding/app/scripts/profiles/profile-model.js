@@ -122,6 +122,12 @@
             this.locations = newLocations;
         };
 
+        Profile.prototype.getWalkDistance = function(walkTimeMins) {
+            var speed = this.preferences.speed; // m/s
+            var seconds = walkTimeMins * 60;
+            return  speed * seconds;
+        };
+
 
         // Public Interface
         var module = {
