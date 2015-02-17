@@ -164,12 +164,14 @@
             if (routeExists()) {
                 var point = turf.along(currentRoute.geom, distance, 'miles');
                 var stepBox = findStepBoxForPoint(point, currentRoute.stepped);
-                // Pass all relevant position info
-                //  point, properties, next destination point
-                position.point = point;
-                position.properties = stepBox.properties;
-                position.destination = stepBox.destinationPoint;
-                $rootScope.$broadcast(events.positionUpdated, position);
+                if (stepBox) {
+                    // Pass all relevant position info
+                    //  point, properties, next destination point
+                    position.point = point;
+                    position.properties = stepBox.properties;
+                    position.destination = stepBox.destinationPoint;
+                    $rootScope.$broadcast(events.positionUpdated, position);
+                }
             }
         }
 

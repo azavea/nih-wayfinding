@@ -166,7 +166,7 @@
             // TODO: Write tests once actual icons exist
             switch (turnType) {
                 case 'DEPART':
-                    return 'glyphicon-flag';
+                    return 'glyphicon-arrow-up';
                 case 'CONTINUE':
                     return 'glyphicon-arrow-up';
                 // Temporarily fall through to similar cases for left/right
