@@ -43,9 +43,49 @@
             }
             var otpRequestParams = getRequestParams();
             var params = angular.extend({}, otpRequestParams);
+
+            if (params.intermediatePlaces) {
+                // split request into multiple steps
+                var steps = params.intermediatePlaces;
+                steps.splice(0, 0, origin);
+                steps.push(destination);
+                var promises = [];
+                for (var i = 0; i < steps.length - 1; i++) {
+                    var stepOrigin = steps[i];
+                    var stepDestination = steps[i + 1];
+                    promises.push(makeRequest(stepOrigin, stepDestination, params));
+                }
+                $q.all(promises).then(function (data) {
+                    var features = [];
+                    angular.forEach(data, function (stepFeatureCollection) {
+                        features = features.concat(stepFeatureCollection.features);
+                    });
+                    var geojson = {
+                        type: 'FeatureCollection',
+                        features: features
+                    };
+                    dfd.resolve(geojson);
+                }, function (error) {
+                    dfd.reject(error);
+                });
+            } else {
+                makeRequest(origin, destination, params).then(function (data) {
+                    dfd.resolve(data);
+                }, function (error) {
+                    dfd.reject(error);
+                });
+            }
+
+            return dfd.promise;
+        }
+
+        function makeRequest(origin, destination, options) {
+            var dfd = $q.defer();
+            var params = angular.extend({}, options);
             // Swap, OTP request uses [lat,lon]
             params.fromPlace = [origin[1], origin[0]].join(',');
             params.toPlace = [destination[1], destination[0]].join(',');
+            delete params.intermediatePlaces;
 
             $http.get(directionsUrl, {
                 params: params
@@ -78,6 +118,7 @@
                     dfd.resolve(geojson);
                 }
             });
+
             return dfd.promise;
         }
 

@@ -43,7 +43,10 @@
 
         function getDirections(data) {
             if (directionsOptions.walkTimeMins > 0) {
-                Walk.getStops(turf.point(data.origin), currentUser.getWalkDistance(directionsOptions.walkTimeMins));
+                var walkKm = currentUser.getWalkDistance(directionsOptions.walkTimeMins);
+                console.log('Walk Distance (km):', walkKm);
+                var steps = Walk.getStops(turf.point(data.origin), walkKm);
+                options.intermediatePlaces = steps;
             }
 
             Navigation.setDestination(data.destination);
@@ -62,7 +65,7 @@
             var dfd = $q.defer();
             var destination = MapControl.cleanLonLatParam($stateParams.destination);
             var origin = MapControl.cleanLonLatParam($stateParams.origin);
-            directionsOptions.walkTimeMins = $stateParams.walkTimeMins || 0;
+            directionsOptions.walkTimeMins = parseInt($stateParams.walkTimeMins, 10) || 0;
 
             if (origin && destination) {
                 dfd.resolve({
@@ -77,9 +80,6 @@
                     }
                     if (!origin) {
                         origin = currentPosition;
-                    }
-                    if (_.isEqual(origin, destination)) {
-                        directionsOptions.walkTimeMins = defaultNonZeroWalkTime;
                     }
                     MapControl.trackUser(currentPosition);
                     dfd.resolve({
