@@ -118,12 +118,12 @@
                 .flatten(true)
                 .value();
 
-            currentRoute.stepBoxes = generateStepBoxes(geojsonRoute);
             // Flatten the original FeatureCollection linestring to a single linestring
             //  so we can properly step along it
             // Only reset the line string if the route is new
             var newLinestring = turf.linestring(coordinates);
             if (!linestringEquals(currentRoute.geom, newLinestring)) {
+                currentRoute.stepBoxes = generateStepBoxes(geojsonRoute);
                 currentRoute.geom = turf.linestring(coordinates);
                 currentRoute.distance = turf.lineDistance(currentRoute.geom, 'miles');
                 currentRoute.stepped = 0;
@@ -163,7 +163,7 @@
             }
             if (routeExists()) {
                 var point = turf.along(currentRoute.geom, distance, 'miles');
-                var stepBox = findStepBoxForPoint(point);
+                var stepBox = findStepBoxForPoint(point, currentRoute.stepped);
                 // Pass all relevant position info
                 //  point, properties, next destination point
                 position.point = point;
@@ -194,6 +194,10 @@
          *      polygon: a slightly buffered polygon feature that surrounds the points on the route step
          *      destinationPoint: the last Point on the route step
          *      properties: the properties object of the next step in the route (has directions info)
+         *      distance: {
+         *          min: Number the min distance that this step box is along the route
+         *          max: Number the max distance that this step box is along the route
+         *      }
          *  }
          *
          * @param  {[type]} geojson [description]
@@ -207,6 +211,7 @@
             };
             var stepBoxes = [];
             var numFeatures = geojson.features.length;
+            var totalDistance = 0;
             angular.forEach(geojson.features, function (feature, index) {
                 var length = feature.geometry.coordinates.length;
                 var lastPoint = turf.point(feature.geometry.coordinates[length - 1]);
@@ -215,12 +220,20 @@
                 var nextFeature = index < numFeatures - 1 ? geojson.features[index + 1] : null;
                 // If we're at the last feature, return the last directions text instead
                 var properties = nextFeature ? nextFeature.properties : lastDirection;
+                var lineLength = turf.lineDistance(feature, 'miles');
+                var minDistance = totalDistance;
+                var maxDistance = minDistance + lineLength;
                 var stepBox = {
                     polygon: turf.buffer(turf.envelope(feature), stepLengthMiles * 0.25, 'miles').features[0],
                     destinationPoint: lastPoint,
-                    properties: properties
+                    properties: properties,
+                    distance: {
+                        min: minDistance,
+                        max: maxDistance
+                    }
                 };
                 stepBoxes.push(stepBox);
+                totalDistance += lineLength;
             });
             return stepBoxes;
         }
@@ -248,11 +261,12 @@
         /**
          * Returns the stepBox that contains the passed Point feature
          * @param  {object Point} point point to search the stepboxes for a match
+         * @param  {Number} distance distance along route that the passed point is
          * @return {object}       the stepbox or undefined
          */
-        function findStepBoxForPoint(point) {
+        function findStepBoxForPoint(point, distance) {
             return _.find(currentRoute.stepBoxes, function (stepBox) {
-                return turf.inside(point, stepBox.polygon);
+                return turf.inside(point, stepBox.polygon) && distance >= stepBox.distance.min && distance < stepBox.distance.max;
             });
         }
     }
