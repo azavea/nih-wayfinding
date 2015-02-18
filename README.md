@@ -36,7 +36,7 @@ cd /opt/app
 grunt serve
 ```
 
-From there, you should be able to access everything off of port 8000 on
+From there, you should be able to access everything off of port 8001 on
 your host machine.
 
 ### Ports
@@ -46,12 +46,13 @@ running in the VMs. You can change the host port numbers by setting
 the environment variables listed in the ``Env Variable Override``
 column.
 
-Service                 | Port  | URL                                              | Env Variable Override
------------------------ | ----- | ------------------------------------------------ | ---------------------
-Angular Web Application | 8000  | [http://localhost:8000](http://localhost:8000)   | NIH_WAYFINDING_PORT_8000
-PostgreSQL              | 15432 |                                                  | NIH_WAYFINDING_PORT_5432
-pgweb                   | 15433 | [http://localhost:15433](http://localhost:15433) | NIH_WAYFINDING_PORT_5433
-livereload              | 35729 |                                                  | N/A
+Service                                 | Port  | URL                                              | Env Variable Override
+--------------------------------------- | ----- | ------------------------------------------------ | ---------------------
+Angular Web Application                 | 8000  | [http://localhost:8000](http://localhost:8000)   | NIH_WAYFINDING_PORT_8000
+Angular Web Application via grunt serve | 8001  | [http://localhost:8001](http://localhost:8001)   | NIH_WAYFINDING_PORT_8001
+PostgreSQL                              | 15432 |                                                  | NIH_WAYFINDING_PORT_5432
+pgweb                                   | 15433 | [http://localhost:15433](http://localhost:15433) | NIH_WAYFINDING_PORT_5433
+livereload                              | 35729 |                                                  | N/A
 
 
 ### JavaScript and CSS

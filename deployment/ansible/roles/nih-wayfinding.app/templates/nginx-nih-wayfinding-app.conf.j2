@@ -1,12 +1,11 @@
 server {
-  root /srv;
+  root /opt/app/dist;
   index index.html;
 
   listen *:80;
   server_name _;
 
   location / {
-    proxy_pass http://127.0.0.1:9000;
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-Host $host;
     proxy_set_header X-Forwarded-Server $host;
