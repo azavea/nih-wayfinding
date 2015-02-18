@@ -153,9 +153,9 @@
             }
             var subtitleText = distanceText;
             var rightImages = [];
-            _.each(position.properties.directions.warnings, function(warning) {
-                rightImages.push(warning.img);
-            });
+            if (position.properties.directions.warnings.length > 0) {
+                rightImages.push(position.properties.directions.warnings[0].img);
+            }
             _.each(position.properties.directions.features, function(feature) {
                 rightImages.push(feature.img);
             });
