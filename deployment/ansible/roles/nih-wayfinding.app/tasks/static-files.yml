@@ -38,9 +38,11 @@
   args:
     chdir: "{{ app_home }}"
 
-- name: Create static files (staging/production)
+# Always do this, because of the junky way we're proxy passing grunt serve to /dev/ via nginx
+#   we need this to be run in dev at least once so that images are in the right place
+# FIXME: If we ever revisit this app, we'll want to remove this debt
+- name: Create static files
   command: grunt build
   sudo: no
   args:
     chdir: "{{ app_home }}"
-  when: not_developing
