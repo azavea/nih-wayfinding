@@ -11,6 +11,7 @@ describe('nih.views.routing: OverviewController', function () {
     var geolocation;
 
     var Config;
+    var Directions;
     var MapRoute;
     var OverviewController;
     var MapControl;
@@ -23,6 +24,12 @@ describe('nih.views.routing: OverviewController', function () {
     var geolocationArray = [geolocationLon, geolocationLat];
     var stateParamsString = stateParamsArray.join(',');
     var graphBounds = {'type':'Polygon','coordinates':[[[-87.5753,41.6638,0.0],[-87.6065,41.7074,0.0],[-87.5985,41.7588,0.0],[-87.5912,41.7733,0.0],[-87.5716,41.7735,0.0],[-87.5435,41.7591,0.0],[-87.5418,41.7577,0.0],[-87.5303,41.7404,0.0],[-87.5299,41.7395,0.0],[-87.5247,41.7266,0.0],[-87.5179,41.7025,0.0],[-87.5316,41.6828,0.0],[-87.534,41.6809,0.0],[-87.5753,41.6638,0.0]]]};
+
+    function mockDirections() {
+        return {
+            getRouteSummary: function () { return {}; }
+        };
+    }
 
     function mockGeolocation($q) {
         return {
@@ -71,6 +78,7 @@ describe('nih.views.routing: OverviewController', function () {
         scope = $rootScope.$new();
         geolocation = mockGeolocation($q);
         Config = _Config_;
+        Directions = mockDirections();
         MapRoute = mockMapRouteService($q);
         MapControl = _MapControl_;
         MapControl.getGraphBounds = mockBounds($q);
@@ -86,6 +94,7 @@ describe('nih.views.routing: OverviewController', function () {
                 $scope: scope,
                 Navigation: geolocation,
                 Config: Config,
+                Directions: Directions,
                 MapRoute: MapRoute,
                 MapControl: MapControl
             });
@@ -116,6 +125,7 @@ describe('nih.views.routing: OverviewController', function () {
             OverviewController = $controller('OverviewController', {
                 $scope: scope,
                 Navigation: geolocation,
+                Directions: Directions,
                 MapRoute: MapRoute,
                 MapControl: MapControl,
                 $stateParams: {
@@ -136,6 +146,7 @@ describe('nih.views.routing: OverviewController', function () {
             OverviewController = $controller('OverviewController', {
                 $scope: scope,
                 Navigation: geolocation,
+                Directions: Directions,
                 MapRoute: MapRoute,
                 MapControl: MapControl,
                 $stateParams: {
@@ -156,6 +167,7 @@ describe('nih.views.routing: OverviewController', function () {
             OverviewController = $controller('OverviewController', {
                 $scope: scope,
                 Navigation: geolocation,
+                Directions: Directions,
                 MapRoute: MapRoute,
                 MapControl: MapControl,
                 $stateParams: {
