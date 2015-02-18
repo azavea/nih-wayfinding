@@ -27,7 +27,10 @@
                 { img: '/images/icons/icon-house.svg', type: 'House' },
                 { img: '/images/icons/icon-park.svg', type: 'Park' },
                 { img: '/images/icons/icon-shopping.svg', type: 'Shopping' },
-                { img: '/images/icons/icon-cafe.svg', type: 'Donut Shop' },
+                { img: '/images/icons/icon-bank.svg', type: 'Bank' },
+                { img: '/images/icons/icon-butcher.svg', type: 'Grocery' },
+                { img: '/images/icons/icon-pharmacy.svg', type: 'Pharmacy' },
+                { img: '/images/icons/icon-school.svg', type: 'School' },
                 { img: '/images/icons/icon-house.svg', type: 'Other' },
             ];
 
