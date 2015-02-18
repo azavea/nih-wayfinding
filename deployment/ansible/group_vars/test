@@ -1,7 +1,1 @@
 ---
-postgresql_listen_addresses: "*"
-postgresql_username: nih_wayfinding
-postgresql_password: nih_wayfinding
-postgresql_database: nih_wayfinding
-postgresql_hba_mapping:
-  - { type: "host", database: "all", user: "all", address: "33.33.33.1/24", method: "md5" }
