@@ -24,8 +24,8 @@
 
         function onSelectAmenity(amenity) {
             planReroute({
-                lat: amenity.geometry.location.k,
-                lng: amenity.geometry.location.B
+                lat: amenity.geometry.location.lat(),
+                lng: amenity.geometry.location.lng()
             });
         }
 
@@ -41,7 +41,7 @@
                 var originPoint = turf.point(currentPosition.slice().reverse());
                 Rerouting.reroute(currentPosition, amenityType).then(function (amenities) {
                     angular.forEach(amenities, function (amenity) {
-                        var destinationPoint = turf.point([amenity.geometry.location.B, amenity.geometry.location.k]);
+                        var destinationPoint = turf.point([amenity.geometry.location.lng(), amenity.geometry.location.lat()]);
                         amenity.distance = turf.distance(originPoint, destinationPoint, 'kilometers') * 1000;   // meters
                     });
                     ctl.amenities = _.take(amenities, 5).sort(function (a, b) {
