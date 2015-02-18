@@ -96,7 +96,7 @@
                 deferred.reject(msg);
             }
 
-            Directions.get(origin, destination, options).then(setGeojson, failure);
+            Directions.get(origin, destination).then(setGeojson, failure);
             return deferred.promise;
         }
     }

@@ -31,7 +31,7 @@
          * @param options {object}
          * // TODO: Document options object
          */
-        function get(origin, destination, options) {
+        function get(origin, destination) {
             var dfd = $q.defer();
             if (!(_.isArray(origin) && origin.length >= 2)) {
                 dfd.reject({ msg: 'Invalid origin parameter' });
@@ -42,7 +42,7 @@
                 return dfd.promise;
             }
             var otpRequestParams = getRequestParams();
-            var params = angular.extend({}, otpRequestParams, options);
+            var params = angular.extend({}, otpRequestParams);
             // Swap, OTP request uses [lat,lon]
             params.fromPlace = [origin[1], origin[0]].join(',');
             params.toPlace = [destination[1], destination[0]].join(',');
@@ -220,7 +220,7 @@
         function transformOtpToGeoJson(otpResponse) {
 
             var itineraries = otpResponse.plan.itineraries;
-            var itinerary = itineraries[0];
+            var itinerary = itineraries[itineraries.length - 1];
             var lineStrings = [];
             currentRouteSummary.distanceMeters = itinerary.walkDistance;
             currentRouteSummary.timeMinutes = itinerary.duration / 60;

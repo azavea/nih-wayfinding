@@ -42,12 +42,8 @@
         }
 
         function getDirections(data) {
-            var options = angular.extend({}, directionsOptions, {
-                wheelchair: !!(currentUser.preferences.wheelchairRequired),
-            });
-
             Navigation.setDestination(data.destination);
-            MapRoute.mapRoute(data.origin, data.destination, options).then(function(mappedRoute) {
+            MapRoute.mapRoute(data.origin, data.destination).then(function(mappedRoute) {
                 angular.extend(ctl.map, mappedRoute);
                 ctl.summary = angular.extend(ctl.summary, Directions.getRouteSummary());
             });
