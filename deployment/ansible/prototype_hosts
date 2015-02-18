@@ -1,5 +1,5 @@
 [app-servers]
-localhost otp_ip=127.0.0.1
+localhost otp_ip=127.0.0.1  app_home=/home/ubuntu/nih-wayfinding/src/nih_wayfinding
 
 [otp-servers]
 localhost
