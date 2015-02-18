@@ -1,3 +1,0 @@
----
-- name: Restart nih-wayfinding-app
-  service: name=nih-wayfinding-app state=restarted

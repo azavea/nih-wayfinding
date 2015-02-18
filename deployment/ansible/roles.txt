@@ -4,8 +4,3 @@ azavea.nginx,0.2.0
 azavea.nodejs,0.2.0
 azavea.ntp,0.1.0
 azavea.opentripplanner,0.2.4
-azavea.pgweb,0.1.1
-azavea.pip,0.1.0
-azavea.postgis,0.1.2
-azavea.postgresql,0.2.1
-azavea.postgresql-support,0.2.0
