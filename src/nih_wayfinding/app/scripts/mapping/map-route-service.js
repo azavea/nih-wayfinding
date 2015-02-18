@@ -32,17 +32,8 @@
             };
         }
 
-        function mapRoute(origin, destination, opts) {
-            var directionsOptions = {
-                walkTimeMins: 0,
-                wheelchair: false
-            };
-            var currentUser = ProfileService.getCurrentUser();
+        function mapRoute(origin, destination, steps) {
             var deferred = $q.defer();
-            var options = angular.extend(directionsOptions, opts, {
-                wheelchair: !!(currentUser.preferences.wheelchairRequired),
-                walkSpeed: currentUser.preferences.speed
-            });
 
             // Success handler on promise
             function setGeojson(geojson) {
@@ -96,7 +87,7 @@
                 deferred.reject(msg);
             }
 
-            Directions.get(origin, destination).then(setGeojson, failure);
+            Directions.get(origin, destination, steps).then(setGeojson, failure);
             return deferred.promise;
         }
     }

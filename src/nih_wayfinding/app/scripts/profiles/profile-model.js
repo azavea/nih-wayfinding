@@ -122,6 +122,17 @@
             this.locations = newLocations;
         };
 
+        /**
+         * Get the walk distance for this user given a walk time in minutes
+         * @param  {Number} walkTimeMins Time this profile would walk for, in minutes
+         * @return {Number} Walk distance in km for the given time
+         */
+        Profile.prototype.getWalkDistance = function(walkTimeMins) {
+            var speed = this.preferences.speed; // m/s
+            var seconds = walkTimeMins * 60;
+            return  speed * seconds / 1000;
+        };
+
 
         // Public Interface
         var module = {

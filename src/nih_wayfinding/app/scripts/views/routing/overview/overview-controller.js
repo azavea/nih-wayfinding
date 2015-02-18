@@ -11,11 +11,10 @@
     /* ngInject */
     function OverviewController($scope, $stateParams, $q, leafletData,
                                 Config, Directions, Map, MapControl, MapStyle, MapRoute, NavbarConfig,
-                                Navigation, Notifications, ProfileService) {
+                                Navigation, Notifications, ProfileService, Walk) {
         var ctl = this;
         var boundsLayer = null;
         var currentUser = null;
-        var defaultNonZeroWalkTime = 30;
         var directionsOptions = {};
         initialize();
 
@@ -42,10 +41,17 @@
         }
 
         function getDirections(data) {
+            var steps = null;
+            if (directionsOptions.walkTimeMins > 0) {
+                var walkKm = currentUser.getWalkDistance(directionsOptions.walkTimeMins);
+                steps = Walk.getStops(turf.point(data.origin), walkKm);
+            }
+
             Navigation.setDestination(data.destination);
-            MapRoute.mapRoute(data.origin, data.destination).then(function(mappedRoute) {
+            MapRoute.mapRoute(data.origin, data.destination, steps).then(function(mappedRoute) {
                 angular.extend(ctl.map, mappedRoute);
-                ctl.summary = angular.extend(ctl.summary, Directions.getRouteSummary());
+                var summary = Directions.getRouteSummary(ctl.map.geojson.data, currentUser.preferences.speed);
+                ctl.summary = angular.extend(ctl.summary, summary);
             });
         }
 
@@ -58,7 +64,7 @@
             var dfd = $q.defer();
             var destination = MapControl.cleanLonLatParam($stateParams.destination);
             var origin = MapControl.cleanLonLatParam($stateParams.origin);
-            directionsOptions.walkTimeMins = $stateParams.walkTimeMins || 0;
+            directionsOptions.walkTimeMins = parseInt($stateParams.walkTimeMins, 10) || 0;
 
             if (origin && destination) {
                 dfd.resolve({
@@ -73,9 +79,6 @@
                     }
                     if (!origin) {
                         origin = currentPosition;
-                    }
-                    if (_.isEqual(origin, destination)) {
-                        directionsOptions.walkTimeMins = defaultNonZeroWalkTime;
                     }
                     MapControl.trackUser(currentPosition);
                     dfd.resolve({

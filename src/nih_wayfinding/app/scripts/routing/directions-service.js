@@ -6,11 +6,6 @@
     function Directions ($filter, $http, $q, $timeout, Config, MapControl, ProfileService, TurnAmenities) {
 
         var directionsUrl = '/otp/routers/default/plan';
-        var currentRouteSummary = {
-            distanceMeters: 0,
-            timeMinutes: 0,
-            turns: 0
-        };
 
         var module = {
             get: get,
@@ -28,10 +23,9 @@
          *
          * @param origin {array} [lon, lat]
          * @param destination {array} [lon, lat]
-         * @param options {object}
-         * // TODO: Document options object
+         * @param steps {array} of [lon, lat] arrays to be used as intermediate steps
          */
-        function get(origin, destination) {
+        function get(origin, destination, steps) {
             var dfd = $q.defer();
             if (!(_.isArray(origin) && origin.length >= 2)) {
                 dfd.reject({ msg: 'Invalid origin parameter' });
@@ -43,10 +37,48 @@
             }
             var otpRequestParams = getRequestParams();
             var params = angular.extend({}, otpRequestParams);
+
+            if (steps && steps.length) {
+                // split request into multiple steps
+                steps.splice(0, 0, origin);
+                steps.push(destination);
+                var promises = [];
+                for (var i = 0; i < steps.length - 1; i++) {
+                    var stepOrigin = steps[i];
+                    var stepDestination = steps[i + 1];
+                    promises.push(makeRequest(stepOrigin, stepDestination, params));
+                }
+                $q.all(promises).then(function (data) {
+                    var features = [];
+                    angular.forEach(data, function (stepFeatureCollection) {
+                        features = features.concat(stepFeatureCollection.features);
+                    });
+                    var geojson = {
+                        type: 'FeatureCollection',
+                        features: features
+                    };
+                    dfd.resolve(geojson);
+                }, function (error) {
+                    dfd.reject(error);
+                });
+            } else {
+                makeRequest(origin, destination, params).then(function (data) {
+                    dfd.resolve(data);
+                }, function (error) {
+                    dfd.reject(error);
+                });
+            }
+
+            return dfd.promise;
+        }
+
+        function makeRequest(origin, destination, options) {
+            var dfd = $q.defer();
+            var params = angular.extend({}, options);
             // Swap, OTP request uses [lat,lon]
             params.fromPlace = [origin[1], origin[0]].join(',');
             params.toPlace = [destination[1], destination[0]].join(',');
-
+            delete params.intermediatePlaces;
             $http.get(directionsUrl, {
                 params: params
             }).then(function (response) {
@@ -78,6 +110,7 @@
                     dfd.resolve(geojson);
                 }
             });
+
             return dfd.promise;
         }
 
@@ -125,7 +158,6 @@
             // TODO: Write tests once actual icons exist
             switch (turnType) {
                 case 'DEPART':
-                    return 'glyphicon-flag';
                 case 'CONTINUE':
                     return 'glyphicon-arrow-up';
                 // Temporarily fall through to similar cases for left/right
@@ -170,8 +202,21 @@
          * @param  {float} walkSpeed    Walk speed in m/s, used to calculate time, optional, default 1
          * @return {[type]}             [description]
          */
-        function getRouteSummary() {
-            return currentRouteSummary;
+        function getRouteSummary(geojson, walkSpeed) {
+            walkSpeed = walkSpeed || 1;
+            var distance = 0;
+            var turns = 0;
+            angular.forEach(geojson.features, function (feature) {
+                if (isTurn(feature.properties.directions.turn)) {
+                    turns++;
+                }
+                distance += feature.properties.directions.distanceMeters;
+            });
+            return {
+                distanceMeters: distance,
+                timeMinutes: distance / walkSpeed / 60,
+                turns: turns
+            };
         }
 
         function isTurn(turnType) {
@@ -222,9 +267,6 @@
             var itineraries = otpResponse.plan.itineraries;
             var itinerary = itineraries[itineraries.length - 1];
             var lineStrings = [];
-            currentRouteSummary.distanceMeters = itinerary.walkDistance;
-            currentRouteSummary.timeMinutes = itinerary.duration / 60;
-            currentRouteSummary.turns = 0; // increment turn count when fetching properties
 
             angular.forEach(itinerary.legs, function (leg) {
                 _.each(leg.steps, function (step) {
@@ -286,9 +328,6 @@
                     flags: flags,
                     lastModified: lastModified
                 };
-                if (isTurn(turn)) {
-                    currentRouteSummary.turns++;
-                }
                 return properties;
             }
 
