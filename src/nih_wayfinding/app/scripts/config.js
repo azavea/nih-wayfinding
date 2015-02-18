@@ -75,7 +75,18 @@
                 longitude: -87.5484962
             }
         },
-        warningMinimumGrade: 5
+        warningMinimumGrade: 5,
+        locationTypes: [
+            { img: '/images/icons/icon-cafe.svg', text: 'Cafe' },
+            { img: '/images/icons/icon-house.svg', text: 'House' },
+            { img: '/images/icons/icon-park.svg', text: 'Park' },
+            { img: '/images/icons/icon-shopping.svg', text: 'Shopping' },
+            { img: '/images/icons/icon-bank.svg', text: 'Bank' },
+            { img: '/images/icons/icon-butcher.svg', text: 'Grocery' },
+            { img: '/images/icons/icon-pharmacy.svg', text: 'Pharmacy' },
+            { img: '/images/icons/icon-school.svg', text: 'School' },
+            { img: '/images/icons/icon-house.svg', text: 'Other' },
+        ]
     };
 
     angular.module('nih.config', [])

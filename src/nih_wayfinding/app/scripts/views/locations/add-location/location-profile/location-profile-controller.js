@@ -4,7 +4,7 @@
     /* ngInject */
     function LocationsProfileController(
         $stateParams, $state,
-        Geocoder, NavbarConfig, ProfileService
+        Config, Geocoder, NavbarConfig, ProfileService
     ) {
         var ctl = this;
         initialize();
@@ -22,17 +22,7 @@
             // Hidden image selection dialog
             ctl.showIconSelect = false;
             ctl.toggleIconSelectDialog = toggleIconSelectDialog;
-            ctl.imgOpts = [
-                { img: '/images/icons/icon-cafe.svg', type: 'Cafe' },
-                { img: '/images/icons/icon-house.svg', type: 'House' },
-                { img: '/images/icons/icon-park.svg', type: 'Park' },
-                { img: '/images/icons/icon-shopping.svg', type: 'Shopping' },
-                { img: '/images/icons/icon-bank.svg', type: 'Bank' },
-                { img: '/images/icons/icon-butcher.svg', type: 'Grocery' },
-                { img: '/images/icons/icon-pharmacy.svg', type: 'Pharmacy' },
-                { img: '/images/icons/icon-school.svg', type: 'School' },
-                { img: '/images/icons/icon-house.svg', type: 'Other' },
-            ];
+            ctl.imgOpts = Config.locationTypes;
 
             ctl.imgOptionClicked = imgOptionClicked;
 
@@ -70,7 +60,7 @@
          */
         function setImageByType() {
             _.each(ctl.imgOpts, function(imgOpt) {
-                if (imgOpt.type === ctl.user.tempLocation.type) {
+                if (imgOpt.text === ctl.user.tempLocation.type) {
                     ctl.user.setTempLocationProperty('img', imgOpt.img);
                     return;
                 }
