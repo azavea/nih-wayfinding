@@ -41,7 +41,7 @@ describe('nih.views.routing: OverviewController', function () {
     }
     function mockMapRouteService($q) {
         return {
-            mapRoute: function (origin, destination, options) {
+            mapRoute: function (origin, destination) {
                 var dfd = $q.defer();
                 dfd.resolve({
                     bounds: {},
@@ -103,7 +103,7 @@ describe('nih.views.routing: OverviewController', function () {
         it('should ensure getMapRoute is called with origin -> geolocation, destination -> geolocation', function () {
             rootScope.$digest();
             expect(geolocation.getCurrentPosition).toHaveBeenCalled();
-            expect(MapRoute.mapRoute).toHaveBeenCalledWith(geolocationArray, geolocationArray, jasmine.any(Object));
+            expect(MapRoute.mapRoute).toHaveBeenCalledWith(geolocationArray, geolocationArray);
         });
 
         it('should fetch the graph bounds', function () {
@@ -127,7 +127,7 @@ describe('nih.views.routing: OverviewController', function () {
         it('should ensure getMapRoute is called with origin -> geolocation, destination -> stateParams', function () {
             rootScope.$digest();
             expect(geolocation.getCurrentPosition).toHaveBeenCalled();
-            expect(MapRoute.mapRoute).toHaveBeenCalledWith(geolocationArray, stateParamsArray, jasmine.any(Object));
+            expect(MapRoute.mapRoute).toHaveBeenCalledWith(geolocationArray, stateParamsArray);
         });
     });
 
@@ -147,7 +147,7 @@ describe('nih.views.routing: OverviewController', function () {
         it('should ensure getMapRoute is called with origin -> stateParams, destination -> geolocation', function () {
             rootScope.$digest();
             expect(geolocation.getCurrentPosition).toHaveBeenCalled();
-            expect(MapRoute.mapRoute).toHaveBeenCalledWith(stateParamsArray, geolocationArray, jasmine.any(Object));
+            expect(MapRoute.mapRoute).toHaveBeenCalledWith(stateParamsArray, geolocationArray);
         });
     });
 
@@ -168,7 +168,7 @@ describe('nih.views.routing: OverviewController', function () {
         it('should ensure getMapRoute is called with origin -> stateParams, destination -> stateParams', function () {
             rootScope.$digest();
             expect(geolocation.getCurrentPosition).not.toHaveBeenCalled();
-            expect(MapRoute.mapRoute).toHaveBeenCalledWith(stateParamsArray, stateParamsArray, jasmine.any(Object));
+            expect(MapRoute.mapRoute).toHaveBeenCalledWith(stateParamsArray, stateParamsArray);
         });
     });
 });
