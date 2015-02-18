@@ -2,7 +2,7 @@
     'use strict';
 
     /* ngInject */
-    function SelectTypeController($state, NavbarConfig, ProfileService) {
+    function SelectTypeController($state, Config,NavbarConfig, ProfileService) {
         var ctl = this;
         initialize();
 
@@ -14,14 +14,7 @@
                 color: NavbarConfig.colors.profile
             });
             ctl.optionClicked = optionClicked;
-            ctl.gridOptions = [
-                { text: 'Cafe' },
-                { text: 'House' },
-                { text: 'Park' },
-                { text: 'Shopping' },
-                { text: 'Donut Shop' },
-                { text: 'Other' }
-            ];
+            ctl.gridOptions = Config.locationTypes;
         }
 
         /**

@@ -36,6 +36,7 @@
         'ngAria',
         'ui.router',
         'leaflet-directive',
+        'nih.config',
         'nih.geocoder',
         'nih.notifications',
         'nih.profiles',
