@@ -268,7 +268,7 @@
          */
         function findStepBoxForPoint(point, distance) {
             return _.find(currentRoute.stepBoxes, function (stepBox) {
-                return turf.inside(point, stepBox.polygon) && distance >= stepBox.distance.min && distance < stepBox.distance.max;
+                return turf.inside(point, stepBox.polygon) && distance >= stepBox.distance.min && distance <= stepBox.distance.max;
             });
         }
     }

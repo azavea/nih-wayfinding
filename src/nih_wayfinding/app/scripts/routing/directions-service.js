@@ -6,11 +6,6 @@
     function Directions ($filter, $http, $q, $timeout, Config, MapControl, ProfileService, TurnAmenities) {
 
         var directionsUrl = '/otp/routers/default/plan';
-        var currentRouteSummary = {
-            distanceMeters: 0,
-            timeMinutes: 0,
-            turns: 0
-        };
 
         var module = {
             get: get,
@@ -86,7 +81,6 @@
             params.fromPlace = [origin[1], origin[0]].join(',');
             params.toPlace = [destination[1], destination[0]].join(',');
             delete params.intermediatePlaces;
-
             $http.get(directionsUrl, {
                 params: params
             }).then(function (response) {
@@ -166,7 +160,6 @@
             // TODO: Write tests once actual icons exist
             switch (turnType) {
                 case 'DEPART':
-                    return 'glyphicon-arrow-up';
                 case 'CONTINUE':
                     return 'glyphicon-arrow-up';
                 // Temporarily fall through to similar cases for left/right
@@ -211,8 +204,21 @@
          * @param  {float} walkSpeed    Walk speed in m/s, used to calculate time, optional, default 1
          * @return {[type]}             [description]
          */
-        function getRouteSummary() {
-            return currentRouteSummary;
+        function getRouteSummary(geojson, walkSpeed) {
+            walkSpeed = walkSpeed || 1;
+            var distance = 0;
+            var turns = 0;
+            angular.forEach(geojson.features, function (feature) {
+                if (isTurn(feature.properties.directions.turn)) {
+                    turns++;
+                }
+                distance += feature.properties.directions.distanceMeters;
+            });
+            return {
+                distanceMeters: distance,
+                timeMinutes: distance / walkSpeed / 60,
+                turns: turns
+            };
         }
 
         function isTurn(turnType) {
@@ -263,9 +269,6 @@
             var itineraries = otpResponse.plan.itineraries;
             var itinerary = itineraries[itineraries.length - 1];
             var lineStrings = [];
-            currentRouteSummary.distanceMeters = itinerary.walkDistance;
-            currentRouteSummary.timeMinutes = itinerary.duration / 60;
-            currentRouteSummary.turns = 0; // increment turn count when fetching properties
 
             angular.forEach(itinerary.legs, function (leg) {
                 _.each(leg.steps, function (step) {
@@ -327,9 +330,6 @@
                     flags: flags,
                     lastModified: lastModified
                 };
-                if (isTurn(turn)) {
-                    currentRouteSummary.turns++;
-                }
                 return properties;
             }
 

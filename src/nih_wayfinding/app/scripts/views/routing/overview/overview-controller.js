@@ -52,7 +52,8 @@
             Navigation.setDestination(data.destination);
             MapRoute.mapRoute(data.origin, data.destination).then(function(mappedRoute) {
                 angular.extend(ctl.map, mappedRoute);
-                ctl.summary = angular.extend(ctl.summary, Directions.getRouteSummary());
+                var summary = Directions.getRouteSummary(ctl.map.geojson.data, currentUser.preferences.speed);
+                ctl.summary = angular.extend(ctl.summary, summary);
             });
         }
 
