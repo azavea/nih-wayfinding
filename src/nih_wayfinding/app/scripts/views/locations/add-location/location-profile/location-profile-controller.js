@@ -55,6 +55,11 @@
 
             // Final validation
             ctl.validateBeforeReview = validateBeforeReview;
+
+            // set default image for location type
+            if (!ctl.user.tempLocation.img) {
+                setImageByType();
+            }
         }
 
         /**
@@ -63,7 +68,7 @@
         function setImageByType() {
             _.each(ctl.imgOpts, function(imgOpt) {
                 if (imgOpt.type === ctl.user.tempLocation.type) {
-                    ctl.user.tempLocation.img = imgOpt.img;
+                    ctl.user.setTempLocationProperty('img', imgOpt.img);
                     return;
                 }
             });
@@ -166,11 +171,6 @@
             } else { // If we have both a label and an address
                 var geom = ctl.user.tempLocation.feature.geometry;
                 var xyString = geom.x.toString() + ',' + geom.y.toString(); // Cast to string
-
-                // set default image for location type, if no image selected
-                if (!ctl.user.tempLocation.img) {
-                    setImageByType();
-                }
                 ctl.user.save();
                 $state.go('locationsReview', { destination: xyString }); // Use as url params
             }
