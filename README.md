@@ -36,8 +36,7 @@ cd /opt/app
 grunt serve
 ```
 
-From there, you should be able to access everything off of port 8001 on
-your host machine.
+From there, you should be able to access the development server at: [http://localhost:8000/dev/]
 
 ### Ports
 
@@ -49,7 +48,6 @@ column.
 Service                                 | Port  | URL                                              | Env Variable Override
 --------------------------------------- | ----- | ------------------------------------------------ | ---------------------
 Angular Web Application                 | 8000  | [http://localhost:8000](http://localhost:8000)   | NIH_WAYFINDING_PORT_8000
-Angular Web Application via grunt serve | 8001  | [http://localhost:8001](http://localhost:8001)   | NIH_WAYFINDING_PORT_8001
 PostgreSQL                              | 15432 |                                                  | NIH_WAYFINDING_PORT_5432
 pgweb                                   | 15433 | [http://localhost:15433](http://localhost:15433) | NIH_WAYFINDING_PORT_5433
 livereload                              | 35729 |                                                  | N/A

@@ -8,5 +8,3 @@
 
   roles:
     - { role: "nih-wayfinding.app" }
-    - { role: "nih-wayfinding.postgresql", when: developing_or_testing }
-    - { role: "nih-wayfinding.pgweb", when: developing_or_testing }
