@@ -112,7 +112,7 @@ describe('nih.views.routing: OverviewController', function () {
         it('should ensure getMapRoute is called with origin -> geolocation, destination -> geolocation', function () {
             rootScope.$digest();
             expect(geolocation.getCurrentPosition).toHaveBeenCalled();
-            expect(MapRoute.mapRoute).toHaveBeenCalledWith(geolocationArray, geolocationArray);
+            expect(MapRoute.mapRoute).toHaveBeenCalledWith(geolocationArray, geolocationArray, null);
         });
 
         it('should fetch the graph bounds', function () {
@@ -137,7 +137,7 @@ describe('nih.views.routing: OverviewController', function () {
         it('should ensure getMapRoute is called with origin -> geolocation, destination -> stateParams', function () {
             rootScope.$digest();
             expect(geolocation.getCurrentPosition).toHaveBeenCalled();
-            expect(MapRoute.mapRoute).toHaveBeenCalledWith(geolocationArray, stateParamsArray);
+            expect(MapRoute.mapRoute).toHaveBeenCalledWith(geolocationArray, stateParamsArray, null);
         });
     });
 
@@ -158,7 +158,7 @@ describe('nih.views.routing: OverviewController', function () {
         it('should ensure getMapRoute is called with origin -> stateParams, destination -> geolocation', function () {
             rootScope.$digest();
             expect(geolocation.getCurrentPosition).toHaveBeenCalled();
-            expect(MapRoute.mapRoute).toHaveBeenCalledWith(stateParamsArray, geolocationArray);
+            expect(MapRoute.mapRoute).toHaveBeenCalledWith(stateParamsArray, geolocationArray, null);
         });
     });
 
@@ -180,7 +180,7 @@ describe('nih.views.routing: OverviewController', function () {
         it('should ensure getMapRoute is called with origin -> stateParams, destination -> stateParams', function () {
             rootScope.$digest();
             expect(geolocation.getCurrentPosition).not.toHaveBeenCalled();
-            expect(MapRoute.mapRoute).toHaveBeenCalledWith(stateParamsArray, stateParamsArray);
+            expect(MapRoute.mapRoute).toHaveBeenCalledWith(stateParamsArray, stateParamsArray, null);
         });
     });
 });

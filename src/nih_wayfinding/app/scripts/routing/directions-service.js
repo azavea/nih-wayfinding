@@ -23,10 +23,9 @@
          *
          * @param origin {array} [lon, lat]
          * @param destination {array} [lon, lat]
-         * @param options {object}
-         * // TODO: Document options object
+         * @param steps {array} of [lon, lat] arrays to be used as intermediate steps
          */
-        function get(origin, destination) {
+        function get(origin, destination, steps) {
             var dfd = $q.defer();
             if (!(_.isArray(origin) && origin.length >= 2)) {
                 dfd.reject({ msg: 'Invalid origin parameter' });
@@ -39,9 +38,8 @@
             var otpRequestParams = getRequestParams();
             var params = angular.extend({}, otpRequestParams);
 
-            if (params.intermediatePlaces) {
+            if (steps && steps.length) {
                 // split request into multiple steps
-                var steps = params.intermediatePlaces;
                 steps.splice(0, 0, origin);
                 steps.push(destination);
                 var promises = [];

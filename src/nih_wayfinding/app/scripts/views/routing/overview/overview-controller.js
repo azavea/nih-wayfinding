@@ -15,7 +15,6 @@
         var ctl = this;
         var boundsLayer = null;
         var currentUser = null;
-        var defaultNonZeroWalkTime = 30;
         var directionsOptions = {};
         initialize();
 
@@ -42,15 +41,14 @@
         }
 
         function getDirections(data) {
+            var steps = null;
             if (directionsOptions.walkTimeMins > 0) {
                 var walkKm = currentUser.getWalkDistance(directionsOptions.walkTimeMins);
-                console.log('Walk Distance (km):', walkKm);
-                var steps = Walk.getStops(turf.point(data.origin), walkKm);
-                options.intermediatePlaces = steps;
+                steps = Walk.getStops(turf.point(data.origin), walkKm);
             }
 
             Navigation.setDestination(data.destination);
-            MapRoute.mapRoute(data.origin, data.destination).then(function(mappedRoute) {
+            MapRoute.mapRoute(data.origin, data.destination, steps).then(function(mappedRoute) {
                 angular.extend(ctl.map, mappedRoute);
                 var summary = Directions.getRouteSummary(ctl.map.geojson.data, currentUser.preferences.speed);
                 ctl.summary = angular.extend(ctl.summary, summary);
