@@ -153,7 +153,7 @@
             }
             var subtitleText = distanceText;
             var rightImages = [];
-            if (position.properties.directions.warnings.length > 0) {
+            if (position.properties.directions.warnings && position.properties.directions.warnings.length > 0) {
                 rightImages.push(position.properties.directions.warnings[0].img);
             }
             _.each(position.properties.directions.features, function(feature) {
