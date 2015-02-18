@@ -154,10 +154,10 @@
             var subtitleText = distanceText;
             var rightImages = [];
             _.each(position.properties.directions.warnings, function(warning) {
-                rightImages.push(warning);
+                rightImages.push(warning.img);
             });
             _.each(position.properties.directions.features, function(feature) {
-                rightImages.push(feature);
+                rightImages.push(feature.img);
             });
             setNavbar({
                 title: text,

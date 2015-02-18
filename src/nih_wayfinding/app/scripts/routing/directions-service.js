@@ -16,7 +16,6 @@
             get: get,
             getTurnIconName: getTurnIconName,
             getRouteSummary: getRouteSummary,
-            textForImage: textForImage,
             isAudited: isAudited,
             isTurn: isTurn
         };
@@ -149,19 +148,6 @@
             }
         }
 
-        function textForImage(imgUrl) {
-            if (imgUrl.indexOf('caution') !== -1) {
-                return 'Block may have issues';
-            } else if (imgUrl.indexOf('flower') !== -1) {
-                return 'Pretty street';
-            } else if (imgUrl.indexOf('bench') !== -1) {
-                return 'Has a place to rest';
-            } else {
-                return 'Unknown issue';
-            }
-            return 'Place to rest';
-        }
-
         /**
          * Get a summary for the last requested route via Directions.get,
          *     including time, distance and # of turns
@@ -258,21 +244,10 @@
                     delete flags[key];
                 });
 
-                var warnings = [];
-                var features = [];
-
+                var stepFeatures = {warnings: [], features: []};
                 // add properties for audited edges
                 if (lastModified > 0) {
-                    if (step.hazards || step.crossSlope || (step.maxSlope > Config.warningMinimumGrade) ||
-                        (step.surface && (step.surface !== 'Concrete'))) {
-                        warnings.push('images/icons/icon-caution.svg');
-                    }
-                    if (step.aesthetics) {
-                        features.push('images/icons/icon-flower.svg');
-                    }
-                    if (step.rest) {
-                        features.push('images/icons/icon-bench.svg');
-                    }
+                    stepFeatures = getFeaturesForStep(step);
                 }
 
                 var properties = {
@@ -280,8 +255,8 @@
                        distanceMeters: distance,
                        turn: turn,
                        text: text,
-                       warnings: warnings,
-                       features: features
+                       warnings: stepFeatures.warnings,
+                       features: stepFeatures.features
                     },
                     flags: flags,
                     lastModified: lastModified
@@ -290,6 +265,54 @@
                     currentRouteSummary.turns++;
                 }
                 return properties;
+            }
+
+            /**
+             * Set notes and images for the features and warnings along this walk step.
+             *
+             * @param step {Object} Walk step from OpenTripPlanner to evaluate
+             * @return {Object} with lists of warnings and features, with notes and image paths
+             */
+            function getFeaturesForStep(step) {
+                var warnings = [];
+                var features = [];
+                if (step.hazards) {
+                        warnings.push({
+                            img: 'images/icons/icon-caution.svg',
+                            note: 'Hazard level is ' + step.hazards.toLowerCase()
+                        });
+                    }
+                    if (step.crossSlope) {
+                        warnings.push({
+                            img: 'images/icons/icon-caution.svg',
+                            note: 'Sidewalk has slope'
+                        });
+                    }
+                    if (step.maxSlope > Config.warningMinimumGrade) {
+                        warnings.push({
+                            img: 'images/icons/icon-caution.svg',
+                            note: 'Steep sections'
+                        });
+                    }
+                    if (step.surface && (step.surface !== 'Concrete')) {
+                        warnings.push({
+                            img: 'images/icons/icon-caution.svg',
+                            note: 'Sections are not concrete'
+                        });
+                    }
+                    if (step.aesthetics) {
+                        features.push({
+                            img: 'images/icons/icon-flower.svg',
+                            note: 'Pretty street'
+                        });
+                    }
+                    if (step.rest) {
+                        features.push({
+                            img: 'images/icons/icon-bench.svg',
+                            note: 'Has a place to rest'
+                        });
+                    }
+                return {warnings: warnings, features: features};
             }
 
             function turnText(turn, street, direction) {

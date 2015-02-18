@@ -2,16 +2,16 @@
     'use strict';
 
      /* ngInject */
-    function RowDetail($compile, Directions) {
+    function RowDetail($compile) {
         // TODO: Animate the row appearing
         var template = [
             '<tr ng-show="visible"><td colspan="2">',
                 '<ul class="list-unstyled">',
                     '<li ng-repeat="feature in item.directions.features">',
-                        '<img width="20px" height="20px" ng-src="{{ ::feature }}" />{{ textForImage(feature) }}',
+                        '<img width="20px" height="20px" ng-src="{{ ::feature.img }}" />{{ ::feature.note }}',
                     '</li>',
-                    '<li ng-repeat="feature in item.directions.warnings">',
-                        '<img width="20px" height="20px" ng-src="{{ ::feature }}" />{{ textForImage(feature) }}',
+                    '<li ng-repeat="warning in item.directions.warnings">',
+                        '<img width="20px" height="20px" ng-src="{{ ::warning.img }}" />{{ ::warning.note }}',
                     '</li>',
                 '</ul>',
             '</td></tr>'
@@ -32,7 +32,6 @@
             }
 
             scope.visible = false;
-            scope.textForImage = Directions.textForImage;
 
             var row = $compile(template)(scope);
             element.after(row);
