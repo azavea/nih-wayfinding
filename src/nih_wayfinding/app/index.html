@@ -25,7 +25,7 @@
     <header ng-controller="NavbarController as navbar" class="navbar" ng-style="{'background': navbar.config.color}">
       <div class="container-fluid">
         <div class="navbar-header">
-          <h2 class="navbar-actionheader" ng-cloak ui-sref="profiles">
+          <h2 class="navbar-actionheader" ng-cloak>
             <span ng-if="navbar.config.leftImage" class="glyphicon" ng-class="navbar.config.leftImage"></span>
             {{ navbar.config.title }}
             <span ng-show="navbar.config.rightImages.length" ng-repeat="imageSrc in navbar.config.rightImages">
