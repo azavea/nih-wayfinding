@@ -153,11 +153,11 @@
             }
             var subtitleText = distanceText;
             var rightImages = [];
-            _.each(position.properties.directions.warnings, function(warning) {
-                rightImages.push(warning);
-            });
+            if (position.properties.directions.warnings && position.properties.directions.warnings.length > 0) {
+                rightImages.push(position.properties.directions.warnings[0].img);
+            }
             _.each(position.properties.directions.features, function(feature) {
-                rightImages.push(feature);
+                rightImages.push(feature.img);
             });
             setNavbar({
                 title: text,
