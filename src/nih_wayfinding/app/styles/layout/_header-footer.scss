@@ -4,7 +4,8 @@ header {
     top: 0;
     width: 100%;
     z-index: 3000;
-    min-height: $header-height;
+    height: $header-height;
+    overflow: hidden;
     transition: background-color 400ms ease-in-out;
     &.mode-route {
         background-color: $brand-route;
@@ -43,4 +44,36 @@ footer {
 .navbar-actionheader-subtitle {
     padding-right: 11rem;
     color: #fff;
+}
+
+.navigate-instruction {
+    z-index: 1000;
+    position: absolute;
+    background-color: #fff;
+    left: 0;
+    right: 0;
+    top: $header-height;
+    height: 20rem;
+    padding: 2rem $grid-gutter-width/2;
+}
+
+.navigation-text {
+    font-size: $font-size-h4;
+}
+
+.navigate-mi {
+    font-size: 5rem;
+    font-weight: bold;
+    color: $headings-color;
+}
+
+.navigate-min {
+    font-size: $font-size-h2;
+    color: $gray-light
+}
+
+.navigation-direction {
+    font-size: 5rem;
+    margin: .3rem 2rem 9rem 0;
+    color: $headings-color;
 }

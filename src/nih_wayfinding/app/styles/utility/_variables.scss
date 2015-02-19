@@ -39,7 +39,7 @@ $primary-light:         #F0FCEC;
 //** Background color for `<body>`.
 $body-bg:               #fff;
 //** Global text color on `<body>`.
-$text-color:            $gray-light;
+$text-color:            #555;
 
 //** Global textual link color.
 $link-color:            $brand-primary;
@@ -78,7 +78,7 @@ $line-height-computed:    floor(($font-size-base * $line-height-base)); // ~20px
 $headings-font-family:    inherit;
 $headings-font-weight:    800;
 $headings-line-height:    1.1;
-$headings-color:          #333;
+$headings-color:          #222;
 
 
 //== Iconography
@@ -866,3 +866,4 @@ $hr-border:                   $gray-lightest;
 
 $header-height: rem(80px);
 $footer-height: rem(80px);
+$navigate-height: rem(200px);
