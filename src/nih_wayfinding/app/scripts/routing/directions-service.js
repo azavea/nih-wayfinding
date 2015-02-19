@@ -150,6 +150,10 @@
                 params.restingPlaces = true;
             }
 
+            if (preferences.busy !== 0) {
+                params.crowding = preferences.busy;
+            }
+
             return params;
         }
 
