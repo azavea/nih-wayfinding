@@ -320,42 +320,53 @@
                 var warnings = [];
                 var features = [];
                 if (step.hazards) {
-                        warnings.push({
-                            img: 'images/icons/icon-caution.svg',
-                            note: 'Hazard level is ' + step.hazards.toLowerCase()
-                        });
+                    var hazardStr = step.hazards.toLowerCase();
+                    if (hazardStr.indexOf(',') > -1) {
+                        var hazardLevels = hazardStr.split(', ');
+                        if (hazardLevels.length === 3) {
+                            hazardStr = 'Hazard level is low to high';
+                        } else {
+                            hazardStr = 'Hazard level is ' + hazardLevels[0] + ' to ' + hazardLevels[1];
+                        }
+                    } else {
+                        hazardStr = 'Hazard level is ' + hazardStr;
                     }
-                    if (step.crossSlope) {
-                        warnings.push({
-                            img: 'images/icons/icon-caution.svg',
-                            note: 'Sidewalk has slope'
-                        });
-                    }
-                    if (step.maxSlope > Config.warningMinimumGrade) {
-                        warnings.push({
-                            img: 'images/icons/icon-caution.svg',
-                            note: 'Steep sections'
-                        });
-                    }
-                    if (step.surface && (step.surface !== 'Concrete')) {
-                        warnings.push({
-                            img: 'images/icons/icon-caution.svg',
-                            note: 'Sections are not concrete'
-                        });
-                    }
-                    if (step.aesthetics) {
-                        features.push({
-                            img: 'images/icons/icon-flower.svg',
-                            note: 'Pretty street'
-                        });
-                    }
-                    if (step.rest) {
-                        features.push({
-                            img: 'images/icons/icon-bench.svg',
-                            note: 'Has a place to rest'
-                        });
-                    }
-                return {warnings: warnings, features: features};
+                    warnings.push({
+                        img: 'images/icons/icon-caution.svg',
+                        note: hazardStr
+                    });
+                }
+                if (step.crossSlope) {
+                    warnings.push({
+                        img: 'images/icons/icon-caution.svg',
+                        note: 'Sidewalk has slope'
+                    });
+                }
+                if (step.maxSlope > Config.warningMinimumGrade) {
+                    warnings.push({
+                        img: 'images/icons/icon-caution.svg',
+                        note: 'Steep sections'
+                    });
+                }
+                if (step.surface && (step.surface !== 'Concrete')) {
+                    warnings.push({
+                        img: 'images/icons/icon-caution.svg',
+                        note: 'Sections are not concrete'
+                    });
+                }
+                if (step.aesthetics) {
+                    features.push({
+                        img: 'images/icons/icon-flower.svg',
+                        note: 'Pretty street'
+                    });
+                }
+                if (step.rest) {
+                    features.push({
+                        img: 'images/icons/icon-bench.svg',
+                        note: 'Has a place to rest'
+                    });
+                }
+                return { warnings: warnings, features: features };
             }
 
             function turnText(turn, street, direction) {
