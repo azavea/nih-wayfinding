@@ -73,6 +73,7 @@ module.exports = function(config) {
       // explicitly list files here in same order as in index.html
       // (globbing fails)
       'app/scripts/profiles/module.js',
+      'app/scripts/profiles/profile-default-user.js',
       'app/scripts/profiles/profile-model.js',
       'app/scripts/profiles/profile-service.js',
       'app/scripts/profiles/profile-preference-options.js',

@@ -87,14 +87,14 @@ describe('nih.profiles: ProfileService', function () {
     it('should reliably generate the next id', function () {
         // already have four locations
         profile.startTempLocation();
-        expect(profile.tempLocation.id).toEqual(5);
+        expect(profile.tempLocation.id).toEqual(7);
         profile.finishTempLocation();
 
         profile.startTempLocation();
-        expect(profile.tempLocation.id).toEqual(6);
+        expect(profile.tempLocation.id).toEqual(8);
 
         profile.finishTempLocation();
-        expect(profile.newLocationID()).toEqual(7);
+        expect(profile.newLocationID()).toEqual(9);
     });
 
     it('should move tempLocation into locations', function () {
@@ -104,7 +104,7 @@ describe('nih.profiles: ProfileService', function () {
         profile.startTempLocation();
         var temp = profile.tempLocation;
         profile.finishTempLocation();
-        expect(profile.locations[5]).toEqual(temp);
+        expect(profile.locations[7]).toEqual(temp);
     });
 
     it('should set a property of tempLocation and, later, find that location', function () {
@@ -115,7 +115,7 @@ describe('nih.profiles: ProfileService', function () {
         profile.setTempLocationProperty('zipzap', 'flimflam');
         expect(profile.tempLocation.zipzap).toEqual('flimflam');
         profile.finishTempLocation();
-        expect(profile.locationByID(6).zipzap).toEqual('flimflam');
+        expect(profile.locationByID(8).zipzap).toEqual('flimflam');
     });
 
     it('should set a property of tempLocation and, later, find that location', function () {
@@ -123,8 +123,8 @@ describe('nih.profiles: ProfileService', function () {
         profile.finishTempLocation();
         profile.startTempLocation();
         profile.finishTempLocation();
-        profile.removeLocation(6);
-        expect(profile.locations.length).toEqual(5);
+        profile.removeLocation(8);
+        expect(profile.locations.length).toEqual(7);
     });
 
 });
