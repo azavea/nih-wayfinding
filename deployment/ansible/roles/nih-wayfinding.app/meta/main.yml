@@ -2,4 +2,5 @@
 dependencies:
   - { role: "azavea.git" }
   - { role: "azavea.nginx", nginx_delete_default_site: True }
+  - { role: "azavea.ruby", ruby_development: True }
   - { role: "nih-wayfinding.nodejs" }
