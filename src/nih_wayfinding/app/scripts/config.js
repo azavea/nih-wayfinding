@@ -71,8 +71,8 @@
         },
         stubs: {
             geolocation: {
-                latitude: 41.7301127,
-                longitude: -87.5484962
+                latitude: 41.728496,
+                longitude: -87.545001
             }
         },
         warningMinimumGrade: 5,
