@@ -2,21 +2,10 @@
 app_home: /opt/app
 app_config_home: /etc/nih-wayfinding.d/env
 app_deploy_branch: "master"
-app_config:
-  - { file: "NIH_WAYFINDING_DB_NAME", content: "{{ postgresql_database }}" }
-  - { file: "NIH_WAYFINDING_DB_USER", content: "{{ postgresql_username }}" }
-  - { file: "NIH_WAYFINDING_DB_PASSWORD", content: "{{ postgresql_password }}" }
-  - { file: "NIH_WAYFINDING_DB_HOST", content: "{{ postgresql_host }}" }
-  - { file: "NIH_WAYFINDING_DB_PORT", content: "{{ postgresql_port }}" }
 
 app_log: /var/log/nih-wayfinding-app.log
 app_log_rotate_count: 5
 app_log_rotate_interval: daily
-
-app_static_root: /var/www/nih-wayfinding/static/
-app_media_root: /var/www/nih-wayfinding/media/
-
-app_static_cache: /var/cache/nih-wayfinding/static/
 
 app_npm_version: 2.1.14
 app_sass_version: 3.4.9

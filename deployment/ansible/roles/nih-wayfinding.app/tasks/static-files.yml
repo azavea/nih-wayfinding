@@ -1,15 +1,4 @@
 ---
-- name: Create folders for static files
-  file: path={{ item }}
-        state=directory
-        owner=root
-        group=nih-wayfinding
-        mode=0775
-  with_items:
-    - "{{ app_static_root }}"
-    - "{{ app_media_root }}"
-    - "{{ app_static_cache }}"
-
 - name: Install Sass
   gem: name=sass
        version="{{ app_sass_version }}"
