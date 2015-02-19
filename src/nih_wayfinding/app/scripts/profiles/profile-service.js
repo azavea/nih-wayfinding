@@ -3,7 +3,7 @@
     'use strict';
 
     /* ngInject */
-    function ProfileService (Config, ProfileProvider, localStorageService) {
+    function ProfileService (DefaultUser, ProfileProvider, localStorageService) {
 
         // private variables
         // It is important that the lastUser entry be namespaced differently (hence not using the localStorageService)
@@ -72,12 +72,11 @@
          */
         function createNewProfile() {
             var user = ProfileProvider.deserialize();
-            var settings = Config.defaultUserSettings;
-            angular.forEach(Config.defaultUserSettings, function(value, key) {
+            angular.forEach(DefaultUser, function(value, key) {
                 user[key] = value;
             });
             user.save();
-            localStorageService.set(settings.username, user);
+            localStorageService.set(DefaultUser.username, user);
             return user;
         }
 
