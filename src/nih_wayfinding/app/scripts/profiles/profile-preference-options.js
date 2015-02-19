@@ -53,10 +53,10 @@
 
             busyOpts: [{
                 text: 'Yes',
-                value: 1
+                value: -0.9
             }, {
                 text: 'No',
-                value: -1
+                value: 0.9
             }, {
                 text: 'Not important',
                 value: 0
