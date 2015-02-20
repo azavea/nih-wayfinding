@@ -26,6 +26,10 @@ body {
   right: 0;
 }
 
+.map-navigate {
+  top: $navigate-height + $header-height !important;
+}
+
 .content.double-footer.scroll {
   margin-bottom: $footer-height * 2;
 }
@@ -97,3 +101,4 @@ nav > .btn-group-nav-main {}
   transform: translateY(-50%);
   font-size: $font-size-h2;
 }
+
