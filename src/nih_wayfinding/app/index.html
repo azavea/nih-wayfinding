@@ -28,9 +28,6 @@
           <h2 class="navbar-actionheader" ng-cloak>
             <span ng-if="navbar.config.leftImage" class="glyphicon" ng-class="navbar.config.leftImage"></span>
             {{ navbar.config.title }}
-            <span ng-show="navbar.config.rightImages.length" ng-repeat="imageSrc in navbar.config.rightImages">
-                <img class="navigation-icon" ng-src="{{ imageSrc }}" />
-            </span>
           </h2>
           <p class="navbar-actionheader-subtitle" ng-if="navbar.config.subtitle" ng-cloak>{{ navbar.config.subtitle }}</p>
         </div>

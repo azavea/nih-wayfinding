@@ -16,7 +16,6 @@
             title: '',
             subtitle: '',
             leftImage: '',
-            rightImages: [],
             rightButton: {
                 text: 'Menu',
                 imgclass: 'caret',
