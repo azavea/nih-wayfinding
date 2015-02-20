@@ -28,10 +28,6 @@
 
         function initialize() {
             setDefaultFooter();
-            setNavbar({
-                title: 'Navigate Route',
-                back: 'routing'
-            });
 
             ctl.map = Map;
             ctl.nextStep = Navigation.stepNext;
@@ -50,6 +46,10 @@
 
             var geojson = ctl.map.geojson.data;
 
+            setNavbar({
+                title: 'Navigate Route',
+                back: 'routing'
+            });
             Navigation.setRoute(geojson);
             Navigation.stepCurrent();
         }
@@ -76,7 +76,11 @@
             var isRerouting = Navigation.isRerouting();
             var color = isRerouting ? NavbarConfig.colors.reroute : NavbarConfig.colors.navigation;
             var back = isRerouting ? false : 'routing';
+            var title = isRerouting ? 'Rerouting' : 'Navigating';
+            var subtitle = 'to ' + destinationFromGeoJson(ctl.map.geojson.data);
             var defaults = {
+                title: title,
+                subtitle: subtitle,
                 color: color,
                 rightButton: {
                     text: 'RESUME ROUTE',
@@ -168,9 +172,7 @@
             ctl.step.text = text;
             ctl.step.turnIcon = turnIcon;
             ctl.step.images = images;
-            setNavbar({
-                title: 'Navigate',
-            });
+            setNavbar();
         }
 
         function onNavbarButtonClicked() {
@@ -185,6 +187,12 @@
                     Navigation.stepFirst();
                 });
             });
+        }
+
+        function destinationFromGeoJson(geojson) {
+            var len = geojson.features.length;
+            var last =  geojson.features[len - 1];
+            return last.properties.to;
         }
     }
 

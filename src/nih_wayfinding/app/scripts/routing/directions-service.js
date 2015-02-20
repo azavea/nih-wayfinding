@@ -259,12 +259,15 @@
             var lineStrings = [];
 
             angular.forEach(itinerary.legs, function (leg) {
+                var to = leg.to.name;
                 _.each(leg.steps, function (step) {
                     var stepPoints = L.PolylineUtil.decode(step.stepGeometry.points);
                     var invertedPoints = _.map(stepPoints, function(pt) {
                         return [pt[1], pt[0]];
                     });
-                    lineStrings.push(turf.linestring(invertedPoints, propertiesFromStep(step)));
+                    var properties = propertiesFromStep(step);
+                    properties.to = to;
+                    lineStrings.push(turf.linestring(invertedPoints, properties));
                 });
             });
             return turf.featurecollection(lineStrings);
