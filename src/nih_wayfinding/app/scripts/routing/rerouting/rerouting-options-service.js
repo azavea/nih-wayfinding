@@ -13,6 +13,7 @@
 
         var module = {
             getReroutingOptions: getReroutingOptions,
+            lastChoice: '',
             reroute: reroute
         };
         return module;
