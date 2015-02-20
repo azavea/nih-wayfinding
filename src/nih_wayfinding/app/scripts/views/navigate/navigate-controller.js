@@ -36,6 +36,12 @@
             ctl.map = Map;
             ctl.nextStep = Navigation.stepNext;
             ctl.offCourse = Navigation.offCourse;
+            ctl.step = {
+                distance: 0,
+                time: 0,
+                text: '',
+                images: []
+            };
 
             // Subscribe to the location update event
             $scope.$on('nih.navigation.positionOffCourse', onPositionOffCourse);
@@ -146,24 +152,24 @@
             var turnIcon = Directions.getTurnIconName(position.properties.directions.turn);
             var speedMs = (ProfileService.getCurrentUser().preferences.speed || 1) * mphToMs;
             var timeMins = (distanceToTurn / speedMs / 60).toFixed(0);
-            var distanceText = 'In approx. ' +  timeMins +
-                ' min (' + $filter('distance')(distanceToTurn) + ')';
             if (position.properties.turnamenity) {
-                distanceText += ' at the ' + position.properties.turnamenity.name;
+                text += ' at the ' + position.properties.turnamenity.name;
             }
-            var subtitleText = distanceText;
-            var rightImages = [];
+            var images = [];
             if (position.properties.directions.warnings && position.properties.directions.warnings.length > 0) {
-                rightImages.push(position.properties.directions.warnings[0].img);
+                images.push(position.properties.directions.warnings[0].img);
             }
             _.each(position.properties.directions.features, function(feature) {
-                rightImages.push(feature.img);
+                images.push(feature.img);
             });
+
+            ctl.step.distance = distanceToTurn;
+            ctl.step.time = timeMins + ' mins';
+            ctl.step.text = text;
+            ctl.step.turnIcon = turnIcon;
+            ctl.step.images = images;
             setNavbar({
-                title: text,
-                subtitle: subtitleText,
-                leftImage: turnIcon,
-                rightImages: rightImages
+                title: 'Navigate',
             });
         }
 
