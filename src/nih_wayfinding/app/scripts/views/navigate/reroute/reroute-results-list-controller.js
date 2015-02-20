@@ -40,6 +40,7 @@
                 var currentPosition = [position.coords.latitude, position.coords.longitude];
                 var originPoint = turf.point(currentPosition.slice().reverse());
                 Rerouting.reroute(currentPosition, amenityType).then(function (amenities) {
+                    Rerouting.lastChoice = amenityType;
                     angular.forEach(amenities, function (amenity) {
                         var destinationPoint = turf.point([amenity.geometry.location.lng(), amenity.geometry.location.lat()]);
                         amenity.distance = turf.distance(originPoint, destinationPoint, 'kilometers') * 1000;   // meters

@@ -19,7 +19,7 @@
     function NavigateController(
         $filter, $scope, $stateParams, $state,
         Navigation, Directions, Map, MapControl, NavbarConfig,
-        Notifications, ProfileService
+        Notifications, ProfileService, Rerouting
     ) {
         var ctl = this;
         var mphToMs = 0.44704;
@@ -77,7 +77,8 @@
             var color = isRerouting ? NavbarConfig.colors.reroute : NavbarConfig.colors.navigation;
             var back = isRerouting ? false : 'routing';
             var title = isRerouting ? 'Rerouting' : 'Navigating';
-            var subtitle = 'to ' + destinationFromGeoJson(ctl.map.geojson.data);
+            var subtitle = 'to ';
+            subtitle += isRerouting ? Rerouting.lastChoice : destinationFromGeoJson(ctl.map.geojson.data);
             var defaults = {
                 title: title,
                 subtitle: subtitle,
@@ -157,7 +158,7 @@
             var speedMs = (ProfileService.getCurrentUser().preferences.speed || 1) * mphToMs;
             var timeMins = (distanceToTurn / speedMs / 60).toFixed(0);
             if (position.properties.turnamenity) {
-                text += ' at the ' + position.properties.turnamenity.name;
+                text += ' at ' + position.properties.turnamenity.name;
             }
             var images = [];
             if (position.properties.directions.warnings && position.properties.directions.warnings.length > 0) {
