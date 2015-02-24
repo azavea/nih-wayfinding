@@ -9,6 +9,11 @@ body {
   margin: 0;
   height: 100%;
   font-size: strip_units($font-size-base) * 1em;
+  -webkit-font-feature-settings: "kern" 1;
+  -moz-font-feature-settings: "kern" 1;
+  -ms-font-feature-settings: "kern" 1;
+  font-feature-settings: "kern" 1;
+  text-rendering: geometricPrecision;
 }
 
 .content.scroll {
