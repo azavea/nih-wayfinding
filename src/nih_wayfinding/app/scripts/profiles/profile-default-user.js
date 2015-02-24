@@ -50,7 +50,7 @@
               {
                 "id": 3,
                 "text": "Groceries",
-                "img": "/images/icons/icon-butcher.svg",
+                "img": "/images/icons/icon-grocery.svg",
                 "feature": {
                   "geometry": {
                     "x": -87.54839096926702,
