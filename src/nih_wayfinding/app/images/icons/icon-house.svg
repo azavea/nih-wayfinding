@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!-- Generator: Adobe Illustrator 16.0.4, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="3.553 0 92.895 100" enable-background="new 3.553 0 92.895 100" xml:space="preserve">
-<rect x="64.223" y="64.232" fill="none" width="3.524" height="23.176"/>
-<rect x="78.57" y="30.354" fill="none" width="8.812" height="21.408"/>
-<rect x="39.299" y="64.232" fill="none" width="21.399" height="23.176"/>
-<rect x="32.125" y="90.932" fill="none" width="35.622" height="3.653"/>
-<rect x="78.57" y="64.232" fill="none" width="8.812" height="23.176"/>
-<rect x="32.125" y="64.232" fill="none" width="3.524" height="23.176"/>
-<rect x="45.594" y="30.354" fill="none" width="8.812" height="21.408"/>
-<rect x="61.957" y="30.354" fill="none" width="9.062" height="21.408"/>
-<polygon points="96.448,17.886 82.098,7.053 67.747,7.053 82.098,17.886 "/>
-<polygon points="32.125,7.053 17.902,7.053 3.553,17.886 17.902,17.886 "/>
-<path d="M3.553,100h92.895V23.176H3.553V100z M67.747,94.585H32.125v-3.653h35.622V94.585z M32.125,87.408V64.232h3.524v23.176
-	H32.125z M39.299,87.408V64.232h21.399v23.176H39.299z M67.747,87.408h-3.524V64.232h3.524V87.408z M32.125,60.706l17.747-5.415
-	l17.875,5.415H32.125z M78.57,30.354h8.812v21.408H78.57V30.354z M78.57,64.232h8.812v23.176H78.57V64.232z M61.957,30.354h9.062
-	v21.408h-9.062V30.354z M45.594,30.354h8.812v21.408h-8.812V30.354z M28.979,30.357h8.936v21.411h-8.936V30.357z M12.488,30.357
-	h8.938v21.411h-8.938V30.357z M12.488,64.229h8.938v23.174h-8.938V64.229z"/>
-<polygon points="73.789,17.886 49.872,0 26.21,17.886 "/>
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="520.212px" height="560px" viewBox="223.447 0 520.212 560" enable-background="new 223.447 0 520.212 560"
+	 xml:space="preserve">
+<rect x="563.199" y="359.699" fill="none" width="19.734" height="129.785"/>
+<rect x="643.542" y="169.982" fill="none" width="49.348" height="119.885"/>
+<rect x="423.625" y="359.699" fill="none" width="119.834" height="129.785"/>
+<rect x="383.45" y="509.219" fill="none" width="199.483" height="20.457"/>
+<rect x="643.542" y="359.699" fill="none" width="49.348" height="129.785"/>
+<rect x="383.45" y="359.699" fill="none" width="19.734" height="129.785"/>
+<rect x="458.877" y="169.982" fill="none" width="49.347" height="119.885"/>
+<rect x="550.51" y="169.982" fill="none" width="50.747" height="119.885"/>
+<polygon points="743.659,100.162 663.299,39.497 582.934,39.497 663.299,100.162 "/>
+<polygon points="383.45,39.497 303.801,39.497 223.447,100.162 303.801,100.162 "/>
+<path d="M223.447,560h520.212V129.786H223.447V560z M582.934,529.676H383.45v-20.457h199.483V529.676z M383.45,489.484V359.699
+	h19.734v129.785H383.45L383.45,489.484z M423.625,489.484V359.699h119.834v129.785H423.625L423.625,489.484z M582.934,489.484
+	h-19.734V359.699h19.734V489.484z M383.45,339.953l99.383-30.323l100.101,30.323H383.45z M643.542,169.982h49.348v119.885h-49.348
+	V169.982z M643.542,359.699h49.348v129.785h-49.348V359.699z M550.51,169.982h50.747v119.885H550.51V169.982z M458.877,169.982
+	h49.347v119.885h-49.347V169.982z M365.833,169.999h50.042V289.9h-50.042V169.999z M273.483,169.999h50.053V289.9h-50.053V169.999z
+	 M273.483,359.683h50.053v129.774h-50.053V359.683z"/>
+<polygon points="616.769,100.162 482.833,0 350.326,100.162 "/>
 </svg>
