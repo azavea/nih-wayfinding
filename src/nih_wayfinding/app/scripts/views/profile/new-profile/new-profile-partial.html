@@ -4,7 +4,7 @@
         <div ng-switch-when="1">
             <form name="newprofile.newusername" ng-submit="newprofile.setStep(2)"
                 ng-class="{ 'has-error': newprofile.newusername.username.$invalid && !newprofile.newusername.username.$pristine }" class="form-inline">
-                <h2>What is your name?</h2>
+                <h1>What is your name?</h1>
                 <input type="text" name="username" ng-model="newprofile.username"
                     class="form-control"
                     ng-change="newprofile.checkUsername()" autofocus required />
@@ -17,7 +17,7 @@
         </div>
         <div ng-switch-when="2">
             <div ng-hide="newprofile.assistanceTypeDialog">
-                <h2>Do you use a wheelchair or other mobility assistance?</h2>
+                <h1>Do you use a wheelchair or other mobility assistance?</h1>
                 <div class="btn-group btn-group-justified" role="group"
                      aria-label="Select whether or not you use a wheelchair or other assistance">
                     <nih-options-grid options="newprofile.preferenceOpts.assistanceOpts"
@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div ng-hide="!newprofile.assistanceTypeDialog">
-                <h2>Is your chair electric or manual?</h2>
+                <h1>Is your chair electric or manual?</h1>
                 <div class="btn-group btn-group-justified" role="group"
                      aria-label="Select assistance type">
                     <nih-options-grid options="newprofile.preferenceOpts.assistanceTypeOpts"
@@ -36,7 +36,7 @@
             </div>
         </div>
         <div ng-switch-when="3">
-            <h2>How comfortable are you on uneven surfaces?</h2>
+            <h1>How comfortable are you on uneven surfaces?</h1>
             <div class="btn-group btn-group-justified" role="group"
                 aria-label="Select comfort on uneven terrain">
                 <nih-options-grid options="newprofile.preferenceOpts.surfaceTypeComfortOpts"
@@ -45,7 +45,7 @@
             </div>
         </div>
         <div ng-switch-when="4">
-            <h2>How would you describe your walking speed? (This is to provide accurate walk time estimates and to choose safe intersection crossings.)</h2>
+            <h1>How would you describe your walking speed? (This is to provide accurate walk time estimates and to choose safe intersection crossings.)</h1>
             <div class="btn-group btn-group-justified" role="group"
                 aria-label="Select movement speed">
                 <nih-options-grid options="newprofile.preferenceOpts.speedOpts"
@@ -54,7 +54,7 @@
             </div>
         </div>
         <div ng-switch-when="5">
-            <h2>Do you have a preference for non-crowded sidewalks over busy sidewalks?</h2>
+            <h1>Do you have a preference for non-crowded sidewalks over busy sidewalks?</h1>
             <div class="btn-group btn-group-justified" role="group"
                 aria-label="Select importance of busy or quiet locations">
                 <nih-options-grid options="newprofile.preferenceOpts.busyOpts"
@@ -63,7 +63,7 @@
             </div>
         </div>
         <div ng-switch-when="6">
-            <h2>How important is an opportunity sit down to rest during your walk?</h2>
+            <h1>How important is an opportunity sit down to rest during your walk?</h1>
             <div class="btn-group btn-group-justified" role="group"
                 aria-label="Select frequency of rest">
                 <nih-options-grid options="newprofile.preferenceOpts.restOpts"
@@ -72,7 +72,7 @@
             </div>
         </div>
         <div ng-switch-when="7">
-            <h2>Favorite Locations</h2>
+            <h1>Favorite Locations</h1>
             <p>If there are any locations you visit regularly, it can be useful to save them
                 as favorites. Would you like to register a location now?</p>
             <div class="btn-group btn-group-justified" role="group"

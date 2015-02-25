@@ -1,6 +1,6 @@
 .btn-nav-main {
   background-color: transparent;
-  border-left: 1px solid transparentize(#fff, .3);
+  border-left: 1px solid transparentize(#fff, .7);
   bottom: 0;
   color: #fff !important;
   font-size: $font-size-h4;
@@ -23,26 +23,27 @@
 .btn {
   font-size: $font-size-h4;
   box-shadow: none !important;
+  padding-top: .75em;
 }
 
 .btn-group-nav {
   height: 100%;
   &>.btn-block {
-    background-color: $gray-light;
+    background-color: #fff;
+    color: $gray;
     border: 0;
-    border-right: 1px solid #c0c3c5;
+    border-right: 1px solid $gray-lightest;
     &:last-child {
       border-right: 0;
     }
     &:hover {
-      background-color: darken($gray-light, 10%);
+      background-color: $gray-lighter;
     }
     &.active {
-      color: #fff;
-      background-color: $brand-primary;
+      color: $brand-primary;
     }
     &.active-delete {
-      background-color: $brand-danger;
+      color: $brand-danger;
     }
   }
 }
@@ -55,11 +56,16 @@
   height: 22rem;
   white-space: normal;
   text-align: left;
-  background-color: $brand-primary !important;
+  background-color: #BAD9DA !important;
   background-size: cover;
 }
 
 .btn-group-temporary .btn {
   background-color: #aaa !important;
   border-bottom: 1px solid #c0c3c5 !important;
+}
+
+.btn-link {
+  position: relative;
+  top: .35rem;
 }
