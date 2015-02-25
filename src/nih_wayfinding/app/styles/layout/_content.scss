@@ -105,12 +105,22 @@ nav > .btn-group-nav-main {}
   padding: 3rem $grid-gutter-width/2;
 }
 
+.overview-summary-container {
+  background-color: $brand-primary;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  display: table;
+  height: 6rem;
+  padding: .8rem $grid-gutter-width/2 0;
+  position: absolute;
+  top: 8rem;
+  width: 100%;
+  z-index: 20000;
+}
+
 .overview-summary {
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: $font-size-h3;
-  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
 }
 
 .homepage-wrapper {

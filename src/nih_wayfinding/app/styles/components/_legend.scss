@@ -5,8 +5,14 @@
     background: #fff;
     border-radius: 0;
     line-height: 1.4;
+    font-family: $font-family-sans-serif;
     color: $gray-light;
     width: 20rem;
+}
+
+.info-label {
+    margin-top: .3rem;
+    margin-bottom: -.3rem;
 }
 
 .legend i {
