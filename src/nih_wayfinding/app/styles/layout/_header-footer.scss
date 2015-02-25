@@ -5,7 +5,6 @@ header {
     width: 100%;
     z-index: 3000;
     height: $header-height;
-    overflow: hidden;
     transition: background-color 400ms ease-in-out;
     &.mode-route {
         background-color: $brand-route;
@@ -35,14 +34,12 @@ footer {
             border-bottom: 0;
         }
     }
-
 }
 
 .navbar-actionheader {
     color: #fff;
-    padding: 2rem 11rem 2rem 0;
+    padding: 3rem 1rem 2rem 4rem;
     margin-bottom: 0;
-    margin-top: .75rem !important;
 }
 
 .navbar-actionheader-subtitle {
