@@ -37,6 +37,10 @@ body {
   top: $navigate-height + $header-height !important;
 }
 
+.leaflet-control-zoom, .leaflet-control-layers {
+  display: none;
+}
+
 .content.double-footer.scroll {
   margin-bottom: $footer-height * 2;
 }
