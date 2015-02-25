@@ -23,33 +23,35 @@
     <![endif]-->
 
     <header ng-controller="NavbarController as navbar" class="navbar" ng-style="{'background': navbar.config.color}">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button ng-if="navbar.config.back" type="button" class="btn btn-nav-main" ng-click="navbar.back()">
-            <span class="glyphicon glyphicon-chevron-left"></span>
-          </button>
-          <button ng-if="navbar.config.back === false && navbar.config.rightButton.dropdown === false"
-                  type="button"
-                  class="btn btn-nav-main"
-                  ng-click="navbar.onRightButtonClicked()">
-            {{ navbar.config.rightButton.text }}
-          </button>
-          <div ng-if="navbar.config.back === false && navbar.config.rightButton.dropdown" class="btn-group btn-group-nav-main" dropdown>
-            <button type="button" class="btn btn-nav-main navbar-button dropdown-toggle" dropdown-toggle ng-cloak>
-              <span class="glyphicon glyphicon-align-justify"></span>
+      <div>
+        <div class="navbars">
+          <div class="navbar-header">
+            <button ng-if="navbar.config.back" type="button" class="btn btn-nav-main" ng-click="navbar.back()">
+              <span class="glyphicon glyphicon-chevron-left"></span>
             </button>
-            <ul class="dropdown-menu pull-left" role="menu">
-              <li><a ui-sref="profiles">Switch User</a></li>
-              <li><a ui-sref="locations">Locations</a></li>
-            </ul>
+            <button ng-if="navbar.config.back === false && navbar.config.rightButton.dropdown === false"
+                    type="button"
+                    class="btn btn-nav-main"
+                    ng-click="navbar.onRightButtonClicked()">
+              {{ navbar.config.rightButton.text }}
+            </button>
+            <div ng-if="navbar.config.back === false && navbar.config.rightButton.dropdown" class="btn-group btn-group-nav-main" dropdown>
+              <button type="button" class="btn btn-nav-main navbar-button dropdown-toggle" dropdown-toggle ng-cloak>
+                <span class="glyphicon glyphicon-align-justify"></span>
+              </button>
+              <ul class="dropdown-menu pull-left" role="menu">
+                <li><a ui-sref="profiles">Switch User</a></li>
+                <li><a ui-sref="locations">Locations</a></li>
+              </ul>
+            </div>
           </div>
-        </div>
-        <div class="navbar-header">
-          <h2 class="navbar-actionheader" ng-cloak>
-            <span ng-if="navbar.config.leftImage" class="glyphicon" ng-class="navbar.config.leftImage"></span>
-            {{ navbar.config.title }}
-          </h2>
-          <p class="navbar-actionheader-subtitle" ng-if="navbar.config.subtitle" ng-cloak>{{ navbar.config.subtitle }}</p>
+          <div class="navbar-header">
+            <h2 class="navbar-actionheader" ng-cloak>
+              <span ng-if="navbar.config.leftImage" class="glyphicon" ng-class="navbar.config.leftImage"></span>
+              {{ navbar.config.title }}
+            </h2>
+            <p class="navbar-actionheader-subtitle" ng-if="navbar.config.subtitle" ng-cloak>{{ navbar.config.subtitle }}</p>
+          </div>
         </div>
         <div class="notification" ng-class="{'active': navbar.active}">
             <span class="glyphicon"

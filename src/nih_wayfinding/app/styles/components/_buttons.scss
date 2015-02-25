@@ -1,26 +1,15 @@
 .btn-nav-main {
   background-color: transparent;
-  border-left: 1px solid transparentize(#fff, .7);
-  bottom: 0;
   color: #fff !important;
   font-size: $font-size-h4;
-  position: absolute !important;
-  left: 0;
-  top: 0;
-  width: 2em;
+  max-width: 6em;
+  // margin-top: -.9rem;
   &:hover {
     opacity: .5;
   }
   &:active {
     opacity: 1;
   }
-}
-
-.btn-group-nav-main {
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
 }
 
 .btn {

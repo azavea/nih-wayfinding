@@ -109,9 +109,8 @@ nav > .btn-group-nav-main {}
   background-color: $brand-primary;
   border-top: 1px solid rgba(255, 255, 255, 0.3);
   color: white;
-  display: table;
   height: 6rem;
-  padding: .8rem $grid-gutter-width/2 0;
+  padding: 0 $grid-gutter-width/2 0;
   position: absolute;
   top: 8rem;
   width: 100%;
@@ -119,8 +118,13 @@ nav > .btn-group-nav-main {}
 }
 
 .overview-summary {
-  display: table-cell;
   vertical-align: middle;
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  margin-top: .3rem;
 }
 
 .homepage-wrapper {
@@ -133,4 +137,8 @@ nav > .btn-group-nav-main {}
   background-color: #fff;
   margin: -5rem -1.5rem 0rem;
   padding: 5rem 1.5rem 2rem;
+}
+
+.navbar-header {
+  display: inline-block;
 }
