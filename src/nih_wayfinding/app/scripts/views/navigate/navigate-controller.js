@@ -66,7 +66,7 @@
                     onClick: function() { $state.go('reroute'); }
                 },
                 right: {
-                    text: 'Report',
+                    text: 'Report Issue',
                     onClick: function() { $state.go('report'); }
                 }
             };

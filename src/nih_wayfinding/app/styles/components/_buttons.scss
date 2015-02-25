@@ -34,7 +34,8 @@
     background-color: #fff;
     color: $gray;
     border: 0;
-    border-right: 1px solid $gray-lightest;
+    border: 1px solid $gray-lightest;
+    border-width: 1px 1px 0 0;
     &:last-child {
       border-right: 0;
     }
