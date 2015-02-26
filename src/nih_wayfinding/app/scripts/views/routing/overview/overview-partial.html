@@ -1,4 +1,4 @@
-<leaflet class="content map double-footer"
+<leaflet class="content map footer"
          bounds="overview.map.bounds"
          center="overview.map.center"
          layers="overview.map.layers"
@@ -7,15 +7,16 @@
          geojson="overview.map.geojson">
 </leaflet>
 
-<footer class="route-overview container-fluid">
-    <div class="row">
-        <div class="col-xs-12 overview-summary" ng-show="overview.summary.timeMinutes">
-            {{ overview.summary.timeMinutes | number:0 }} min, {{ overview.summary.distanceMeters | distance }}, {{ overview.summary.turns }} turns
-        </div>
+<div class="overview-summary-container">
+    <div class="overview-summary" ng-show="overview.summary.timeMinutes">
+        {{ overview.summary.timeMinutes | number:0 }} min, {{ overview.summary.distanceMeters | distance }}, {{ overview.summary.turns }} turns
     </div>
+</div>
+
+<footer class="route-overview container-fluid">
     <nav class="row">
         <div class="btn-group-nav btn-group-justified">
-            <a ui-sref="directions" type="button" class="btn btn-primary btn-block">Directions</a>
+            <a ui-sref="directions" type="button" class="btn btn-primary btn-block">Turn-by-Turn</a>
             <a ui-sref="changeroute(overview.stateParams)" type="button" class="btn btn-primary btn-block">Change Route</a>
             <a ui-sref="navigate" type="button" class="btn btn-primary active btn-block"><b>Start <span class="glyphicon glyphicon-chevron-right"></span></b></a>
         </div>

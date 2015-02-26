@@ -1,50 +1,51 @@
 .btn-nav-main {
   background-color: transparent;
-  border-left: 1px solid transparentize(#fff, .3);
-  bottom: 0;
   color: #fff !important;
   font-size: $font-size-h4;
-  position: absolute !important;
-  right: 0;
-  top: 0;
-  width: 6em;
+  max-width: 6em;
+  margin-top: -.5rem;
   &:hover {
-    background-color: #666;
+    opacity: .5;
   }
-}
-
-.btn-group-nav-main {
-  height: 100%;
-  position: absolute;
-  right: 0;
-  top: 0;
+  &:active {
+    opacity: 1;
+  }
 }
 
 .btn {
   font-size: $font-size-h4;
   box-shadow: none !important;
+  white-space: normal;
+  line-height: 1.3;
 }
 
 .btn-group-nav {
   height: 100%;
   &>.btn-block {
-    background-color: $gray-light;
+    background-color: #fff;
+    color: $gray;
     border: 0;
-    border-right: 1px solid #c0c3c5;
+    border: 1px solid $gray-lightest;
+    border-width: 1px 1px 0 0;
     &:last-child {
       border-right: 0;
     }
     &:hover {
-      background-color: darken($gray-light, 10%);
+      background-color: $gray-lighter;
     }
     &.active {
-      color: #fff;
-      background-color: $brand-primary;
+      color: $brand-primary;
     }
     &.active-delete {
-      background-color: $brand-danger;
+      color: $brand-danger;
     }
   }
+}
+
+.row-temporary {
+  position: absolute;
+  top: -8rem;
+  width: 100%;
 }
 
 .btn-img {
@@ -55,11 +56,15 @@
   height: 22rem;
   white-space: normal;
   text-align: left;
-  background-color: $brand-primary !important;
+  background-color: #BAD9DA !important;
   background-size: cover;
 }
 
 .btn-group-temporary .btn {
-  background-color: #aaa !important;
-  border-bottom: 1px solid #c0c3c5 !important;
+  background-color: rgba(233, 229, 220, 0.9) !important;
+  border-color: #ddd;
+}
+
+.btn-link {
+  margin-top: .35rem;
 }

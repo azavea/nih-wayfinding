@@ -6,11 +6,11 @@
     function NavbarConfig ($rootScope) {
 
         var colors = {
-            default: '#000',
-            profile: '#9A9A9A',
-            routing: '#9E5C28',
-            reroute: '#00C3A6',
-            navigation: '#38769F'
+            default: '#1a1b27',
+            profile: '#9e8c66',
+            routing: '#406A90',
+            reroute: '#C5A960',
+            navigation: '#1D8760'
         };
         var defaults = {
             title: '',

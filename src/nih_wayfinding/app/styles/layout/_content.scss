@@ -9,12 +9,20 @@ body {
   margin: 0;
   height: 100%;
   font-size: strip_units($font-size-base) * 1em;
+  -webkit-font-feature-settings: "kern" 1;
+  -moz-font-feature-settings: "kern" 1;
+  -ms-font-feature-settings: "kern" 1;
+  font-feature-settings: "kern" 1;
+  text-rendering: geometricPrecision;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .content.scroll {
   margin-top: $header-height;
   margin-bottom: $footer-height;
   padding: 5rem $grid-gutter-width/2;
+  width: 100%;
 }
 
 .content.map {
@@ -30,6 +38,15 @@ body {
   top: $navigate-height + $header-height !important;
 }
 
+.leaflet-marker-icon {
+  -webkit-filter: hue-rotate(140deg);
+  filter: hue-rotate(140deg);
+}
+
+.leaflet-control-zoom, .leaflet-control-layers {
+  display: none;
+}
+
 .content.double-footer.scroll {
   margin-bottom: $footer-height * 2;
 }
@@ -43,8 +60,8 @@ body {
 }
 
 .navigation-icon {
-  width: 20px;
-  height: 20px;
+  width: 2.3rem;
+  height: 2.3rem;
 }
 
 .content.no-footer {
@@ -62,6 +79,7 @@ body {
 .direction-instruction {
   font-size: $font-size-h3;
   margin-bottom: 0;
+  font-weight: normal;
 }
 
 .direction-description {
@@ -89,16 +107,43 @@ img {
 nav > .btn-group-nav-main {}
 
 .homepage-locations {
-  background-color: #ddd;
   margin: 0 $grid-gutter-width/-2 -5rem;
   padding: 3rem $grid-gutter-width/2;
-  min-height: 50vh; // this is a temporary fix; space from "your locations" to bottom of home screen should have a grey background
+}
+
+.overview-summary-container {
+  background-color: $brand-primary;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  height: 6rem;
+  padding: 0 $grid-gutter-width/2 0;
+  position: absolute;
+  top: 8rem;
+  width: 100%;
+  z-index: 20000;
 }
 
 .overview-summary {
+  vertical-align: middle;
   position: relative;
   top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
   transform: translateY(-50%);
-  font-size: $font-size-h2;
 }
 
+.homepage-wrapper {
+  display: flex;
+  background-color: #ddd;
+  min-height: 100vh;
+}
+
+.homepage-whitebackground {
+  background-color: #fff;
+  margin: -5rem -1.5rem 0rem;
+  padding: 5rem 1.5rem 2rem;
+}
+
+.navbar-header {
+  display: inline-block;
+}

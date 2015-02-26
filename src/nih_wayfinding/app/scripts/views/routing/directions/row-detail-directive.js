@@ -5,16 +5,16 @@
     function RowDetail($compile) {
         // TODO: Animate the row appearing
         var template = [
-            '<tr ng-show="visible"><td colspan="2">',
+            '<div class="block" ng-show="visible">',
                 '<ul class="list-unstyled">',
                     '<li ng-repeat="feature in item.directions.features">',
-                        '<img width="20px" height="20px" ng-src="{{ ::feature.img }}" />{{ ::feature.note }}',
+                        '<img width="20px" height="20px" ng-src="{{ ::feature.img }}" /> {{ ::feature.note }}',
                     '</li>',
                     '<li ng-repeat="warning in item.directions.warnings">',
-                        '<img width="20px" height="20px" ng-src="{{ ::warning.img }}" />{{ ::warning.note }}',
+                        '<img width="20px" height="20px" ng-src="{{ ::warning.img }}" /> {{ ::warning.note }}',
                     '</li>',
                 '</ul>',
-            '</td></tr>'
+            '</div>'
         ].join('');
 
         var module = {
@@ -34,7 +34,7 @@
             scope.visible = false;
 
             var row = $compile(template)(scope);
-            element.after(row);
+            element.find('td:last-child').append(row);
 
             element.click(function () {
                 scope.visible = !scope.visible;
