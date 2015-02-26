@@ -3,7 +3,7 @@
   color: #fff !important;
   font-size: $font-size-h4;
   max-width: 6em;
-  // margin-top: -.9rem;
+  margin-top: -.5rem;
   &:hover {
     opacity: .5;
   }
@@ -15,7 +15,6 @@
 .btn {
   font-size: $font-size-h4;
   box-shadow: none !important;
-  padding-top: .75em;
   white-space: normal;
   line-height: 1.3;
 }
@@ -43,6 +42,12 @@
   }
 }
 
+.row-temporary {
+  position: absolute;
+  top: -8rem;
+  width: 100%;
+}
+
 .btn-img {
   font-size: $font-size-h3 !important;
 }
@@ -56,11 +61,10 @@
 }
 
 .btn-group-temporary .btn {
-  background-color: #aaa !important;
-  border-bottom: 1px solid #c0c3c5 !important;
+  background-color: rgba(233, 229, 220, 0.9) !important;
+  border-color: #ddd;
 }
 
 .btn-link {
-  position: relative;
-  top: .35rem;
+  margin-top: .35rem;
 }

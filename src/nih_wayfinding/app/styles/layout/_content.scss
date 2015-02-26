@@ -22,6 +22,7 @@ body {
   margin-top: $header-height;
   margin-bottom: $footer-height;
   padding: 5rem $grid-gutter-width/2;
+  width: 100%;
 }
 
 .content.map {
@@ -54,8 +55,8 @@ body {
 }
 
 .navigation-icon {
-  width: 20px;
-  height: 20px;
+  width: 2.3rem;
+  height: 2.3rem;
 }
 
 .content.no-footer {
@@ -124,7 +125,6 @@ nav > .btn-group-nav-main {}
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
-  margin-top: .3rem;
 }
 
 .homepage-wrapper {

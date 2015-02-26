@@ -32,7 +32,8 @@
             <button ng-if="navbar.config.back === false && navbar.config.rightButton.dropdown === false"
                     type="button"
                     class="btn btn-nav-main"
-                    ng-click="navbar.onRightButtonClicked()">
+                    ng-click="navbar.onRightButtonClicked()"
+                    ng-cloak>
               {{ navbar.config.rightButton.text }}
             </button>
             <div ng-if="navbar.config.back === false && navbar.config.rightButton.dropdown" class="btn-group btn-group-nav-main" dropdown>
@@ -40,8 +41,8 @@
                 <span class="glyphicon glyphicon-align-justify"></span>
               </button>
               <ul class="dropdown-menu pull-left" role="menu">
+                <li><a ui-sref="locations">Home</a></li>
                 <li><a ui-sref="profiles">Switch User</a></li>
-                <li><a ui-sref="locations">Locations</a></li>
               </ul>
             </div>
           </div>

@@ -38,7 +38,7 @@ footer {
 
 .navbar-actionheader {
     color: #fff;
-    padding: 3rem 0 2rem;
+    padding: 2.7rem 0 2rem;
     margin-bottom: 0;
 }
 
@@ -55,7 +55,7 @@ footer {
     left: 0;
     right: 0;
     top: $header-height;
-    height: 20rem;
+    min-height: $navigate-height;
     padding: 2rem $grid-gutter-width/2;
 }
 
@@ -74,8 +74,12 @@ footer {
     color: $gray-light
 }
 
+.navigation-directions {
+    padding-left: 7rem;
+}
+
 .navigation-direction {
     font-size: 5rem;
-    margin: .3rem 2rem 9rem 0;
+    margin: .3rem 2rem -1rem 0;
     color: $headings-color;
 }

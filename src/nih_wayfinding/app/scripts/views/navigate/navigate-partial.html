@@ -3,16 +3,17 @@
         <span class="glyphicon" ng-class="navigate.step.turnIcon"></span>
     </div>
     <div class="navigation-text">
-        <span class="navigate-mi">{{ navigate.step.distance | distance }}</span>
-        <span class="navigate-min">/ {{ navigate.step.time }}</span>
-        <span ng-show="navigate.step.images.length" ng-repeat="imageSrc in navigate.step.images">
-            <img class="navigation-icon" ng-src="{{ imageSrc }}" />
-        </span>
-        <p>{{ navigate.step.text }}</p>
+        <span class="navigate-mi">{{ navigate.step.distance | distance }} </span>
+        <span class="navigate-min">({{ navigate.step.time }})</span>
+        <p class="navigation-directions">{{ navigate.step.text }}
+            <span ng-show="navigate.step.images.length" ng-repeat="imageSrc in navigate.step.images">
+                <img class="navigation-icon" ng-src="{{ imageSrc }}" />
+            </span>
+        </p>
     </div>
 </div>
 
-<leaflet class="content map map-navigate double-footer"
+<leaflet class="content map map-navigate"
          bounds="navigate.map.bounds"
          center="navigate.map.center"
          layers="navigate.map.layers"
@@ -21,7 +22,7 @@
 </leaflet>
 
 <footer class="container-fluid">
-    <nav class="row">
+    <nav class="row row-temporary">
         <div class="btn-group-nav btn-group-justified btn-group-temporary">
             <a ng-click="navigate.offCourse()" type="button" class="btn btn-primary btn-block">Off-Course</a>
             <a ng-click="navigate.nextStep()" type="button" class="btn btn-primary btn-block">Next Step</a>
