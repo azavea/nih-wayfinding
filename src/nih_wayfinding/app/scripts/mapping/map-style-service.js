@@ -8,7 +8,8 @@
         var module = {
             getLegendRamp: getLegendRamp,
             getLineColor: getLineColor,
-            getBoundsStyle: getBoundsStyle
+            getBoundsStyle: getBoundsStyle,
+            getRouteLineStyle: getRouteLineStyle
         };
 
         return module;
@@ -62,6 +63,25 @@
             index = index >= rampLength ? rampLength - 1 : index;
             return ramp[index];
             */
+        }
+
+        function getRouteLineStyle(feature) {
+            if (feature.geometry.type !== 'LineString') {
+                return;
+            }
+            var lastModified = 0;
+            var issueCount = 0;
+            if (feature && feature.properties) {
+                lastModified = feature.properties.lastModified;
+                issueCount = feature.properties.directions ? feature.properties.directions.warnings.length : 0;
+            }
+            var color = getLineColor(lastModified, issueCount);
+            return {
+                color: color,
+                weight: 4,
+                opacity: 1,
+                clickable: false
+            };
         }
     }
 

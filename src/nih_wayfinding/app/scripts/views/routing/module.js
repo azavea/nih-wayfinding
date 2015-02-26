@@ -4,7 +4,7 @@
     /* ngInject */
     function StateConfig($stateProvider) {
         $stateProvider.state('routing', {
-            url: '/routing?origin&destination&walkTimeMins',
+            url: '/routing?origin&destination&walkTimeMins&back',
             templateUrl: 'scripts/views/routing/overview/overview-partial.html',
             controller: 'OverviewController',
             controllerAs: 'overview'

@@ -10,8 +10,8 @@
 
     /* ngInject */
     function OverviewController($scope, $stateParams, $q, leafletData,
-                                Config, Directions, Map, MapControl, MapStyle, MapRoute, NavbarConfig,
-                                Navigation, Notifications, ProfileService, Walk) {
+                                Config, Directions, Map, MapControl, MapStyle, NavbarConfig,
+                                Navigation, Notifications, ProfileService, RouteCache, Walk) {
         var ctl = this;
         var boundsLayer = null;
         var currentUser = null;
@@ -47,12 +47,17 @@
                 steps = Walk.getStops(turf.point(data.origin), walkKm);
             }
 
-            Navigation.setDestination(data.destination);
-            MapRoute.mapRoute(data.origin, data.destination, steps).then(function(mappedRoute) {
-                angular.extend(ctl.map, mappedRoute);
-                var summary = Directions.getRouteSummary(ctl.map.geojson.data, currentUser.preferences.speed);
-                ctl.summary = angular.extend(ctl.summary, summary);
-            });
+            if (!!($stateParams.back) && RouteCache.hasData()) {
+                setGeojson(RouteCache.getCache());
+            } else {
+                Navigation.setDestination(data.destination);
+                Directions.get(data.origin, data.destination, steps).then(setGeojson, function (error) {
+                    var msg = error.msg ? error.msg : 'Unable to load route. Please try again later.';
+                    Notifications.show({
+                        text: msg
+                    });
+                });
+            }
         }
 
         /**
@@ -114,6 +119,51 @@
                 console.error('Could not get graph bounds from OTP');
                 console.error(error);
             });
+        }
+
+        function setGeojson(geojson) {
+            if (!(geojson && geojson.features.length)) {
+                Notifications.show({
+                    text: 'No valid route found. Please go back and try again.'
+                });
+                return;
+            }
+            var bbox = turf.extent(geojson);
+            if (!Directions.isAudited(geojson)) {
+                Notifications.show({
+                    text: 'This route contains unverified segments. Please exercise caution.'
+                });
+            }
+            var lastPoint = _(geojson.features)
+                .map(function (feature) { return feature.geometry.coordinates; })
+                .flatten(true)
+                .last();
+            angular.extend(ctl.map, {
+                bounds: {
+                    southWest: {
+                        lat: bbox[1],
+                        lng: bbox[0]
+                    },
+                    northEast: {
+                        lat: bbox[3],
+                        lng: bbox[2]
+                    }
+                },
+                geojson: {
+                    data: geojson,
+                    style: MapStyle.getRouteLineStyle,
+                    resetStyleOnMouseout: true
+                },
+                markers: {
+                    end: {
+                        lat: lastPoint[1],
+                        lng: lastPoint[0]
+                    }
+                }
+            });
+            var summary = Directions.getRouteSummary(geojson, currentUser.preferences.speed);
+            ctl.summary = angular.extend(ctl.summary, summary);
+            RouteCache.setCache(geojson);
         }
 
         function showPopup(event, feature) {
