@@ -38,6 +38,11 @@ body {
   top: $navigate-height + $header-height !important;
 }
 
+.leaflet-marker-icon {
+  -webkit-filter: hue-rotate(140deg);
+  filter: hue-rotate(140deg);
+}
+
 .leaflet-control-zoom, .leaflet-control-layers {
   display: none;
 }
