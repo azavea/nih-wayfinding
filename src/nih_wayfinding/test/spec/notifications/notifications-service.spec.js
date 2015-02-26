@@ -12,6 +12,7 @@ describe('nih.notifications: Notifications', function () {
         text: 'Test',
         timeout: 300,
         delay: 0,
+        top: '8rem',
         closeButton: false,
         imageClass: 'glyphicon-warning-sign'
     };
