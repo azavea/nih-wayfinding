@@ -149,6 +149,13 @@ nav > .btn-group-nav-main {}
   display: block;
 }
 
+.navbars {
+  height: 100%;
+  background-color: inherit;
+  z-index: 200;
+  position: relative;
+}
+
 .icon-content {
   width: 2rem;
 }
