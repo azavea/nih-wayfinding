@@ -186,7 +186,7 @@
             var src = turf.point(originalDestination);
             var dest = turf.point(_(currentRoute.geom.geometry.coordinates).last());
             var distanceMeters = turf.distance(src, dest, 'kilometers') * 1000;
-            return distanceMeters > 15;
+            return distanceMeters > 25;
         }
 
         /**
