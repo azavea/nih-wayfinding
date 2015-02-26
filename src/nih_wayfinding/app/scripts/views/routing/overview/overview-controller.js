@@ -47,10 +47,10 @@
                 steps = Walk.getStops(turf.point(data.origin), walkKm);
             }
 
-            Navigation.setDestination(data.destination);
             if (!!($stateParams.back) && RouteCache.hasData()) {
                 setGeojson(RouteCache.getCache());
             } else {
+                Navigation.setDestination(data.destination);
                 Directions.get(data.origin, data.destination, steps).then(setGeojson, function (error) {
                     var msg = error.msg ? error.msg : 'Unable to load route. Please try again later.';
                     Notifications.show({
