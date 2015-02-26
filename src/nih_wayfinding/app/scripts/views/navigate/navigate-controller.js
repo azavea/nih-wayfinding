@@ -43,6 +43,7 @@
             $scope.$on('nih.navigation.positionOffCourse', onPositionOffCourse);
             $scope.$on('nih.navigation.positionUpdated', onPositionUpdated);
             $scope.$on('nih.navbarconfig.rightbuttonclicked', onNavbarButtonClicked);
+            $scope.$on('$stateChangeStart', onStateChangeStart);
 
             var geojson = ctl.map.geojson.data;
 
@@ -188,6 +189,13 @@
                     Navigation.stepFirst();
                 });
             });
+        }
+
+        function onStateChangeStart(event, toState, toParams) {
+            if (toState.name === 'routing') {
+                // setting this triggers geojson load from cache on overview view
+                toParams.back = true;
+            }
         }
 
         function destinationFromGeoJson(geojson) {
