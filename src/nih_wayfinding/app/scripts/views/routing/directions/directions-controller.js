@@ -2,7 +2,7 @@
     'use strict';
 
     /* ngInject */
-    function DirectionsController(Directions, Map, MapStyle, NavbarConfig) {
+    function DirectionsController($scope, Directions, Map, MapStyle, NavbarConfig) {
 
         var ctl = this;
         initialize();
@@ -18,6 +18,8 @@
 
             var geojson = Map.geojson && Map.geojson.data ? Map.geojson.data : null;
             setDirectionsListData(geojson);
+
+            $scope.$on('$stateChangeStart', onStateChangeStart);
         }
 
         function setDirectionsListData(geojson) {
@@ -38,6 +40,14 @@
                 }];
             }
         }
+
+        function onStateChangeStart(event, toState, toParams) {
+            if (toState.name === 'routing') {
+                // setting this triggers geojson load from cache on overview view
+                toParams.back = true;
+            }
+        }
+
     }
 
     angular.module('nih.views.routing')
