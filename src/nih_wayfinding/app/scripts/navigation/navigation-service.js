@@ -247,11 +247,12 @@
             if (!a || !b || a.length !== b.length) {
                 return false;
             }
-            var len = a.geometry.coordinates.length;
+            var aLen = a.geometry.coordinates.length;
+            var bLen = b.geometry.coordinates.length;
             var aFirst = a.geometry.coordinates[0];
             var bFirst = b.geometry.coordinates[0];
-            var aLast = a.geometry.coordinates[len - 1];
-            var bLast = b.geometry.coordinates[len - 1];
+            var aLast = a.geometry.coordinates[aLen - 1];
+            var bLast = b.geometry.coordinates[bLen - 1];
             if (aFirst[0] === bFirst[0] && aFirst[1] === bFirst[1] &&
                 aLast[0] === bLast[0] && aLast[1] === bLast[1]) {
                 return true;
