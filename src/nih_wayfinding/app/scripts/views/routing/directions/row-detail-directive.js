@@ -8,10 +8,10 @@
             '<div class="block" ng-show="visible">',
                 '<ul class="list-unstyled">',
                     '<li ng-repeat="feature in item.directions.features">',
-                        '<img width="20px" height="20px" ng-src="{{ ::feature.img }}" /> {{ ::feature.note }}',
+                        '<img class="icon-condition" ng-src="{{ ::feature.img }}"> {{ ::feature.note }}',
                     '</li>',
                     '<li ng-repeat="warning in item.directions.warnings">',
-                        '<img width="20px" height="20px" ng-src="{{ ::warning.img }}" /> {{ ::warning.note }}',
+                        '<img class="icon-condition" ng-src="{{ ::warning.img }}"> {{ ::warning.note }}',
                     '</li>',
                 '</ul>',
             '</div>'
