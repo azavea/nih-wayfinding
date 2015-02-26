@@ -5,7 +5,7 @@
         <span class="glyphicon" ng-class="directions.getTurnIconName(item.directions.turn)"></span>
       </td>
       <td class="direction" ng-style="{'border-right': '10px solid ' + directions.getLineColor(item.lastModified, item.directions.warnings.length)}">
-        <h3 class="direction-instruction">{{ ::item.directions.text }} <span ng-if="item.turnamenity">at the {{ ::item.turnamenity.name }}</span>
+        <h3 class="direction-instruction">{{ ::item.directions.text }} <span ng-if="item.turnamenity">at {{ ::item.turnamenity.name }}</span>
           <span ng-if="item.directions.warnings.length">
             <img width="20px" height="20px" ng-src="{{ ::item.directions.warnings[0].img }}" />
           </span>
