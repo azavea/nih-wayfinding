@@ -53,7 +53,7 @@
                 Navigation.setDestination(data.destination);
                 Directions.get(data.origin, data.destination, steps).then(setGeojson, function (error) {
                     var msg = error.msg ? error.msg : 'Unable to load route. Please try again later.';
-                    Notifications.show({
+                    showNotification({
                         text: msg
                     });
                 });
@@ -123,15 +123,15 @@
 
         function setGeojson(geojson) {
             if (!(geojson && geojson.features.length)) {
-                Notifications.show({
+                showNotification({
                     text: 'No valid route found. Please go back and try again.'
                 });
                 return;
             }
             var bbox = turf.extent(geojson);
             if (!Directions.isAudited(geojson)) {
-                Notifications.show({
-                    text: 'This route contains unverified segments. Please exercise caution.'
+                showNotification({
+                    text: 'This route contains unverified segments. Please exercise caution.',
                 });
             }
             var lastPoint = _(geojson.features)
@@ -168,6 +168,13 @@
 
         function showPopup(event, feature) {
             MapControl.showPopup(feature);
+        }
+
+        function showNotification(options) {
+            var defaults = {
+                top: '14rem'
+            };
+            Notifications.show(angular.extend({}, defaults, options));
         }
     }
 

@@ -34,6 +34,7 @@
         function show(options) {
             var defaults = {
                 timeout: 0,
+                top: '8rem',
                 closeButton: true,
                 text: '',
                 imageClass: 'glyphicon-warning-sign'

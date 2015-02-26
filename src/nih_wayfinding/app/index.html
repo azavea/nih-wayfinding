@@ -54,7 +54,7 @@
             <p class="navbar-actionheader-subtitle" ng-if="navbar.config.subtitle" ng-cloak>{{ navbar.config.subtitle }}</p>
           </div>
         </div>
-        <div class="notification" ng-class="{'active': navbar.active}">
+        <div class="notification" ng-class="{'active': navbar.active}" ng-style="{top: navbar.alert.top}">
             <span class="glyphicon"
                   ng-class="navbar.alert.imageClass"
                   ng-if="navbar.alert.imageClass"></span>
