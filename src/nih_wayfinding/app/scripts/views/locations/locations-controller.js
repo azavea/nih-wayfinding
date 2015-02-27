@@ -20,9 +20,8 @@
                 buttonText: 'Delete'
             };
 
-            var title = ctl.user.username ? ctl.user.username : 'Profile';
             NavbarConfig.set({
-                title: title,
+                title: 'Wayfinder',
                 back: false
             });
         }
