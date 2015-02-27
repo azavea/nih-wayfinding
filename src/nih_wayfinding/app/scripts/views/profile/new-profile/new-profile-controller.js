@@ -26,6 +26,7 @@
             ctl.willCreateLocations = willCreateLocations;
 
             NavbarConfig.set({
+                title: 'Customize',
                 color: NavbarConfig.colors.profile
             });
         }
