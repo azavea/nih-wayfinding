@@ -7,10 +7,10 @@
       <td class="direction" ng-style="{'border-right': '10px solid ' + directions.getLineColor(item.lastModified, item.directions.warnings.length)}">
         <h3 class="direction-instruction">{{ ::item.directions.text }} <span ng-if="item.turnamenity">at {{ ::item.turnamenity.name }}</span>
           <span ng-if="item.directions.warnings.length">
-            <img class="icon-content" ng-src="{{ ::item.directions.warnings[0].img }}" />
+            <img class="icon-condition" ng-src="{{ ::item.directions.warnings[0].img }}" />
           </span>
           <span ng-if="item.directions.features" ng-repeat="feature in item.directions.features">
-            <img class="icon-content" ng-src="{{ ::feature.img }}" />
+            <img class="icon-condition" ng-src="{{ ::feature.img }}" />
           </span>
         </h3>
         <div class="direction-description"
