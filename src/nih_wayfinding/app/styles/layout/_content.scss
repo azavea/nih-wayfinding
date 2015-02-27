@@ -145,7 +145,15 @@ nav > .btn-group-nav-main {}
 }
 
 .navbar-header {
-  display: inline-block;
+  float: left;
+  display: block;
+}
+
+.navbars {
+  height: 100%;
+  background-color: inherit;
+  z-index: 200;
+  position: relative;
 }
 
 .icon-content {

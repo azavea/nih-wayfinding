@@ -3,12 +3,10 @@
   color: #fff !important;
   font-size: $font-size-h4;
   max-width: 6em;
-  margin-top: -.5rem;
-  &:hover {
-    opacity: .5;
-  }
-  &:active {
-    opacity: 1;
+  height: 8rem;
+  padding-top: 1rem;
+  &:active, &:focus, &:visited {
+    color: #fff;
   }
 }
 
@@ -31,7 +29,7 @@
       border-right: 0;
     }
     &:hover {
-      background-color: $gray-lighter;
+      background-color: $gray-lightest;
     }
     &.active {
       color: $brand-primary;
